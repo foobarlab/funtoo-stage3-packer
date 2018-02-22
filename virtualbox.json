@@ -57,14 +57,9 @@
     },
     {
       "environment_vars": [
-        "VM_TYPE=virtualbox",
         "SCRIPTS=/tmp",
         "MAKEOPTS=-j{{user `cpus`}}",
-        "TIMEZONE=UTC",
-        "LANG=en_US",
-        "KEYMAP=us",
-        "ARCH=amd64",
-        "MEMORY={{user `memory`}}"
+        "TIMEZONE=UTC"
       ],
       "scripts": [
         "provision.sh"
