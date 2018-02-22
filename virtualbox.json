@@ -1,0 +1,82 @@
+{
+  "builders": [
+    {
+      "boot_command": [
+        "<enter>",
+        "<wait>",
+        "<enter>",
+        "<wait10>",
+        "<enter>",
+        "<wait10>",
+        "<wait5>",
+        "passwd {{user `username`}}",
+        "<enter>",
+        "<wait>",
+        "{{user `password`}}",
+        "<enter>",
+        "<wait>",
+        "{{user `password`}}",
+        "<enter>",
+        "<wait>",
+        "{{user `password`}}",
+        "<enter>",
+        "<wait>"
+      ],
+      "boot_wait": "5s",
+      "disk_size": 100000,
+      "guest_additions_mode": "disable",
+      "guest_os_type": "Gentoo_64",
+      "headless": "{{user `headless`}}",
+      "iso_checksum": "f3a9bbc82e203d2e301fb5f429f56f634cca87731a684b7f85fe762c070545bd",
+      "iso_checksum_type": "sha256",
+      "iso_url": "systemrescuecd-x86-5.2.0.iso",
+      "shutdown_command": "shutdown -hP now",
+      "ssh_password": "{{user `password`}}",
+      "ssh_username": "{{user `username`}}",
+      "ssh_wait_timeout": "30s",
+      "type": "virtualbox-iso",
+      "vm_name": "funtoo-stage3",
+      "vboxmanage":[
+        ["modifyvm","{{.Name}}","--memory","{{user `memory`}}"],
+        ["modifyvm","{{.Name}}","--cpus","{{user `cpus`}}"]
+      ]
+    }
+  ],
+  "description": "Stage 3 Funtoo Installation (VirtualBox)",
+  "post-processors": [
+    {
+      "output": "foobarlab-funtoo-x86_64-generic_64-stage3.box",
+      "type": "vagrant"
+    }
+  ],
+  "provisioners": [
+    {
+      "destination": "/tmp",
+      "source": "scripts",
+      "type": "file"
+    },
+    {
+      "environment_vars": [
+        "VM_TYPE=virtualbox",
+        "SCRIPTS=/tmp",
+        "MAKEOPTS=-j{{user `cpus`}}",
+        "TIMEZONE=UTC",
+        "LANG=en_US",
+        "KEYMAP=us",
+        "ARCH=amd64",
+        "MEMORY={{user `memory`}}"
+      ],
+      "scripts": [
+        "provision.sh"
+      ],
+      "type": "shell"
+    }
+  ],
+  "variables": {
+    "headless": "false",
+    "password": "toor",
+    "username": "root",
+    "memory": "2048",
+    "cpus": "4"
+  }
+}

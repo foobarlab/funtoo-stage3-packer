@@ -1,0 +1,9 @@
+.vagrant/
+packer_cache/
+output-virtualbox-iso/
+.ssh/
+/*.box
+/*.iso
+/*.tar.xz.hash.txt
+*.tar.xz
+.project
