@@ -24,6 +24,7 @@
       ],
       "boot_wait": "5s",
       "disk_size": 100000,
+      "hard_drive_interface": "sata",
       "guest_additions_mode": "disable",
       "guest_os_type": "Gentoo_64",
       "headless": "{{user `headless`}}",
