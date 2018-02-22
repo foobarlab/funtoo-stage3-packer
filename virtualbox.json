@@ -24,6 +24,7 @@
       ],
       "boot_wait": "5s",
       "disk_size": 100000,
+      "hard_drive_interface": "sata",
       "guest_additions_mode": "disable",
       "guest_os_type": "Gentoo_64",
       "headless": "{{user `headless`}}",
@@ -57,14 +58,9 @@
     },
     {
       "environment_vars": [
-        "VM_TYPE=virtualbox",
         "SCRIPTS=/tmp",
         "MAKEOPTS=-j{{user `cpus`}}",
-        "TIMEZONE=UTC",
-        "LANG=en_US",
-        "KEYMAP=us",
-        "ARCH=amd64",
-        "MEMORY={{user `memory`}}"
+        "TIMEZONE=UTC"
       ],
       "scripts": [
         "provision.sh"
