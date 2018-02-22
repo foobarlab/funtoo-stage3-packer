@@ -1,7 +1,7 @@
 #!/bin/bash -uex
 
 tarball=stage3-latest.tar.xz
-tarball_path=/tmp/scripts/$tarball
+tarball_path=$SCRIPTS/scripts/$tarball
 
 cd /mnt/funtoo
 if [ -f "$tarball_path" ]
