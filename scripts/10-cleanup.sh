@@ -2,13 +2,14 @@
 
 chroot /mnt/funtoo /bin/bash <<'EOF'
 emerge -v sys-fs/zerofree
-cd /usr/src/linux && make clean
+cd /usr/src/linux && make distclean
 emerge --depclean
 EOF
 
 rm -f /mnt/funtoo/etc/resolv.conf
 rm -f /mnt/funtoo/etc/resolv.conf.bak
 rm -rf /mnt/funtoo/var/cache/portage/distfiles/*
+rm -rf /mnt/funtoo/var/git/meta-repo/kits/*
 rm -rf /mnt/funtoo/var/log/*
 rm -rf /mnt/funtoo/tmp/*
 
