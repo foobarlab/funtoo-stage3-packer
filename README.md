@@ -4,11 +4,11 @@ This is a minimal stage3 installation of Funtoo Linux that is packaged into a Va
 
 ### Purpose
 
-This box is intended to serve as a generic startpoint to build a derived base box. The box does not include the VirtualBox guest additions.
+This box is intended to serve as a generic startpoint to build a derived base box. The box does not include the VirtualBox guest additions. During build [SystemRescueCD](http://www.system-rescue-cd.org) is being used.
 
 ### What's included?
 
- - Latest stage3 tarball from [http://build.funtoo.org/funtoo-current/x86-64bit/generic_64/stage3-latest.tar.xz](http://build.funtoo.org/funtoo-current/x86-64bit/generic_64/stage3-latest.tar.xz) using [SystemRescueCD](http://www.system-rescue-cd.org)
+ - Latest stage3 tarball from [http://build.funtoo.org/funtoo-current/x86-64bit/generic_64/stage3-latest.tar.xz](http://build.funtoo.org/funtoo-current/x86-64bit/generic_64/stage3-latest.tar.xz)
  - Architecture: amd64, generic_64
  - 100 GB dynamic sized HDD image
  - Timezone: ```UTC```
