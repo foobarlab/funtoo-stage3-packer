@@ -8,8 +8,6 @@ echo "Destroying current box ..."
 vagrant destroy -f || true
 echo "Removing box '$BOX_NAME' ..."
 vagrant box remove -f "$BOX_NAME" || true
-echo "Cleaning .ssh dir ..."
-rm -rf .ssh/ || true
 echo "Cleaning .vagrant dir ..."
 rm -rf .vagrant/ || true
 echo "Cleaning packer_cache ..."
