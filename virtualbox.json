@@ -60,7 +60,8 @@
       "environment_vars": [
         "SCRIPTS=/tmp",
         "MAKEOPTS=-j{{user `cpus`}}",
-        "TIMEZONE=UTC"
+        "TIMEZONE=UTC",
+		"BUILD_RUN=true"
       ],
       "scripts": [
         "provision.sh"

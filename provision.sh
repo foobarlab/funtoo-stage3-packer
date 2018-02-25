@@ -1,5 +1,10 @@
 #!/bin/bash -e
 
+if [ -z $BUILD_RUN ]; then
+  echo "This script can not run directly! Aborting."
+  exit 1
+fi
+
 if [ -z ${SCRIPTS:-} ]; then
   SCRIPTS=.
 fi
@@ -8,10 +13,10 @@ tarball=stage3-latest.tar.xz
 tarball_path=$SCRIPTS/scripts/$tarball
 if [ -f "$tarball_path" ]
 then
-	echo "stage3 found: $tarball_path"
+  echo "stage3 found: $tarball_path"
 else
-	echo "stage3 not found: $tarball_path"
-	exit 1
+  echo "stage3 not found: $tarball_path"
+  exit 1
 fi
 
 chmod +x $SCRIPTS/scripts/*.sh
