@@ -61,7 +61,7 @@
         "SCRIPTS=/tmp",
         "MAKEOPTS=-j{{user `cpus`}}",
         "TIMEZONE=UTC",
-		"BUILD_RUN=true"
+        "BUILD_RUN=true"
       ],
       "scripts": [
         "provision.sh"
