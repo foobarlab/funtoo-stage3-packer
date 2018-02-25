@@ -43,10 +43,10 @@
       ]
     }
   ],
-  "description": "Stage 3 Funtoo Installation (VirtualBox)",
+  "description": "Funtoo stage3 installation",
   "post-processors": [
     {
-      "output": "foobarlab-funtoo-x86_64-generic_64-stage3.box",
+      "output": "funtoo-x86_64-generic_64-stage3.box",
       "type": "vagrant"
     }
   ],
