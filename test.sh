@@ -8,13 +8,13 @@ then
 	echo "Suspending any running instances ..."
 	vagrant suspend
 	echo "Destroying current box ..."
-	vagrant destroy -f
+	vagrant destroy -f || true
 	echo "Removing '$BOX_NAME' ..."
-	vagrant box remove -f $BOX_NAME
+	vagrant box remove -f "$BOX_NAME" || true
 	echo "Adding '$BOX_NAME' ..."
-	vagrant box add --name $BOX_NAME
-	echo "Powerup '$BOX_NAME' ..." 
-	vagrant up
+	vagrant box add --name "$BOX_NAME" "$BOX_FILE"
+	echo "Powerup '$BOX_NAME' ..."
+	vagrant up || true
 	echo "Establishing SSH connection to '$BOX_NAME' ..."
 	vagrant ssh
 else
