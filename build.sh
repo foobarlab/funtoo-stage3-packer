@@ -3,8 +3,8 @@
 echo "Running in dir: $(pwd)"
 
 # configure systemrescuecd version + sha256sum here (also check virtualbox.json fields iso_checksum and iso_url)
-VERSION="5.2.0"
-SHA256SUM="f3a9bbc82e203d2e301fb5f429f56f634cca87731a684b7f85fe762c070545bd"
+VERSION="5.2.1"
+SHA256SUM="d76d9444a73ce2127e489f54b0ce1cb9057ae470459dc3fb32e8c916f7cbfe2e"
 
 command -v packer >/dev/null 2>&1 || { echo "Command 'packer' required but it's not installed.  Aborting." >&2; exit 1; }
 command -v wget >/dev/null 2>&1 || { echo "Command 'wget' required but it's not installed.  Aborting." >&2; exit 1; }
