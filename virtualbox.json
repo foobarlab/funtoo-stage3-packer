@@ -28,9 +28,9 @@
       "guest_additions_mode": "disable",
       "guest_os_type": "Gentoo_64",
       "headless": "{{user `headless`}}",
-      "iso_checksum": "d76d9444a73ce2127e489f54b0ce1cb9057ae470459dc3fb32e8c916f7cbfe2e",
+      "iso_checksum": "{{user `systemrescuecd_checksum`}}",
       "iso_checksum_type": "sha256",
-      "iso_url": "systemrescuecd-x86-5.2.1.iso",
+      "iso_url": "{{user `systemrescuecd_url`}}",
       "shutdown_command": "shutdown -hP now",
       "ssh_password": "{{user `password`}}",
       "ssh_username": "{{user `username`}}",
@@ -70,6 +70,8 @@
     }
   ],
   "variables": {
+  	"systemrescuecd_url": "{{env `SYSTEMRESCUECD_FILE`}}",
+    "systemrescuecd_checksum": "{{env `SYSTEMRESCUECD_REMOTE_HASH`}}",
     "headless": "false",
     "password": "toor",
     "username": "root",
