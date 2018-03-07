@@ -6,3 +6,4 @@ output-virtualbox-iso/
 /*.tar.xz.hash.txt
 *.tar.xz
 .project
+packer.log
