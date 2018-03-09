@@ -72,7 +72,7 @@
   "variables": {
   	"systemrescuecd_url": "{{env `SYSTEMRESCUECD_FILE`}}",
     "systemrescuecd_checksum": "{{env `SYSTEMRESCUECD_REMOTE_HASH`}}",
-    "headless": "false",
+    "headless": "true",
     "password": "toor",
     "username": "root",
     "memory": "2048",
