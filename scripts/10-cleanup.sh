@@ -13,7 +13,6 @@ rm -rf /mnt/funtoo/var/git/meta-repo/kits/*
 rm -rf /mnt/funtoo/var/log/*
 rm -rf /mnt/funtoo/tmp/*
 
-sudo rm -f /root/.bash_history
 cat /dev/null > ~/.bash_history && history -c
 
 mount -o remount,ro /mnt/funtoo
