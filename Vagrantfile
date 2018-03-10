@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-system(config.sh)
+system("./config.sh")
 
 Vagrant.configure("2") do |config|
   config.vm.box = "#{ENV['BUILD_BOX_NAME']}"
