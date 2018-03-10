@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-if [ -z $BUILD_RUN ]; then
+if [ -z ${BUILD_RUN:-} ]; then
   echo "This script can not be run directly! Aborting."
   exit 1
 fi
