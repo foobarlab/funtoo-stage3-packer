@@ -14,3 +14,8 @@ export BUILD_OUTPUT_FILE="funtoo-pure64-generic_64-stage3.box"
 export BUILD_GUEST_TYPE="Gentoo_64"
 export BUILD_GUEST_CPUS="4"
 export BUILD_GUEST_MEMORY="2048"
+
+echo "Executing $0 ..."
+echo "=== Build settings ============================================================="
+env | grep BUILD_
+echo "================================================================================"
