@@ -1,18 +1,23 @@
 #!/bin/bash -uex
 
-tarball=stage3-latest.tar.xz
-tarball_path=$SCRIPTS/scripts/$tarball
-
 cd /mnt/funtoo
-if [ -f "$tarball_path" ]
+if [ -f "$BUILD_STAGE3_PATH" ]
 then
-	cp $tarball_path /mnt/funtoo
+	mv $BUILD_STAGE3_PATH /mnt/funtoo
 else
-	wget http://build.funtoo.org/funtoo-current/x86-64bit/generic_64/$tarball
-	cp $tarball /mnt/funtoo
+	echo "File '$BUILD_STAGE3_PATH' does not exist. Aborting"
+	exit 1
+
+#	wget $BUILD_STAGE3_URL
+#	if [ $? -ne 0 ]; then
+#    	echo "Could not download '$BUILD_STAGE3_URL'. Exit code from wget was $?."
+#    	exit 1
+#    fi
+#	mv $BUILD_STAGE3_FILE /mnt/funtoo
+
 fi
 
 cd /mnt/funtoo
-tar xpf $tarball
-rm -f $tarball
+tar xpf $BUILD_STAGE3_FILE
+rm -f $BUILD_STAGE3_FILE
 ls -l

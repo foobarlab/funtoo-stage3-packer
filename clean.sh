@@ -1,13 +1,13 @@
 #!/bin/bash -ue
 
-BOX_NAME="funtoo-stage3"
+. config.sh
 
 echo "Suspending any running instances ..."
 vagrant suspend && true
 echo "Destroying current box ..."
 vagrant destroy -f || true
-echo "Removing box '$BOX_NAME' ..."
-vagrant box remove -f "$BOX_NAME" || true
+echo "Removing box '$BUILD_BOX_NAME' ..."
+vagrant box remove -f "$BUILD_BOX_NAME" 2>/dev/null || true
 echo "Cleaning .vagrant dir ..."
 rm -rf .vagrant/ || true
 echo "Cleaning packer_cache ..."
@@ -16,4 +16,8 @@ echo "Removing hash file ..."
 rm -f *.tar.xz.hash.txt || true
 echo "Deleting any box file ..."
 rm -f *.box || true
+echo "Cleanup scripts dir ..."
+rm -f scripts/*.tar.xz || true
+echo "Cleanup old logs ..."
+rm -f packer.log || true
 echo "All done. You may now run './build.sh' to build a new box."
