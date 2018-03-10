@@ -1,5 +1,10 @@
 #!/bin/bash -uex
 
+if [ -z ${BUILD_RUN:-} ]; then
+  echo "This script can not be run directly! Aborting."
+  exit 1
+fi
+
 sgdisk \
   -n 1:0:+128M -t 1:8300 -c 1:"boot" \
   -n 2:0:+32M  -t 2:ef02 -c 2:"BIOS boot partition" \

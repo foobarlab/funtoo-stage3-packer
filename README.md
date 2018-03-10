@@ -2,14 +2,10 @@
 
 This is a minimal stage3 installation of Funtoo Linux that is packaged into a Vagrant box file. Currently only a VirtualBox version is provided.
 
-### Purpose
-
-This box is intended to serve as a generic startpoint to build a derived base box. The box does not include the VirtualBox guest additions. During build [SystemRescueCD](http://www.system-rescue-cd.org) is being used.
-
 ### What's included?
 
- - Latest stage3 tarball from [http://build.funtoo.org/funtoo-current/x86-64bit/generic_64/stage3-latest.tar.xz](http://build.funtoo.org/funtoo-current/x86-64bit/generic_64/stage3-latest.tar.xz)
- - Architecture: amd64, generic_64
+ - Latest stage3 tarball from [https://build.funtoo.org/funtoo-current/pure64/generic_64-pure64/stage3-latest.tar.xz](https://build.funtoo.org/funtoo-current/pure64/generic_64-pure64/stage3-latest.tar.xz) using [SystemRescueCD](http://www.system-rescue-cd.org)
+ - Architecture: pure64, generic_64
  - 100 GB dynamic sized HDD image
  - Timezone: ```UTC```
  - NAT Networking using DHCP
@@ -23,7 +19,7 @@ This box is intended to serve as a generic startpoint to build a derived base bo
 
 ### Download pre-build images
 
-Get the latest build from Vagrant Cloud: [foobarlab/funtoo-stage3](https://app.vagrantup.com/foobarlab/boxes/funtoo-stage3) (~ 554 MB)
+Get the latest build from Vagrant Cloud: [foobarlab/funtoo-stage3](https://app.vagrantup.com/foobarlab/boxes/funtoo-stage3) (~ 527 MB)
 
 ### Build your own using Packer
 

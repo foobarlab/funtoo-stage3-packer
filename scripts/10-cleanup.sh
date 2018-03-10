@@ -1,5 +1,10 @@
 #!/bin/bash -uex
 
+if [ -z ${BUILD_RUN:-} ]; then
+  echo "This script can not be run directly! Aborting."
+  exit 1
+fi
+
 chroot /mnt/funtoo /bin/bash <<'EOF'
 emerge -v sys-fs/zerofree
 cd /usr/src/linux && make distclean
@@ -12,6 +17,8 @@ rm -rf /mnt/funtoo/var/cache/portage/distfiles/*
 rm -rf /mnt/funtoo/var/git/meta-repo/kits/*
 rm -rf /mnt/funtoo/var/log/*
 rm -rf /mnt/funtoo/tmp/*
+
+cat /dev/null > ~/.bash_history && history -c
 
 mount -o remount,ro /mnt/funtoo
 chroot /mnt/funtoo /bin/bash <<'EOF'
