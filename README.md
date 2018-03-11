@@ -1,6 +1,6 @@
 # Funtoo stage3 Vagrant box
 
-This is a minimal stage3 installation of Funtoo Linux that is packaged into a Vagrant box file. Currently only a VirtualBox version is provided.
+This is a minimal stage3 snapshot of Funtoo Linux that is packaged into a Vagrant box file. Currently only a VirtualBox version is provided.
 
 ### What's included?
 
@@ -10,6 +10,7 @@ This is a minimal stage3 installation of Funtoo Linux that is packaged into a Va
  - Timezone: ```UTC```
  - NAT Networking using DHCP
  - Vagrant user *vagrant* with password *vagrant* (can get superuser via sudo without password), additionally using the default ssh authorized keys provided by Vagrant (see https://github.com/hashicorp/vagrant/tree/master/keys) 
+ - No Virtualbox guest additions installed, no shared folders
  - Kernel: default included from stage3 tarball (debian-sources)
  - Additionally installed software:
    - *boot-update* and *grub*
