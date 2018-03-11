@@ -11,5 +11,5 @@ Vagrant.configure("2") do |config|
     vb.memory = "#{ENV['BUILD_GUEST_MEMORY']}"
     vb.cpus = "#{ENV['BUILD_GUEST_CPUS']}"
   end
- config.vm.synced_folder '.', '/vagrant', disabled: true
+  config.vm.synced_folder '.', '/vagrant', disabled: true
 end
