@@ -11,6 +11,8 @@ Vagrant.configure("2") do |config|
     vb.gui = false
     vb.memory = "#{ENV['BUILD_GUEST_MEMORY']}"
     vb.cpus = "#{ENV['BUILD_GUEST_CPUS']}"
+    vb.customize ["modifyvm", :id, "--audio", "none"]
+    vb.customize ["modifyvm", :id, "--usb", "off"]
   end
   config.ssh.pty = true
   config.vm.synced_folder '.', '/vagrant', disabled: true
