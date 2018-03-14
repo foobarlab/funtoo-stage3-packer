@@ -53,8 +53,17 @@ if [ "$BUILD_STAGE3_LOCAL_HASH" == "$BUILD_STAGE3_REMOTE_HASH" ]
 then
     echo "'$BUILD_STAGE3_FILE' checksums matched. Proceeding ..."
 else
-    echo "'$BUILD_STAGE3_FILE' checksums did NOT match. The file is possibly outdated or corrupted, please delete it and try again."
-    exit 1
+    echo "'$BUILD_STAGE3_FILE' checksums did NOT match. The file is possibly outdated or corrupted."
+	read -p "Do you want to delete it and try again (Y/n)? " choice
+	case "$choice" in 
+	  n|N ) echo "Canceled by user."
+	  		exit 1
+	  ;;
+	  * ) echo "Deleteing '$BUILD_STAGE3_FILE' ..."
+	      rm -f $BUILD_STAGE3_FILE
+	      exec $0
+	  ;;
+	esac
 fi
 
 cp $BUILD_STAGE3_FILE ./scripts
