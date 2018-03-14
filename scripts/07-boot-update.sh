@@ -6,7 +6,7 @@ if [ -z ${BUILD_RUN:-} ]; then
 fi
 
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
-emerge boot-update
+emerge -v boot-update
 grub-install --target=i386-pc --no-floppy /dev/sda
 cat > /etc/boot.conf <<'DATA'
 boot {
