@@ -77,3 +77,5 @@ PACKER_LOG_PATH="$PWD/packer.log"
 PACKER_LOG="1"
 
 packer build virtualbox.json
+
+rm -f ./scripts/$BUILD_STAGE3_FILE

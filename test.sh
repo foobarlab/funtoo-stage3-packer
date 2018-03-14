@@ -13,7 +13,7 @@ then
 	echo "Adding '$BUILD_BOX_NAME' ..."
 	vagrant box add --name "$BUILD_BOX_NAME" "$BUILD_OUTPUT_FILE"
 	echo "Powerup '$BUILD_BOX_NAME' ..."
-	vagrant up || true
+	vagrant up --no-provision || true
 	echo "Establishing SSH connection to '$BUILD_BOX_NAME' ..."
 	vagrant ssh
 else

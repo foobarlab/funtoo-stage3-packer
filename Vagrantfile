@@ -4,6 +4,7 @@
 system("./config.sh >/dev/null")
 
 Vagrant.configure("2") do |config|
+  config.vm.box_check_update = false
   config.vm.box = "#{ENV['BUILD_BOX_NAME']}"
   config.vm.hostname = "#{ENV['BUILD_BOX_NAME']}"
   config.vm.provider "virtualbox" do |vb|
@@ -11,5 +12,6 @@ Vagrant.configure("2") do |config|
     vb.memory = "#{ENV['BUILD_GUEST_MEMORY']}"
     vb.cpus = "#{ENV['BUILD_GUEST_CPUS']}"
   end
- config.vm.synced_folder '.', '/vagrant', disabled: true
+  config.ssh.pty = true
+  config.vm.synced_folder '.', '/vagrant', disabled: true
 end
