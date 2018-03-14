@@ -20,7 +20,7 @@ This is a minimal stage3 snapshot of Funtoo Linux that is packaged into a Vagran
 
 ### Download pre-build images
 
-Get the latest build from Vagrant Cloud: [foobarlab/funtoo-stage3](https://app.vagrantup.com/foobarlab/boxes/funtoo-stage3) (~ 527 MB)
+Get the latest build from Vagrant Cloud: [foobarlab/funtoo-stage3](https://app.vagrantup.com/foobarlab/boxes/funtoo-stage3)
 
 ### Build your own using Packer
 

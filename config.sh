@@ -9,10 +9,12 @@ export BUILD_STAGE3_FILE="stage3-latest.tar.xz"
 
 # x86-64bit/generic64 build (multilib)
 #export BUILD_FUNTOO_DOWNLOADPATH="https://build.funtoo.org/funtoo-current/x86-64bit/generic_64"
+#export BUILD_FUNTOO_DOWNLOADPATH="https://ftp.osuosl.org/pub/funtoo/funtoo-current/x86-64bit/generic_64"
 #export BUILD_BOX_DESCRIPTION="Funtoo stage3 installation (x86-64bit, generic64)"
 
 # pure64/generic64 build
-export BUILD_FUNTOO_DOWNLOADPATH="https://build.funtoo.org/funtoo-current/pure64/generic_64-pure64"
+#export BUILD_FUNTOO_DOWNLOADPATH="https://build.funtoo.org/funtoo-current/pure64/generic_64-pure64"
+export BUILD_FUNTOO_DOWNLOADPATH="https://ftp.osuosl.org/pub/funtoo/funtoo-current/pure64/generic_64-pure64"
 export BUILD_BOX_DESCRIPTION="Funtoo stage3 installation (pure64, generic64)"
 
 export BUILD_OUTPUT_FILE="$BUILD_BOX_NAME.box"

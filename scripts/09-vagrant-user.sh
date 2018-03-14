@@ -6,8 +6,8 @@ if [ -z ${BUILD_RUN:-} ]; then
 fi
 
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
-USE="-sendmail" emerge app-admin/sudo
-emerge net-fs/nfs-utils
+USE="-sendmail" emerge -v app-admin/sudo
+emerge -v net-fs/nfs-utils
 useradd -m -s /bin/bash vagrant
 echo vagrant:vagrant | chpasswd
 echo 'vagrant ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/vagrant
