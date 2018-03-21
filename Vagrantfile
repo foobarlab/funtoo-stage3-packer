@@ -5,6 +5,7 @@ system("./config.sh >/dev/null")
 
 Vagrant.configure("2") do |config|
   config.vm.box_check_update = false
+  config.vm.box_version = "#{ENV['BUILD_BOX_VERSION']}"
   config.vm.box = "#{ENV['BUILD_BOX_NAME']}"
   config.vm.hostname = "#{ENV['BUILD_BOX_NAME']}"
   config.vm.provider "virtualbox" do |vb|
