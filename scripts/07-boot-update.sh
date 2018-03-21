@@ -19,6 +19,7 @@ boot {
     kernel bzImage[-v]
 }
 
+# FIXME is this unused? obviously defaults to entry above ...
 "Funtoo Linux genkernel" {
     kernel kernel[-v]
     initrd initramfs[-v]
