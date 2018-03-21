@@ -73,9 +73,8 @@ fi
 
 cp $BUILD_STAGE3_FILE ./scripts
 
-PACKER_LOG_PATH="$PWD/packer.log"
-PACKER_LOG="1"
-
+export PACKER_LOG_PATH="$PWD/packer.log"
+export PACKER_LOG="1"
 packer build virtualbox.json
 
 rm -f ./scripts/$BUILD_STAGE3_FILE
