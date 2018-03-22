@@ -14,12 +14,10 @@ boot {
     default "Funtoo Linux"
     timeout 1
 }
-
-"Funtoo Linux" {
-    kernel bzImage[-v]
+display { 
+	gfxmode 800x600
 }
-
-"Funtoo Linux genkernel" {
+"Funtoo Linux" {
     kernel kernel[-v]
     initrd initramfs[-v]
     params += real_root=auto rootfstype=auto

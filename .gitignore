@@ -7,3 +7,5 @@ output-virtualbox-iso/
 *.tar.xz
 .project
 packer.log
+release
+vagrant-cloud-credentials

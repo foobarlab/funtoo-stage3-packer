@@ -1,6 +1,8 @@
 #!/bin/bash -e
 
-. config.sh
+echo "Executing $0 ..."
+
+. config.sh quiet
 
 command -v packer >/dev/null 2>&1 || { echo "Command 'packer' required but it's not installed.  Aborting." >&2; exit 1; }
 command -v wget >/dev/null 2>&1 || { echo "Command 'wget' required but it's not installed.  Aborting." >&2; exit 1; }
@@ -50,6 +52,8 @@ else
     	echo "Could not download '$BUILD_STAGE3_URL'. Exit code from wget was $?."
     	exit 1
     fi
+    echo "Deleteing possibly outdated release info ..."
+	rm -f ./release
 fi
 
 BUILD_STAGE3_LOCAL_HASH=$(cat $BUILD_STAGE3_FILE | sha256sum | grep -o '^\S\+')
@@ -66,10 +70,21 @@ else
 	        ;;
 	  * ) echo "Deleteing '$BUILD_STAGE3_FILE' ..."
 	      rm -f $BUILD_STAGE3_FILE
+	      echo "Deleteing outdated release info ..."
+	      rm -f ./release
 	      exec $0
 	      ;;
 	esac
 fi
+
+if [ ! -f ./release ]; then
+echo "Extracting actual stage3 release info ..."
+	tar -xvf $BUILD_STAGE3_FILE ./etc/os-release -O > ./release
+else
+echo "Skipping extraction of stage3 release info. Already extracted."
+fi
+
+. config.sh
 
 cp $BUILD_STAGE3_FILE ./scripts
 
