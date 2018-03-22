@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export BUILD_BOX_NAME="funtoo-stage3"
-export BUILD_BOX_VERSION="0"			# FIXME determine version dynamically from stage3 tarball?
+export BUILD_BOX_VERSION="0"			# FIXME determine actual version dynamically? (see: '/etc/os-release' and '/etc/gentoo-release' inside stage3 tarball)
 export BUILD_GUEST_TYPE="Gentoo_64"
 export BUILD_GUEST_CPUS="4"
 export BUILD_GUEST_MEMORY="2048"
