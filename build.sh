@@ -52,7 +52,7 @@ else
     	echo "Could not download '$BUILD_STAGE3_URL'. Exit code from wget was $?."
     	exit 1
     fi
-    echo "Deleteing possibly outdated release info ..."
+    echo "Deleting possibly outdated release info ..."
 	rm -f ./release
 fi
 
@@ -68,9 +68,9 @@ else
 	  n|N ) echo "Canceled by user."
 	  		exit 1
 	        ;;
-	  * ) echo "Deleteing '$BUILD_STAGE3_FILE' ..."
+	  * ) echo "Deleting '$BUILD_STAGE3_FILE' ..."
 	      rm -f $BUILD_STAGE3_FILE
-	      echo "Deleteing outdated release info ..."
+	      echo "Deleting outdated release info ..."
 	      rm -f ./release
 	      exec $0
 	      ;;
