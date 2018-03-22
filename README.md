@@ -28,10 +28,25 @@ Get the latest build from Vagrant Cloud: [foobarlab/funtoo-stage3](https://app.v
 
  - Install [Vagrant](https://www.vagrantup.com/) and [Packer](https://www.packer.io/)
 
-#### Build fresh Virtualbox
+#### Build a fresh Virtualbox box
 
  - Run ```./build.sh```
  
-#### Test box file
+#### Quick test the box file
 
  - Run ```./test.sh```
+
+#### Upload the box to Vagrant Cloud
+
+ - Run ```./upload.sh```
+
+### Regular use cases
+
+#### Initialize on the box (restoring initial state)
+
+ - Run ```./init.sh```
+
+#### Power on the box (keeping previous state) 
+
+ - Run ```./startup.sh```
+ 
