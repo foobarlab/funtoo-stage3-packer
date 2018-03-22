@@ -22,7 +22,6 @@ export BUILD_OUTPUT_FILE="$BUILD_BOX_NAME.box"
 export BUILD_SYSTEMRESCUECD_FILE="systemrescuecd-x86-5.2.1.iso"
 export BUILD_SYSTEMRESCUECD_REMOTE_HASH="d76d9444a73ce2127e489f54b0ce1cb9057ae470459dc3fb32e8c916f7cbfe2e"
 
-# dynamically set actual version and description from extracted release info 
 if [ -f ./release ]; then
 	while read line; do
 		line_name=`echo $line |cut -d "=" -f1`
@@ -33,7 +32,6 @@ if [ -f ./release ]; then
 	export BUILD_BOX_DESCRIPTION="$BUILD_BOX_NAME version $BUILD_BOX_VERSION ($BUILD_RELEASE_VERSION_ID) build @$(date --iso-8601=seconds)"
 fi
 
-# output info only if there is no argument given
 if [ $# -eq 0 ]; then
 	echo "Executing $0 ..."
 	echo "=== Build settings ============================================================="
