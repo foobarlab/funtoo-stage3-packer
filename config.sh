@@ -2,9 +2,13 @@
 
 export BUILD_BOX_NAME="funtoo-stage3"
 export BUILD_BOX_VERSION="0"
+
 export BUILD_GUEST_TYPE="Gentoo_64"
 export BUILD_GUEST_CPUS="4"
 export BUILD_GUEST_MEMORY="2048"
+
+export BUILD_BOX_PROVIDER="virtualbox"
+export BUILD_BOX_USERNAME="foobarlab"
 
 export BUILD_STAGE3_FILE="stage3-latest.tar.xz"
 export BUILD_BOX_DESCRIPTION="$BUILD_BOX_NAME build @$(date --iso-8601=seconds)"
