@@ -34,6 +34,7 @@ if [ -f ./release ]; then
 	done < ./release
 	export BUILD_BOX_VERSION=`echo $BUILD_RELEASE_VERSION | sed -e 's/\-/./g'`
 	export BUILD_BOX_DESCRIPTION="$BUILD_BOX_NAME version $BUILD_BOX_VERSION ($BUILD_RELEASE_VERSION_ID) build @$(date --iso-8601=seconds)"
+	export BUILD_OUTPUT_FILE="$BUILD_BOX_NAME-$BUILD_RELEASE_VERSION.box"
 fi
 
 if [ $# -eq 0 ]; then
