@@ -14,13 +14,10 @@ boot {
     default "Funtoo Linux"
     timeout 1
 }
-
-"Funtoo Linux" {
-    kernel bzImage[-v]
+display { 
+	gfxmode 800x600
 }
-
-# FIXME is this unused? obviously defaults to entry above ...
-"Funtoo Linux genkernel" {
+"Funtoo Linux" {
     kernel kernel[-v]
     initrd initramfs[-v]
     params += real_root=auto rootfstype=auto
