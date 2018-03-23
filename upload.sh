@@ -6,6 +6,7 @@
 command -v curl >/dev/null 2>&1 || { echo "Command 'curl' required but it's not installed.  Aborting." >&2; exit 1; }
 command -v jq >/dev/null 2>&1 || { echo "Command 'jq' required but it's not installed.  Aborting." >&2; exit 1; }
 
+echo "This script is marked as EXPERIMENTAL! Use at your own risk."
 echo "This script will upload the current build box to Vagrant Cloud."
 echo
 echo "User:     $BUILD_BOX_USERNAME"
@@ -14,7 +15,6 @@ echo "Provider: $BUILD_BOX_PROVIDER"
 echo "Version:  $BUILD_BOX_VERSION"
 echo
 echo "Please verify if above information is correct."
-echo "We will do the upload via API on the behalf of your Vagrant Cloud login."
 echo
 
 read -p "Continue (Y/n)? " choice
@@ -26,12 +26,17 @@ case "$choice" in
   		;;
 esac
 
-if [ -f ./vagrant-cloud-credentials ]; then
-	echo "Using Vagrant Cloud credentials from 'vagrant-cloud-credentials' file ..."
-	AUTH_USERNAME=`awk -F ":" '{ print $1 }' ./vagrant-cloud-credentials` 
-	AUTH_PASSWORD=`awk -F ":" '{ print $2 }' ./vagrant-cloud-credentials`
+if [ -f ./vagrant-cloud-token ]; then
+	echo "Using previously stored auth token."
+	VAGRANT_CLOUD_TOKEN=`cat ./vagrant-cloud-token`	
 else
-	echo "Please enter your Vagrant Cloud credentials to proceed ..."
+	echo "No auth token found."
+	echo
+	echo "We will do the upload via API on the behalf of your Vagrant Cloud"
+	echo "account. For this we will use an auth token. Please keep this token"
+	echo "in a secure place or delete it after upload."
+	echo
+	echo "Please enter your Vagrant Cloud credentials to proceed:"
 	echo
 	echo -n "Username: "
 	read AUTH_USERNAME
@@ -39,31 +44,41 @@ else
 	read -s AUTH_PASSWORD
 	echo
 	echo
-	read -p "Do you want to store your credentials for future use (y/N)? " choice
+	
+	# Request auth token
+	UPLOAD_AUTH_REQUEST=$( \
+	curl -sS \
+	  --header "Content-Type: application/json" \
+	  https://app.vagrantup.com/api/v1/authenticate \
+	  --data '{"token": {"description": "Login from cURL"},"user": {"login": "'$AUTH_USERNAME'","password": "'$AUTH_PASSWORD'"}}' \
+	)
+	
+	UPLOAD_AUTH_REQUEST_SUCCESS=`echo $UPLOAD_AUTH_REQUEST | jq '.success'`
+	if [ $UPLOAD_AUTH_REQUEST_SUCCESS == 'false' ]; then
+		echo "Request for auth token failed."
+		echo "Response from API:"
+		echo $UPLOAD_AUTH_REQUEST | jq
+		echo "Please consult the error above and try again."
+		exit 1
+	fi
+	
+	VAGRANT_CLOUD_TOKEN=`echo $UPLOAD_AUTH_REQUEST | jq '.token' | tr -d '"'`
+	
+	echo "OK, we got authorized."
+	
+	read -p "Do you want to store the auth token for future use (y/N)? " choice
 	case "$choice" in 
-	  y|Y ) echo "Storing Vagrant Cloud credentials in 'vagrant-cloud-credentials' file ..."
-	  		echo $AUTH_USERNAME:$AUTH_PASSWORD > ./vagrant-cloud-credentials
-	  		chmod 600 ./vagrant-cloud-credentials
+	  y|Y ) echo "Storing auth token ..."
+	  		echo $VAGRANT_CLOUD_TOKEN > ./vagrant-cloud-token
+	  		chmod 600 ./vagrant-cloud-token
 	        ;;
-	  * ) echo "Not storing credentials."
+	  * ) echo "Not storing auth token."
 	      ;;
 	esac
+	
 fi
 
-# Request auth token
-UPLOAD_AUTH_REQUEST=$( \
-curl -sS \
-  --header "Content-Type: application/json" \
-  https://app.vagrantup.com/api/v1/authenticate \
-  --data '{"token": {"description": "Login from cURL"},"user": {"login": "'$AUTH_USERNAME'","password": "'$AUTH_PASSWORD'"}}' \
-)
-
-UPLOAD_AUTH_REQUEST_SUCCESS=`echo $UPLOAD_AUTH_REQUEST | jq '.success'`
-if [ $UPLOAD_AUTH_REQUEST_SUCCESS == 'false' ]; then echo "Authentication failed. Please try again."; exit 1; fi
-
-VAGRANT_CLOUD_TOKEN=`echo $UPLOAD_AUTH_REQUEST | jq '.token' | tr -d '"'`
-
-echo "OK, we got authorized."
+# FIXME check if a box with same name/version/provider already exists, revoke version, delete on user request, otherwise continue ...
 
 # Create a new box
 echo "Trying to create a new box '$BUILD_BOX_NAME' ..."
@@ -88,6 +103,8 @@ if [ $UPLOAD_CREATE_BOX_SUCCESS == 'false' ]; then
 	fi
 else
 	echo "OK, we created a new box named '$BUILD_BOX_NAME'."
+	echo "Response from API:"
+	echo $UPLOAD_CREATE_BOX | jq
 fi
 
 # Create a new version
@@ -113,6 +130,8 @@ if [ $UPLOAD_NEW_VERSION_SUCCESS == 'false' ]; then
 	fi
 else
 	echo "OK, we created a new version '$BUILD_BOX_VERSION'."
+	echo "Response from API:"
+	echo $UPLOAD_NEW_VERSION | jq
 fi
 
 # Create a new provider
@@ -138,6 +157,8 @@ if [ $UPLOAD_NEW_PROVIDER_SUCCESS == 'false' ]; then
 	fi
 else
 	echo "OK, we created a new provider '$BUILD_BOX_PROVIDER'."
+	echo "Response from API:"
+	echo $UPLOAD_NEW_PROVIDER | jq
 fi
 
 # Prepare the provider for upload/get an upload URL
@@ -160,13 +181,14 @@ fi
 UPLOAD_URL=$(echo "$UPLOAD_PREPARE_UPLOADURL" | jq '.upload_path' | tr -d '"')
 
 # Perform the upload
+# FIXME progress-bar wont show for PUT command
 echo "Trying to upload ... This may take a while ..."
 curl --progress-bar \
      $UPLOAD_URL \
      --request PUT \
      --upload-file $BUILD_OUTPUT_FILE
 
-# TODO: validate successful upload
+# FIXME: validate successful upload (curl exit code?)
 echo "Upload finished."
 
 # Release the version
