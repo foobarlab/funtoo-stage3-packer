@@ -8,4 +8,4 @@ output-virtualbox-iso/
 .project
 packer.log
 release
-vagrant-cloud-credentials
+vagrant-cloud-*
