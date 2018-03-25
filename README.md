@@ -6,14 +6,14 @@ This is a minimal stage3 snapshot of Funtoo Linux that is packaged into a Vagran
 
  - Latest stage3 tarball from [https://build.funtoo.org/funtoo-current/pure64/generic_64-pure64/stage3-latest.tar.xz](https://build.funtoo.org/funtoo-current/pure64/generic_64-pure64/stage3-latest.tar.xz) using [SystemRescueCD](http://www.system-rescue-cd.org)
  - Architecture: pure64, generic_64
- - 100 GB dynamic sized HDD image
+ - 100 GB dynamic sized HDD image (ext4)
  - Timezone: ```UTC```
  - NAT Networking using DHCP
  - Vagrant user *vagrant* with password *vagrant* (can get superuser via sudo without password), additionally using the default ssh authorized keys provided by Vagrant (see https://github.com/hashicorp/vagrant/tree/master/keys) 
  - No Virtualbox guest additions installed, no shared folders
  - Kernel: default included from stage3 tarball (debian-sources)
  - Additionally installed software:
-   - *boot-update* and *grub*
+   - *boot-update* (implies *grub*)
    - *sudo*
    - *nfs-utils*
    - *zerofree*
@@ -36,13 +36,13 @@ Get the latest build from Vagrant Cloud: [foobarlab/funtoo-stage3](https://app.v
 
  - Run ```./test.sh```
 
-#### Upload the box to Vagrant Cloud
+#### Upload the box to Vagrant Cloud (experimental)
 
  - Run ```./upload.sh```
 
 ### Regular use cases
 
-#### Initialize on the box (restoring initial state)
+#### Initialize a fresh box (initial state, any modifications are lost)
 
  - Run ```./init.sh```
 
