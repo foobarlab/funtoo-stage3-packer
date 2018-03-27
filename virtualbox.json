@@ -2,25 +2,13 @@
   "builders": [
     {
       "boot_command": [
-        "<enter>",
-        "<wait>",
-        "<enter>",
-        "<wait10>",
-        "<enter>",
-        "<wait10>",
-        "<wait5>",
-        "passwd {{user `username`}}",
-        "<enter>",
-        "<wait>",
-        "{{user `password`}}",
-        "<enter>",
-        "<wait>",
-        "{{user `password`}}",
-        "<enter>",
-        "<wait>",
-        "{{user `password`}}",
-        "<enter>",
-        "<wait>"
+        "<enter>","<wait>",
+        "<enter>","<wait10>",
+        "<enter>","<wait10>","<wait10>","<wait10>",
+        "passwd {{user `username`}}","<enter>","<wait>",
+        "{{user `password`}}","<enter>","<wait>",
+        "{{user `password`}}","<enter>","<wait>",
+        "{{user `password`}}","<enter>","<wait>"
       ],
       "boot_wait": "5s",
       "disk_size": "{{user `disksize`}}",
