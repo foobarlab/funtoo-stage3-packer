@@ -23,7 +23,7 @@
         "<wait>"
       ],
       "boot_wait": "5s",
-      "disk_size": 100000,
+      "disk_size": "{{user `disksize`}}",
       "hard_drive_interface": "sata",
       "guest_additions_mode": "disable",
       "guest_os_type": "{{user `guest_os_type`}}",
@@ -86,8 +86,10 @@
     "vm_name": "{{env `BUILD_BOX_NAME`}}",
     "memory": "{{env `BUILD_GUEST_MEMORY`}}",
     "cpus": "{{env `BUILD_GUEST_CPUS`}}",
+    "disksize": "{{env `BUILD_GUEST_DISKSIZE`}}",
     "headless": "true",
-    "password": "toor",
-    "username": "root"
+    "username": "root",
+    "password": "toor"
+    
   }
 }
