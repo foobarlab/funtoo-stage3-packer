@@ -20,6 +20,8 @@ echo "Cleanup scripts dir ..."
 rm -f scripts/*.tar.xz || true
 echo "Cleanup old logs ..."
 rm -f packer.log || true
+echo "Cleanup old release info ..."
+rm -f release || true
 echo "Cleanup sensitive information ..."
 rm -f ./vagrant-cloud-* || true
 echo "All done. You may now run './build.sh' to build a new box."
