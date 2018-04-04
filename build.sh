@@ -12,8 +12,8 @@ if [ -f "$BUILD_SYSTEMRESCUECD_FILE" ]; then
     echo "'$BUILD_SYSTEMRESCUECD_FILE' found. Skipping download ..."
 else
     echo "'$BUILD_SYSTEMRESCUECD_FILE' NOT found. Starting download ..."
-    wget --content-disposition "https://sourceforge.net/projects/systemrescuecd/files/sysresccd-x86/$BUILD_SYSTEMRESCUECD_FILE/download"
-    if [ $? -ne 0 ]; then
+    wget --content-disposition "https://sourceforge.net/projects/systemrescuecd/files/sysresccd-x86/$BUILD_SYSTEMRESCUECD_VERSION/$BUILD_SYSTEMRESCUECD_FILE/download"
+	if [ $? -ne 0 ]; then
     	echo "Could not download '$BUILD_SYSTEMRESCUECD_FILE'. Exit code from wget was $?."
     	exit 1
     fi

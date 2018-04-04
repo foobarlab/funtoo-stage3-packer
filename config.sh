@@ -26,10 +26,11 @@ export BUILD_FUNTOO_DOWNLOADPATH="https://ftp.osuosl.org/pub/funtoo/funtoo-curre
 
 export BUILD_OUTPUT_FILE="$BUILD_BOX_NAME.box"
 
-export BUILD_SYSTEMRESCUECD_FILE="systemrescuecd-x86-5.2.1.iso"
-export BUILD_SYSTEMRESCUECD_REMOTE_HASH="d76d9444a73ce2127e489f54b0ce1cb9057ae470459dc3fb32e8c916f7cbfe2e"
+export BUILD_SYSTEMRESCUECD_VERSION="5.2.2"
+export BUILD_SYSTEMRESCUECD_FILE="systemrescuecd-x86-$BUILD_SYSTEMRESCUECD_VERSION.iso"
+export BUILD_SYSTEMRESCUECD_REMOTE_HASH="148bfbc16837d3e7ac13556f11b6a600bd6a88e98a8eb3a899d0fe243d826a3f"
 
-if [ -f ./release ]; then
+if [[ -f ./release && -s release ]]; then
 	while read line; do
 		line_name=`echo $line |cut -d "=" -f1`
 		line_value=`echo $line |cut -d "=" -f2 | sed -e 's/"//g'`
