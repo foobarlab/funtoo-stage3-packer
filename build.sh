@@ -4,12 +4,13 @@ echo "Executing $0 ..."
 
 . config.sh quiet
 
+command -v vagrant >/dev/null 2>&1 || { echo "Command 'vagrant' required but it's not installed.  Aborting." >&2; exit 1; }
 command -v packer >/dev/null 2>&1 || { echo "Command 'packer' required but it's not installed.  Aborting." >&2; exit 1; }
 command -v wget >/dev/null 2>&1 || { echo "Command 'wget' required but it's not installed.  Aborting." >&2; exit 1; }
 command -v sha256sum >/dev/null 2>&1 || { echo "Command 'sha256sum' required but it's not installed.  Aborting." >&2; exit 1; }
 
 if [ -f "$BUILD_SYSTEMRESCUECD_FILE" ]; then
-    echo "'$BUILD_SYSTEMRESCUECD_FILE' found. Skipping download ..."
+	echo "'$BUILD_SYSTEMRESCUECD_FILE' found. Skipping download ..."
 else
     echo "'$BUILD_SYSTEMRESCUECD_FILE' NOT found. Starting download ..."
     wget --content-disposition "https://sourceforge.net/projects/systemrescuecd/files/sysresccd-x86/$BUILD_SYSTEMRESCUECD_VERSION/$BUILD_SYSTEMRESCUECD_FILE/download"
@@ -23,6 +24,7 @@ BUILD_SYSTEMRESCUECD_LOCAL_HASH=$(cat $BUILD_SYSTEMRESCUECD_FILE | sha256sum | g
 if [ "$BUILD_SYSTEMRESCUECD_LOCAL_HASH" == "$BUILD_SYSTEMRESCUECD_REMOTE_HASH" ]; then
     echo "'$BUILD_SYSTEMRESCUECD_FILE' checksums matched. Proceeding ..."
 else
+	# FIXME: let the user decide to delete and try downloading again
     echo "'$BUILD_SYSTEMRESCUECD_FILE' checksum did NOT match with expected checksum. The file is possibly corrupted, please delete it and try again."
     exit 1
 fi
@@ -47,7 +49,7 @@ if [ -f "$BUILD_STAGE3_FILE" ]; then
 else
     echo "'$BUILD_STAGE3_FILE' not found. Starting download ..."
     wget $BUILD_STAGE3_URL
-    if [ $? -ne 0 ]; then
+	if [ $? -ne 0 ]; then
     	echo "Could not download '$BUILD_STAGE3_URL'. Exit code from wget was $?."
     	exit 1
     fi
