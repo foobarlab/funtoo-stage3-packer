@@ -25,7 +25,6 @@
       "ssh_password": "{{user `password`}}",
       "ssh_wait_timeout": "30s",
       "ssh_pty": true,
-      "ssh_private_key_file": "keys/vagrant",
       "vboxmanage":[
         ["modifyvm","{{.Name}}","--memory","{{user `memory`}}"],
         ["modifyvm","{{.Name}}","--cpus","{{user `cpus`}}"],
@@ -43,8 +42,8 @@
       "destination": "/tmp",
       "source": "scripts",
       "type": "file"
-  },
-  {
+  	},
+  	{
       "type": "shell",
       "script": "provision.sh",
       "environment_vars": [
