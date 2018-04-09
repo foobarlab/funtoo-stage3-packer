@@ -1,6 +1,7 @@
-# Funtoo stage3 Vagrant box
+# Funtoo Stage3 Vagrant box
 
 This is a minimal stage3 snapshot of Funtoo Linux that is packaged into a Vagrant box file. Currently only a VirtualBox version is provided.
+This box serves as initial base box for the [Funtoo Core Vagrant box](https://github.com/foobarlab/funtoo-core-packer).
 
 ### What's included?
 
