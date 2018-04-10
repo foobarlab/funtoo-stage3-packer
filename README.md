@@ -14,9 +14,10 @@ This box serves as initial base box for the [Funtoo Core Vagrant box](https://gi
  - No Virtualbox guest additions installed, no shared folders
  - Kernel: default included from stage3 tarball (debian-sources)
  - Additionally installed software:
-   - *boot-update* (implies *grub*)
+   - *boot-update*
    - *sudo*
-   - *nfs-utils*
+   - *nfs-utils*, *usermode-utilities* and *bridge-utils* for advanced networking
+   - *acpid* (graceful acpi shutdown for virtualbox)
    - *zerofree*
 
 ### Download pre-build images

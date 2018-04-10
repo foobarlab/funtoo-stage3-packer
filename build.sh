@@ -88,6 +88,7 @@ fi
 . config.sh
 
 cp $BUILD_STAGE3_FILE ./scripts
+cp ./release ./scripts/stage3_release
 
 export PACKER_LOG_PATH="$PWD/packer.log"
 export PACKER_LOG="1"

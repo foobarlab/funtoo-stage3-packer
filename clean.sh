@@ -18,6 +18,7 @@ echo "Deleting any box file ..."
 rm -f *.box || true
 echo "Cleanup scripts dir ..."
 rm -f scripts/*.tar.xz || true
+rm -f scripts/stage3_release || true
 echo "Cleanup old logs ..."
 rm -f packer.log || true
 echo "Cleanup old release info ..."

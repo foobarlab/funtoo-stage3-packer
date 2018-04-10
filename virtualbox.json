@@ -3,7 +3,7 @@
       "boot_command": [
         "<enter>","<wait>",
         "<enter>","<wait10>",
-        "<enter>","<wait10>","<wait10>","<wait10>",
+        "<enter>","<wait10>","<wait10>",
         "passwd {{user `username`}}","<enter>","<wait>",
         "{{user `password`}}","<enter>","<wait>",
         "{{user `password`}}","<enter>","<wait>",

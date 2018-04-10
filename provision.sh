@@ -23,7 +23,8 @@ for script in \
   07-boot-update \
   08-networking \
   09-vagrant-user \
-  10-cleanup
+  10-software-config \
+  11-cleanup
 do
   echo "**** Running $script ******"
   "$SCRIPTS/scripts/$script.sh"
