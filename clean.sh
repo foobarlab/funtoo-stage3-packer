@@ -29,4 +29,4 @@ echo "Cleanup old stage 3 hash ..."
 rm -f $BUILD_STAGE3_FILE_HASH || true
 #echo "Cleanup sensitive information ..."
 #rm -f ./vagrant-cloud-* || true
-echo "All done. You may now run './build.sh' to build a new box."
+echo "All done. You may now run './build.sh' to build a fresh box."

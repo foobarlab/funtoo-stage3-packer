@@ -71,7 +71,7 @@ else
 	        ;;
 	  * ) echo "Deleting '$BUILD_STAGE3_FILE' ..."
 	      rm -f $BUILD_STAGE3_FILE
-	      echo "Deleting outdated release info ..."
+	      echo "Cleanup stage3 release info ..."
 	      rm -f ./release
 	      exec $0
 	      ;;
@@ -79,10 +79,10 @@ else
 fi
 
 if [ ! -f ./release ]; then
-echo "Extracting actual stage3 release info ..."
+	echo "Extracting stage3 release info ..."
 	tar -xvf $BUILD_STAGE3_FILE ./etc/os-release -O > ./release
 else
-echo "Skipping extraction of stage3 release info. Already extracted."
+	echo "Skipping extraction of stage3 release info. Already extracted."
 fi
 
 . config.sh
