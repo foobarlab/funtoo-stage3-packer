@@ -95,3 +95,26 @@ export PACKER_LOG="1"
 packer build virtualbox.json
 
 rm -f ./scripts/$BUILD_STAGE3_FILE
+
+echo "Optimizing box size (second run) ..."
+
+if [ -f "$BUILD_OUTPUT_FILE_TEMP" ]
+then
+    echo "Suspending any running instances ..."
+    vagrant suspend
+    echo "Destroying current box ..."
+    vagrant destroy -f || true
+    echo "Removing '$BUILD_BOX_NAME' ..."
+    vagrant box remove -f "$BUILD_BOX_NAME" 2>/dev/null || true
+    echo "Adding '$BUILD_BOX_NAME' ..."
+    vagrant box add --name "$BUILD_BOX_NAME" "$BUILD_OUTPUT_FILE_TEMP"
+    echo "Powerup and provision '$BUILD_BOX_NAME' ..."
+    vagrant --provision up || true
+    echo "Exporting base box ..."
+    vagrant package --output "$BUILD_OUTPUT_FILE"
+	#echo "Removing temporary box file ..."
+	#rm -f  "$BUILD_OUTPUT_FILE_TEMP"
+else
+    echo "There is no box file '$BUILD_OUTPUT_FILE_TEMP' in the current directory."
+    exit 1
+fi

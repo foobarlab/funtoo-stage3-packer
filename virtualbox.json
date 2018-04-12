@@ -62,7 +62,7 @@
     "stage3_file": "{{env `BUILD_STAGE3_FILE`}}",
     "stage3_url": "{{env `BUILD_STAGE3_URL`}}",
     "stage3_path": "{{env `BUILD_STAGE3_PATH`}}",
-    "output_file": "{{env `BUILD_OUTPUT_FILE`}}",
+    "output_file": "{{env `BUILD_OUTPUT_FILE_TEMP`}}",
     "box_description": "{{env `BUILD_BOX_DESCRIPTION`}}",
     "guest_os_type": "{{env `BUILD_GUEST_TYPE`}}",
     "vm_name": "{{env `BUILD_BOX_NAME`}}",
