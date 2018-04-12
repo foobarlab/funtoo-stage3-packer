@@ -112,8 +112,8 @@ then
     vagrant --provision up || true
     echo "Exporting base box ..."
     vagrant package --output "$BUILD_OUTPUT_FILE"
-	#echo "Removing temporary box file ..."
-	#rm -f  "$BUILD_OUTPUT_FILE_TEMP"
+	echo "Removing temporary box file ..."
+	rm -f  "$BUILD_OUTPUT_FILE_TEMP"
 else
     echo "There is no box file '$BUILD_OUTPUT_FILE_TEMP' in the current directory."
     exit 1
