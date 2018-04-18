@@ -20,6 +20,5 @@ EOF
 # some utils required for advanced networking
 # see: https://wiki.gentoo.org/wiki/VirtualBox#Gentoo_guests
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
-emerge -v sys-apps/usermode-utilities
-emerge -v net-misc/bridge-utils
+emerge -v sys-apps/usermode-utilities net-misc/bridge-utils
 EOF
