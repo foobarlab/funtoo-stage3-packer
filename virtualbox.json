@@ -17,6 +17,7 @@
       "guest_additions_mode": "disable",
       "guest_os_type": "{{user `guest_os_type`}}",
       "headless": "{{user `headless`}}",
+      "ssh_pty": "true",
       "iso_checksum": "{{user `systemrescuecd_checksum`}}",
       "iso_checksum_type": "sha256",
       "iso_url": "{{user `systemrescuecd_url`}}",
