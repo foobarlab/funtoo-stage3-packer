@@ -29,6 +29,7 @@ Vagrant.configure("2") do |config|
     vb.customize ["modifyvm", :id, "--usb", "off"]
     vb.customize ["modifyvm", :id, "--rtcuseutc", "on"]
   end
+  config.ssh.pty = true
   config.ssh.insert_key = false
   config.vm.synced_folder '.', '/vagrant', disabled: true
   config.vm.provision "cleanup", type: "shell", inline: $script_cleanup
