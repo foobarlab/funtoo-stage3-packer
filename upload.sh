@@ -115,7 +115,7 @@ curl -sS \
   --header "Content-Type: application/json" \
   --header "Authorization: Bearer $VAGRANT_CLOUD_TOKEN" \
   https://app.vagrantup.com/api/v1/box/$BUILD_BOX_USERNAME/$BUILD_BOX_NAME/versions \
-  --data '{ "version": { "version": "'$BUILD_BOX_VERSION'", "description": "'$BUILD_RELEASE_VERSION_ID'" } }' \
+  --data '{ "version": { "version": "'$BUILD_BOX_VERSION'", "description": "'$BUILD_BOX_DESCRIPTION'" } }' \
 )
 
 UPLOAD_NEW_VERSION_SUCCESS=`echo $UPLOAD_NEW_VERSION | jq '.success'`
