@@ -98,8 +98,7 @@ rm -f ./scripts/$BUILD_STAGE3_FILE
 
 echo "Optimizing box size (second run) ..."
 
-if [ -f "$BUILD_OUTPUT_FILE_TEMP" ]
-then
+if [ -f "$BUILD_OUTPUT_FILE_TEMP" ]; then
     echo "Suspending any running instances ..."
     vagrant suspend
     echo "Destroying current box ..."
