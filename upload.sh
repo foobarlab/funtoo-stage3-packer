@@ -132,15 +132,13 @@ fi
 UPLOAD_URL=$(echo "$UPLOAD_PREPARE_UPLOADURL" | jq '.upload_path' | tr -d '"')
 
 # Perform the upload
-# FIXME progress-bar wont show for PUT command
 echo "Trying to upload ... This may take a while ..."
-curl --progress-bar \
-     $UPLOAD_URL \
+curl $UPLOAD_URL \
      --request PUT \
      --upload-file $BUILD_OUTPUT_FILE
 
 # FIXME: validate successful upload (curl exit code?)
-echo "Upload finished."
+echo "Upload finished with exit code $?."
 
 # Release the version
 echo "Releasing box ..."
