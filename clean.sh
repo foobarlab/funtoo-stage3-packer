@@ -25,6 +25,6 @@ echo "Cleanup old release info ..."
 rm -f release || true
 echo "Cleanup broken wget downloads ..."
 rm -f download || true
-echo "Cleanup old stage 3 hash ..."
+echo "Cleanup old stage3 hash ..."
 rm -f $BUILD_STAGE3_FILE_HASH || true
 echo "All done. You may now run './build.sh' to build a fresh box."
