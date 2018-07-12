@@ -31,6 +31,26 @@ esac
 
 # FIXME check if a box with same name/version/provider already exists, revoke version, delete on user request, otherwise continue ...
 
+# check version match on cloud and abort if same
+echo "Checking existing cloud version ..."
+# FIXME check if box already exists (should give us a 200 HTTP response, if not we will get a 404)
+LATEST_CLOUD_VERSION=$( \
+curl -sS \
+  --header "Authorization: Bearer $VAGRANT_CLOUD_TOKEN" \
+  https://app.vagrantup.com/api/v1/box/$BUILD_BOX_USERNAME/$BUILD_BOX_NAME \
+)
+
+LATEST_CLOUD_VERSION=$(echo $LATEST_CLOUD_VERSION | jq .current_version.version | tr -d '"')
+echo "Our version: $BUILD_BOX_VERSION"
+echo "Latest cloud version: $LATEST_CLOUD_VERSION"
+
+if [[ $BUILD_BOX_VERSION = $LATEST_CLOUD_VERSION ]]; then
+	echo "Same version will not be uploaded. Aborting upload."
+	exit 0
+else 
+	echo "Looks like we got a new version to provide. Proceeding to upload ..."
+fi
+
 # Create a new box
 echo "Trying to create a new box '$BUILD_BOX_NAME' ..."
 UPLOAD_CREATE_BOX=$( \
