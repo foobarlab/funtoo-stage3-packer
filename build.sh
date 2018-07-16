@@ -87,6 +87,42 @@ fi
 
 . config.sh
 
+# as we do not want to build an already existing release on vagrant cloud automatically we better ask the user
+	
+if [ $# -eq 0 ]; then
+	BUILD_SKIP_VERSION_CHECK=true
+else
+	BUILD_SKIP_VERSION_CHECK=false
+fi
+
+if [ "$BUILD_SKIP_VERSION_CHECK" = false ]; then
+	
+	. vagrant_cloud_token.sh
+	
+	# check version match on cloud and abort if same
+	echo "Comparing local and cloud version ..."
+	# FIXME check if box already exists (should give us a 200 HTTP response, if not we will get a 404)
+	LATEST_CLOUD_VERSION=$( \
+	curl -sS \
+	  --header "Authorization: Bearer $VAGRANT_CLOUD_TOKEN" \
+	  https://app.vagrantup.com/api/v1/box/$BUILD_BOX_USERNAME/$BUILD_BOX_NAME \
+	)
+	
+	LATEST_CLOUD_VERSION=$(echo $LATEST_CLOUD_VERSION | jq .current_version.version | tr -d '"')
+	echo "Our latest version: $BUILD_BOX_VERSION"
+	echo "Latest cloud version: $LATEST_CLOUD_VERSION"
+	
+	if [[ $BUILD_BOX_VERSION = $LATEST_CLOUD_VERSION ]]; then
+		echo "Same version already exists. Aborting build."
+		exit 0
+	else 
+		echo "Looks like we got a new version available. Proceeding build ..."
+	fi
+
+else
+	echo "Skipping cloud version check ..."
+fi
+
 cp $BUILD_STAGE3_FILE ./scripts
 cp ./release ./scripts/.funtoo_stage3
 
