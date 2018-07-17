@@ -6,7 +6,7 @@ command -v vagrant >/dev/null 2>&1 || { echo "Command 'vagrant' required but it'
 
 echo "==> Testing '$BUILD_BOX_NAME' box ..."
 
-if [ -f "$BUILD_OUTPUT_FILE" ]
+if [ -f "$BUILD_OUTPUT_FILE" ];
 then
 	echo "Suspending any running instances ..."
 	vagrant suspend
@@ -22,7 +22,11 @@ then
 	vagrant suspend
 else
 	echo "There is no box file '$BUILD_OUTPUT_FILE' in the current directory. Please run './build.sh' before to build the box."
-	exit 1
+	if [ $# -eq 0 ]; then
+		exit 1	# exit with error when running without param
+	else
+		exit 0	# silently exit when running with param
+	fi 
 fi
 
 echo "==> Test succeded."
