@@ -3,6 +3,18 @@
 
 . config.sh
 
+if [ -f "$BUILD_OUTPUT_FILE" ];
+then
+	echo "Found box file '$BUILD_OUTPUT_FILE' in the current directory ..."
+else
+	echo "There is no box file '$BUILD_OUTPUT_FILE' in the current directory. Please run './build.sh' before to build the box."
+	if [ $# -eq 0 ]; then
+		exit 1	# exit with error when running without param
+	else
+		exit 0	# silently exit when running with param
+	fi 
+fi
+
 command -v curl >/dev/null 2>&1 || { echo "Command 'curl' required but it's not installed.  Aborting." >&2; exit 1; }
 command -v jq >/dev/null 2>&1 || { echo "Command 'jq' required but it's not installed.  Aborting." >&2; exit 1; }
 
