@@ -41,16 +41,16 @@ esac
 
 . vagrant_cloud_token.sh
 
-# FIXME check if a box with same name/version/provider already exists, revoke version, delete on user request, otherwise continue ...
-
 # check version match on cloud and abort if same
 echo "Checking existing cloud version ..."
-# FIXME check if box already exists (should give us a 200 HTTP response, if not we will get a 404)
 LATEST_CLOUD_VERSION=$( \
 curl -sS \
   --header "Authorization: Bearer $VAGRANT_CLOUD_TOKEN" \
   https://app.vagrantup.com/api/v1/box/$BUILD_BOX_USERNAME/$BUILD_BOX_NAME \
 )
+
+# FIXME handle curl exit code, check if box exists (should give us a 200 HTTP response, if not we will get a 404)
+#echo "curl exit code: $?"
 
 LATEST_CLOUD_VERSION=$(echo $LATEST_CLOUD_VERSION | jq .current_version.version | tr -d '"')
 echo "Our version: $BUILD_BOX_VERSION"
