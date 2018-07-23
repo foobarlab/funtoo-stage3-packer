@@ -22,7 +22,7 @@ echo "Cleanup scripts dir ..."
 rm -f scripts/*.tar.xz || true
 rm -f scripts/.funtoo_stage3 || true
 echo "Cleanup old logs ..."
-rm -f packer.log || true
+rm -f *.log || true
 echo "Cleanup old release info ..."
 rm -f release || true
 echo "Cleanup broken wget downloads ..."
