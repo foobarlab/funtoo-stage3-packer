@@ -20,7 +20,7 @@ echo "Deleting any box file ..."
 rm -f *.box || true
 echo "Cleanup scripts dir ..."
 rm -f scripts/*.tar.xz || true
-rm -f scripts/.funtoo_stage3 || true
+rm -f scripts/.$BUILD_BOX_NAME || true
 echo "Cleanup old logs ..."
 rm -f *.log || true
 echo "Cleanup old release info ..."

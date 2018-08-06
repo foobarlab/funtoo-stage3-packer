@@ -124,7 +124,7 @@ else
 fi
 
 cp $BUILD_STAGE3_FILE ./scripts
-cp ./release ./scripts/.funtoo_stage3
+cp ./release ./scripts/.$BUILD_BOX_NAME
 
 export PACKER_LOG_PATH="$PWD/packer.log"
 export PACKER_LOG="1"
