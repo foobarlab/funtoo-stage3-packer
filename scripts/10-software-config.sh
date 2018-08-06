@@ -6,9 +6,9 @@ if [ -z ${BUILD_RUN:-} ]; then
 fi
 
 # copy stage3 release info to vagrant home
-cp /tmp/scripts/.funtoo_stage3 /mnt/funtoo/home/vagrant/
+cp /tmp/scripts/.$BUILD_BOX_NAME /mnt/funtoo/home/vagrant/
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
-chown vagrant.vagrant ~vagrant/.funtoo_stage3
+chown vagrant.vagrant ~vagrant/.$BUILD_BOX_NAME
 EOF
 
 # acpid: required for gracefully shutdown on close
