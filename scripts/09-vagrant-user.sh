@@ -7,7 +7,7 @@ fi
 
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
 USE="-sendmail" emerge -v app-admin/sudo
-emerge -v net-fs/nfs-utils
+USE="-keyutils" emerge -v net-fs/nfs-utils
 useradd -m -G audio,video,cdrom,wheel,users -s /bin/bash vagrant
 echo vagrant:vagrant | chpasswd
 echo 'vagrant ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/vagrant
