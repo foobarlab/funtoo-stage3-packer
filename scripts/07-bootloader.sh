@@ -5,7 +5,7 @@ if [ -z ${BUILD_RUN:-} ]; then
   exit 1
 fi
 
-# upgrade to latest ego
+# upgrade to latest ego and re-sync
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
 emerge -s app-admin/ego
 emerge -vt app-admin/ego
@@ -13,6 +13,7 @@ env-update
 source /etc/profile
 etc-update --preen
 etc-update --automode -5
+ego sync
 EOF
 
 # install bootloader
