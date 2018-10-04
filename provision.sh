@@ -20,7 +20,7 @@ for script in \
   04-prepare_chroot \
   05-fstab \
   06-timezone \
-  07-boot-update \
+  07-bootloader \
   08-networking \
   09-vagrant-user \
   10-software-config \

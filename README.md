@@ -14,7 +14,6 @@ This box serves for bootstrapping an initial base box for the [Funtoo Core Vagra
  - No Virtualbox guest additions included, therefore no shared folders
  - Kernel: default included from stage3 tarball (debian-sources)
  - Additionally installed software:
-   - *boot-update*
    - *sudo*
    - *nfs-utils*, *usermode-utilities* and *bridge-utils* for advanced networking
    - *acpid* (enables graceful acpi shutdown for virtualbox)

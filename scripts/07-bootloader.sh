@@ -6,7 +6,6 @@ if [ -z ${BUILD_RUN:-} ]; then
 fi
 
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
-emerge -v boot-update
 grub-install --target=i386-pc --no-floppy /dev/sda
 cat > /etc/boot.conf <<'DATA'
 boot {
@@ -24,5 +23,5 @@ display {
 }
 DATA
 rm -f /boot/memtest86.bin
-boot-update
+ego boot
 EOF
