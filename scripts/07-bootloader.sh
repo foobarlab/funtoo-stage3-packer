@@ -5,18 +5,18 @@ if [ -z ${BUILD_RUN:-} ]; then
   exit 1
 fi
 
-## this is a workaround for now
-## upgrade to latest ego and re-sync
-#chroot /mnt/funtoo /bin/bash -uex <<'EOF'
-#emerge -s app-admin/ego
-#emerge -vt app-admin/ego
-#env-update
-#source /etc/profile
-#etc-update --preen
-#etc-update --automode -5
-#ego sync
-#emerge --depclean
-#EOF
+# this is a workaround for now
+# upgrade to latest ego and re-sync
+chroot /mnt/funtoo /bin/bash -uex <<'EOF'
+emerge -s app-admin/ego
+emerge -vt app-admin/ego
+env-update
+source /etc/profile
+etc-update --preen
+etc-update --automode -5
+emerge --depclean
+ego sync
+EOF
 
 # install bootloader
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
