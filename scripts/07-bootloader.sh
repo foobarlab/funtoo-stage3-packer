@@ -5,8 +5,22 @@ if [ -z ${BUILD_RUN:-} ]; then
   exit 1
 fi
 
+# this is a workaround for now
+# upgrade to latest ego and re-sync
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
-emerge -v boot-update
+emerge -s app-admin/ego
+emerge -vt app-admin/ego
+env-update
+source /etc/profile
+etc-update --preen
+etc-update --automode -5
+emerge --depclean
+ego sync
+EOF
+
+# install bootloader
+chroot /mnt/funtoo /bin/bash -uex <<'EOF'
+emerge -vt sys-boot/grub
 grub-install --target=i386-pc --no-floppy /dev/sda
 cat > /etc/boot.conf <<'DATA'
 boot {
