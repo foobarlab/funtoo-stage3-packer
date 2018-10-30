@@ -16,8 +16,8 @@ vagrant global-status | awk '/running/{print $1}' | xargs -r -d '\n' -n 1 -- vag
 echo "Forcibly shutdown any running virtualbox vms ..."
 vboxmanage list runningvms | sed -r 's/.*\{(.*)\}/\1/' | xargs -L1 -I {} VBoxManage controlvm {} acpipowerbutton && true
 vboxmanage list runningvms | sed -r 's/.*\{(.*)\}/\1/' | xargs -L1 -I {} VBoxManage controlvm {} poweroff && true
-#echo "Delete all virtualbox vms ..."
-#vboxmanage list vms | sed -r 's/.*\{(.*)\}/\1/' | xargs -L1 -I {} vboxmanage unregistervm --delete {}
+echo "Delete all inaccessible vms ..."
+vboxmanage list vms | grep "<inaccessible>" | sed -r 's/.*\{(.*)\}/\1/' | xargs -L1 -I {} vboxmanage unregistervm --delete {}
 echo "Force remove of appliance from Virtualbox folder ..."
 rm -rf ~/.VirtualBox/Machines/$BUILD_BOX_NAME/
 echo "Delete temporary vagrant files ..."
