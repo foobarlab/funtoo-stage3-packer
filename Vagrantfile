@@ -25,9 +25,20 @@ Vagrant.configure("2") do |config|
     vb.gui = false
     vb.memory = "#{ENV['BUILD_GUEST_MEMORY']}"
     vb.cpus = "#{ENV['BUILD_GUEST_CPUS']}"
+    # customize virtualbox settings, see also virtualbox.json
+    vb.customize ["modifyvm", :id, "--nictype1", "virtio"]
+    vb.customize ["modifyvm", :id, "--nictype2", "virtio"]
     vb.customize ["modifyvm", :id, "--audio", "none"]
     vb.customize ["modifyvm", :id, "--usb", "off"]
     vb.customize ["modifyvm", :id, "--rtcuseutc", "on"]
+    vb.customize ["modifyvm", :id, "--chipset", "ich9"]
+    vb.customize ["modifyvm", :id, "--vram", "12"]
+    vb.customize ["modifyvm", :id, "--vrde", "off"]
+    vb.customize ["modifyvm", :id, "--hpet", "on"]
+    vb.customize ["modifyvm", :id, "--hwvirtex", "on"]
+    vb.customize ["modifyvm", :id, "--vtxvpid", "on"]
+    vb.customize ["modifyvm", :id, "--spec-ctrl", "on"]
+    vb.customize ["modifyvm", :id, "--largepages", "on"]
   end
   config.ssh.pty = true
   config.ssh.insert_key = false

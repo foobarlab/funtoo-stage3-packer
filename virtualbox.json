@@ -28,9 +28,19 @@
       "vboxmanage":[
         ["modifyvm","{{.Name}}","--memory","{{user `memory`}}"],
         ["modifyvm","{{.Name}}","--cpus","{{user `cpus`}}"],
+        ["modifyvm","{{.Name}}","--nictype1","virtio"],
+        ["modifyvm","{{.Name}}","--nictype2","virtio"],
         ["modifyvm","{{.Name}}","--audio","none"],
         ["modifyvm","{{.Name}}","--usb","off"],
-        ["modifyvm","{{.Name}}","--rtcuseutc","on"]
+        ["modifyvm","{{.Name}}","--chipset","ich9"],
+        ["modifyvm","{{.Name}}","--rtcuseutc","on"],
+        ["modifyvm","{{.Name}}","--vram", "12"],
+        ["modifyvm","{{.Name}}","--vrde", "off"],
+        ["modifyvm","{{.Name}}","--hpet", "on"],
+        ["modifyvm","{{.Name}}","--hwvirtex", "on"],
+        ["modifyvm","{{.Name}}","--vtxvpid", "on"],
+        ["modifyvm","{{.Name}}","--spec-ctrl", "on"],
+        ["modifyvm","{{.Name}}","--largepages", "on"]
       ]
   }],
   "description": "{{user `box_description`}}",
