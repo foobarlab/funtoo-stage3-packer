@@ -13,6 +13,8 @@ command -v vboxmanage >/dev/null 2>&1 || { echo "Command 'vboxmanage' required b
 # => delete temporary files as seen by the current user
 echo "Suspend any running vagrant vms ..."
 vagrant global-status | awk '/running/{print $1}' | xargs -r -d '\n' -n 1 -- vagrant suspend
+echo "Prune invalid vagrant entries ..."
+vagrant global-status --prune
 echo "Forcibly shutdown any running virtualbox vms ..."
 vboxmanage list runningvms | sed -r 's/.*\{(.*)\}/\1/' | xargs -L1 -I {} VBoxManage controlvm {} acpipowerbutton && true
 vboxmanage list runningvms | sed -r 's/.*\{(.*)\}/\1/' | xargs -L1 -I {} VBoxManage controlvm {} poweroff && true
