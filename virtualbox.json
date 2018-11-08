@@ -29,7 +29,6 @@
         ["modifyvm","{{.Name}}","--memory","{{user `memory`}}"],
         ["modifyvm","{{.Name}}","--cpus","{{user `cpus`}}"],
         ["modifyvm","{{.Name}}","--nictype1","virtio"],
-        ["modifyvm","{{.Name}}","--nictype2","virtio"],
         ["modifyvm","{{.Name}}","--audio","none"],
         ["modifyvm","{{.Name}}","--usb","off"],
         ["modifyvm","{{.Name}}","--chipset","ich9"],
