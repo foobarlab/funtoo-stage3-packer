@@ -27,7 +27,6 @@ Vagrant.configure("2") do |config|
     vb.cpus = "#{ENV['BUILD_GUEST_CPUS']}"
     # customize virtualbox settings, see also virtualbox.json
     vb.customize ["modifyvm", :id, "--nictype1", "virtio"]
-    vb.customize ["modifyvm", :id, "--nictype2", "virtio"]
     vb.customize ["modifyvm", :id, "--audio", "none"]
     vb.customize ["modifyvm", :id, "--usb", "off"]
     vb.customize ["modifyvm", :id, "--rtcuseutc", "on"]
