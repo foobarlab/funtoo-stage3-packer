@@ -9,14 +9,14 @@ This box serves for bootstrapping an initial base box for the [Funtoo Core Vagra
  - Architecture: pure64, generic_64
  - 100 GB dynamic sized HDD image (ext4)
  - Timezone: ```UTC```
- - NAT Networking using DHCP
- - Vagrant user *vagrant* with password *vagrant* (can get superuser via sudo without password), additionally using the default ssh authorized keys provided by Vagrant (see https://github.com/hashicorp/vagrant/tree/master/keys) 
- - No Virtualbox guest additions included, therefore no shared folders
- - Kernel: default included from stage3 tarball (debian-sources)
+ - NAT Networking using DHCP (virtio)
+ - Vagrant user *vagrant* with password *vagrant* (can get superuser via sudo without password), additionally using the default SSH authorized keys provided by Vagrant (see https://github.com/hashicorp/vagrant/tree/master/keys) 
+ - No VirtualBox guest additions included, therefore no shared folders active
+ - Kernel: default included from stage3 tarball (debian-sources-lts)
  - Additionally installed software:
    - *sudo*
    - *nfs-utils*, *usermode-utilities* and *bridge-utils* for advanced networking
-   - *acpid* (enables graceful acpi shutdown for virtualbox)
+   - *acpid* (enables graceful acpi shutdown for VirtualBox)
    - *zerofree*
 
 ### Download pre-build images
@@ -29,7 +29,7 @@ Get the latest build from Vagrant Cloud: [foobarlab/funtoo-stage3](https://app.v
 
  - Install [Vagrant](https://www.vagrantup.com/) and [Packer](https://www.packer.io/)
 
-#### Build a fresh Virtualbox box
+#### Build a fresh VirtualBox box
 
  - Run ```./build.sh```
  
@@ -57,7 +57,7 @@ Get the latest build from Vagrant Cloud: [foobarlab/funtoo-stage3](https://app.v
 
  - Run ```./config.sh```
 
-#### Cleanup build environment (poweroff all Vagrant and Virtualbox machines)
+#### Cleanup build environment (poweroff all Vagrant and VirtualBox machines)
 
  - Run ```./clean_env.sh```
 
