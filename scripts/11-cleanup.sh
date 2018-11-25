@@ -14,7 +14,7 @@ rm -f /mnt/funtoo/etc/resolv.conf
 rm -f /mnt/funtoo/etc/resolv.conf.bak
 rm -rf /mnt/funtoo/var/cache/portage/distfiles/*
 rm -rf /mnt/funtoo/var/git/meta-repo
-rm -rf /mnt/funtoo/var/log/*
+#rm -rf /mnt/funtoo/var/log/*
 rm -rf /mnt/funtoo/tmp/*
 
 cat /dev/null > ~/.bash_history && history -c
