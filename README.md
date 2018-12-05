@@ -7,7 +7,7 @@ This box serves for bootstrapping an initial base box for the [Funtoo Core Vagra
 
  - Latest stage3 tarball from [https://build.funtoo.org/funtoo-current/pure64/generic_64-pure64/stage3-latest.tar.xz](https://build.funtoo.org/funtoo-current/pure64/generic_64-pure64/stage3-latest.tar.xz) using [SystemRescueCD](http://www.system-rescue-cd.org)
  - Architecture: pure64, generic_64
- - 16 GB dynamic sized HDD image (ext4)
+ - 20 GB dynamic sized HDD image (ext4)
  - Timezone: ```UTC```
  - NAT Networking using DHCP (virtio)
  - Vagrant user *vagrant* with password *vagrant* (can get superuser via sudo without password), additionally using the default SSH authorized keys provided by Vagrant (see https://github.com/hashicorp/vagrant/tree/master/keys) 
