@@ -19,12 +19,10 @@ export BUILD_TIMESTAMP="$(date --iso-8601=seconds)"
 BUILD_BOX_DESCRIPTION="$BUILD_BOX_NAME"
 
 # x86-64bit/generic64 build (multilib)
-#export BUILD_FUNTOO_DOWNLOADPATH="https://build.funtoo.org/funtoo-current/x86-64bit/generic_64"
-#export BUILD_FUNTOO_DOWNLOADPATH="https://ftp.osuosl.org/pub/funtoo/funtoo-current/x86-64bit/generic_64"
+export BUILD_FUNTOO_DOWNLOADPATH="https://build.funtoo.org/funtoo-current/x86-64bit/generic_64/"
 
 # pure64/generic64 build
-export BUILD_FUNTOO_DOWNLOADPATH="https://build.funtoo.org/funtoo-current/pure64/generic_64-pure64"
-#export BUILD_FUNTOO_DOWNLOADPATH="https://ftp.osuosl.org/pub/funtoo/funtoo-current/pure64/generic_64-pure64"
+#export BUILD_FUNTOO_DOWNLOADPATH="https://build.funtoo.org/funtoo-current/pure64/generic_64-pure64"
 
 export BUILD_OUTPUT_FILE="$BUILD_BOX_NAME.box"
 export BUILD_OUTPUT_FILE_TEMP="$BUILD_BOX_NAME.tmp.box"
