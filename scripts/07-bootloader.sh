@@ -34,7 +34,7 @@ display {
 "Funtoo Linux" {
     kernel kernel[-v]
     initrd initramfs[-v]
-    params += real_root=auto rootfstype=auto
+    params += real_root=auto rootfstype=auto nomodeset
 }
 DATA
 rm -f /boot/memtest86.bin
