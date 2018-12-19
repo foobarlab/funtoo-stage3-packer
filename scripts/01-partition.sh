@@ -15,6 +15,6 @@ sgdisk \
 sync
 
 mkfs.ext2 /dev/sda1
-mkfs.ext4 /dev/sda4
+mkfs.xfs /dev/sda4
 
 mkswap /dev/sda3 && swapon /dev/sda3
