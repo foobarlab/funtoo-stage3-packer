@@ -3,6 +3,20 @@
 
 system("./config.sh >/dev/null")
 
+# second run to free some space
+$script_cleanup = <<SCRIPT
+# /boot (initially not mounted)
+sudo mount -o ro /dev/sda1
+sudo zerofree /dev/sda1
+# /
+sudo mount -o remount,ro /dev/sda4
+sudo zerofree /dev/sda4
+# swap
+sudo swapoff /dev/sda3
+sudo bash -c 'dd if=/dev/zero of=/dev/sda3 2>/dev/null' || true
+sudo mkswap /dev/sda3
+SCRIPT
+
 Vagrant.configure("2") do |config|
   config.vm.box_check_update = false
   config.vm.box = "#{ENV['BUILD_BOX_NAME']}"
@@ -28,4 +42,5 @@ Vagrant.configure("2") do |config|
   config.ssh.pty = true
   config.ssh.insert_key = false
   config.vm.synced_folder '.', '/vagrant', disabled: true
+  config.vm.provision "cleanup", type: "shell", inline: $script_cleanup
 end

@@ -6,6 +6,7 @@ if [ -z ${BUILD_RUN:-} ]; then
 fi
 
 chroot /mnt/funtoo /bin/bash <<'EOF'
+emerge -v sys-fs/zerofree
 cd /usr/src/linux && make distclean
 EOF
 
@@ -16,6 +17,16 @@ rm -rf /mnt/funtoo/var/git/meta-repo
 rm -rf /mnt/funtoo/tmp/*
 
 cat /dev/null > ~/.bash_history && history -c
+
+mount -o remount,ro /mnt/funtoo
+chroot /mnt/funtoo /bin/bash <<'EOF'
+zerofree /dev/sda4
+EOF
+
+mount -o remount,ro /mnt/funtoo/boot
+chroot /mnt/funtoo /bin/bash <<'EOF'
+zerofree /dev/sda1
+EOF
 
 swapoff /dev/sda3
 dd if=/dev/zero of=/dev/sda3 || true
