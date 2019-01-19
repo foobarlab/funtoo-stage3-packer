@@ -15,7 +15,7 @@ source /etc/profile
 etc-update --preen
 etc-update --automode -5
 emerge --depclean
-# workaround for FL-6143: ensure we use the correct gcc version (in case it got depcleaned):
+# workaround for FL-6143: ensure we use a valid gcc version:
 gcc-config -l || gcc-config 1
 ego sync
 EOF
