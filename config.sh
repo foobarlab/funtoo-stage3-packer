@@ -26,7 +26,7 @@ export BUILD_OUTPUT_FILE_TEMP="$BUILD_BOX_NAME.tmp.box"
 
 # FIXME: extract latest version and its sha256sum from the webpage
 export BUILD_SYSTEMRESCUECD_VERSION="6.0.0"
-export BUILD_SYSTEMRESCUECD_FILE="systemrescuecd-x86-$BUILD_SYSTEMRESCUECD_VERSION.iso"
+export BUILD_SYSTEMRESCUECD_FILE="systemrescuecd-$BUILD_SYSTEMRESCUECD_VERSION.iso"
 export BUILD_SYSTEMRESCUECD_REMOTE_HASH="efaced9449d62131ee08856a85b4ee72f892af2f83f4e4231b6acc567f42116b"
 
 if [[ -f ./release && -s release ]]; then
