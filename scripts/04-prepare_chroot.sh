@@ -21,4 +21,5 @@ EOF
 
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
 ego sync
+emerge --update --newuse --deep --with-bdeps=y @world
 EOF
