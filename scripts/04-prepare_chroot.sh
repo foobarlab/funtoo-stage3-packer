@@ -12,6 +12,14 @@ mount --rbind /dev dev
 
 cp -L /etc/resolv.conf /mnt/funtoo/etc/
 
+# DEBUG: find out why we get a ModuleError on `ego sync`
+chroot /mnt/funtoo /bin/bash -uex <<'EOF'
+echo 'DEBUG START'
+eselect python list
+cat  /etc/portage/make.profile/parent
+echo 'DEBUG END'
+EOF
+
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
 ego sync
 EOF
