@@ -12,7 +12,7 @@ mount --rbind /dev dev
 
 cp -L /etc/resolv.conf /mnt/funtoo/etc/
 
-# DEBUG: ensure to use Python 3.7 (Python 2.7 was the default)
+# ensure to use Python 3.7
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
 eselect python list
 eselect python set python3.7
