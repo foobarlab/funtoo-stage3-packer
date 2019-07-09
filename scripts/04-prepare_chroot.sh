@@ -12,12 +12,11 @@ mount --rbind /dev dev
 
 cp -L /etc/resolv.conf /mnt/funtoo/etc/
 
-# DEBUG: find out why we get a ModuleError on `ego sync`
+# DEBUG: ensure to use Python 3.6 (Python 2.7 is default)
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
-echo 'DEBUG START'
 eselect python list
-cat  /etc/portage/make.profile/parent
-echo 'DEBUG END'
+eselect python set python3.6
+eselect python list
 EOF
 
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
