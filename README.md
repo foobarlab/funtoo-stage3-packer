@@ -5,7 +5,7 @@ This box serves for bootstrapping an initial base box for the [Funtoo Core Vagra
 
 ### What's included?
 
- - Latest Funtoo 1.3 stage3 tarball from [https://build.funtoo.org/1.3-release-std/x86-64bit/generic_64/stage3-latest.tar.xz](https://build.funtoo.org/1.3-release-std/x86-64bit/generic_64/stage3-latest.tar.xz) using [SystemRescueCD](http://www.system-rescue-cd.org)
+ - Latest Funtoo 1.4 ALPHA stage3 tarball from [https://build.funtoo.org/1.4-release-std/x86-64bit/generic_64/stage3-latest.tar.xz](https://build.funtoo.org/1.4-release-std/x86-64bit/generic_64/stage3-latest.tar.xz) using [SystemRescueCD](http://www.system-rescue-cd.org)
  - Architecture: x86-64bit, generic_64
  - 40 GB dynamic sized HDD image (ext4)
  - Timezone: ```UTC```
