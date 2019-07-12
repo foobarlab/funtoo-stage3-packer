@@ -38,7 +38,7 @@ if [[ -f ./release && -s release ]]; then
 	export BUILD_BOX_VERSION=`echo $BUILD_RELEASE_VERSION | sed -e 's/\-/./g'`
 	export BUILD_OUTPUT_FILE="$BUILD_BOX_NAME-$BUILD_RELEASE_VERSION.box"
 	
-	BUILD_BOX_DESCRIPTION="Funtoo 1.4 ALPHA<br><br>$BUILD_BOX_NAME version $BUILD_BOX_VERSION ($BUILD_RELEASE_VERSION_ID)"
+	BUILD_BOX_DESCRIPTION="Funtoo 1.4<br><br>$BUILD_BOX_NAME version $BUILD_BOX_VERSION ($BUILD_RELEASE_VERSION_ID)"
 	if [ -z ${BUILD_NUMBER+x} ] || [ -z ${BUILD_TAG+x} ]; then
 		# without build number 
 		BUILD_BOX_DESCRIPTION="$BUILD_BOX_DESCRIPTION custom build"
