@@ -26,7 +26,7 @@ for script in \
   10-software-config \
   11-cleanup
 do
-  echo "**** Running $script ******"
+  echo "**** Running $script.sh ******"
   "$SCRIPTS/scripts/$script.sh"
 done
 
