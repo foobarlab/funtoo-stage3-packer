@@ -29,10 +29,11 @@ else
     exit 1
 fi
 
-# FIXME: file hashes for stage3 seem not being online anymore, we try without ...
 BUILD_STAGE3_URL="$BUILD_FUNTOO_DOWNLOADPATH/$BUILD_STAGE3_FILE"
-#BUILD_STAGE3_HASH_URL="$BUILD_FUNTOO_DOWNLOADPATH/$BUILD_STAGE3_FILE_HASH"
 
+# FIXME: file hashes for stage3 seem not being online anymore, we try without ...
+#BUILD_STAGE3_HASH_URL="$BUILD_FUNTOO_DOWNLOADPATH/$BUILD_STAGE3_FILE_HASH"
+#
 #if [ -f "$BUILD_STAGE3_FILE_HASH" ]; then
 #	rm -f "$BUILD_STAGE3_FILE_HASH"
 #fi
@@ -58,6 +59,7 @@ else
 	rm -f ./release
 fi
 
+# FIXME: file hashes for stage3 seem not being online anymore, we try without ...
 #BUILD_STAGE3_LOCAL_HASH=$(cat $BUILD_STAGE3_FILE | sha256sum | grep -o '^\S\+')
 #BUILD_STAGE3_REMOTE_HASH=$(cat $BUILD_STAGE3_FILE_HASH | sed -e 's/^sha256\s//g')
 #
