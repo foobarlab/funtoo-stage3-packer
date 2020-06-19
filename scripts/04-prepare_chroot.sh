@@ -12,13 +12,6 @@ mount --rbind /dev dev
 
 cp -L /etc/resolv.conf /mnt/funtoo/etc/
 
-# ensure to use Python 3.7
-chroot /mnt/funtoo /bin/bash -uex <<'EOF'
-eselect python list
-eselect python set python3.7
-eselect python list
-EOF
-
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
 ego sync
 emerge --update --newuse --deep --with-bdeps=y @world
