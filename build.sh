@@ -29,20 +29,21 @@ else
     exit 1
 fi
 
+# FIXME: file hashes for stage3 seem not being online anymore, we try without ...
 BUILD_STAGE3_URL="$BUILD_FUNTOO_DOWNLOADPATH/$BUILD_STAGE3_FILE"
-BUILD_STAGE3_HASH_URL="$BUILD_FUNTOO_DOWNLOADPATH/$BUILD_STAGE3_FILE_HASH"
+#BUILD_STAGE3_HASH_URL="$BUILD_FUNTOO_DOWNLOADPATH/$BUILD_STAGE3_FILE_HASH"
 
-if [ -f "$BUILD_STAGE3_FILE_HASH" ]; then
-	rm -f "$BUILD_STAGE3_FILE_HASH"
-fi
-
-if [ ! -f "$BUILD_STAGE3_FILE_HASH" ]; then
-	wget $BUILD_STAGE3_HASH_URL
-	if [ $? -ne 0 ]; then
-		echo "Could not download '$BUILD_STAGE3_HASH_URL'. Exit code from wget was $?."
-		exit 1
-	fi
-fi
+#if [ -f "$BUILD_STAGE3_FILE_HASH" ]; then
+#	rm -f "$BUILD_STAGE3_FILE_HASH"
+#fi
+#
+#if [ ! -f "$BUILD_STAGE3_FILE_HASH" ]; then
+#	wget $BUILD_STAGE3_HASH_URL
+#	if [ $? -ne 0 ]; then
+#		echo "Could not download '$BUILD_STAGE3_HASH_URL'. Exit code from wget was $?."
+#		exit 1
+#	fi
+#fi
 
 if [ -f "$BUILD_STAGE3_FILE" ]; then
     echo "'$BUILD_STAGE3_FILE' exists. Skipping download ..."
@@ -57,26 +58,26 @@ else
 	rm -f ./release
 fi
 
-BUILD_STAGE3_LOCAL_HASH=$(cat $BUILD_STAGE3_FILE | sha256sum | grep -o '^\S\+')
-BUILD_STAGE3_REMOTE_HASH=$(cat $BUILD_STAGE3_FILE_HASH | sed -e 's/^sha256\s//g')
-
-if [ "$BUILD_STAGE3_LOCAL_HASH" == "$BUILD_STAGE3_REMOTE_HASH" ]; then
-    echo "'$BUILD_STAGE3_FILE' checksums matched. Proceeding ..."
-else
-    echo "'$BUILD_STAGE3_FILE' checksums did NOT match. The file is possibly outdated or corrupted."
-	read -p "Do you want to delete it and try again (Y/n)? " choice
-	case "$choice" in 
-	  n|N ) echo "Canceled by user."
-	  		exit 1
-	        ;;
-	  * ) echo "Deleting '$BUILD_STAGE3_FILE' ..."
-	      rm -f $BUILD_STAGE3_FILE
-	      echo "Cleanup stage3 release info ..."
-	      rm -f ./release
-	      exec $0
-	      ;;
-	esac
-fi
+#BUILD_STAGE3_LOCAL_HASH=$(cat $BUILD_STAGE3_FILE | sha256sum | grep -o '^\S\+')
+#BUILD_STAGE3_REMOTE_HASH=$(cat $BUILD_STAGE3_FILE_HASH | sed -e 's/^sha256\s//g')
+#
+#if [ "$BUILD_STAGE3_LOCAL_HASH" == "$BUILD_STAGE3_REMOTE_HASH" ]; then
+#    echo "'$BUILD_STAGE3_FILE' checksums matched. Proceeding ..."
+#else
+#    echo "'$BUILD_STAGE3_FILE' checksums did NOT match. The file is possibly outdated or corrupted."
+#	read -p "Do you want to delete it and try again (Y/n)? " choice
+#	case "$choice" in 
+#	  n|N ) echo "Canceled by user."
+#	  		exit 1
+#	        ;;
+#	  * ) echo "Deleting '$BUILD_STAGE3_FILE' ..."
+#	      rm -f $BUILD_STAGE3_FILE
+#	      echo "Cleanup stage3 release info ..."
+#	      rm -f ./release
+#	      exec $0
+#	      ;;
+#	esac
+#fi
 
 if [ ! -f ./release ]; then
 	echo "Extracting stage3 release info ..."
