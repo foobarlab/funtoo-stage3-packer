@@ -17,13 +17,12 @@ export BUILD_TIMESTAMP="$(date --iso-8601=seconds)"
 
 BUILD_BOX_DESCRIPTION="$BUILD_BOX_NAME"
 
-# generic_64 build
-export BUILD_FUNTOO_DOWNLOADPATH="https://build.funtoo.org/1.4-release-std/x86-64bit/generic_64"
+export BUILD_FUNTOO_ARCHITECTURE="x86-64bit/generic_64"
+export BUILD_FUNTOO_DOWNLOADPATH="https://build.funtoo.org/1.4-release-std/$BUILD_FUNTOO_ARCHITECTURE"
 
 export BUILD_OUTPUT_FILE="$BUILD_BOX_NAME.box"
 export BUILD_OUTPUT_FILE_TEMP="$BUILD_BOX_NAME.tmp.box"
 
-# FIXME: extract latest version and its sha256sum from the webpage
 export BUILD_SYSTEMRESCUECD_VERSION="5.3.2"
 export BUILD_SYSTEMRESCUECD_FILE="systemrescuecd-x86-$BUILD_SYSTEMRESCUECD_VERSION.iso"
 export BUILD_SYSTEMRESCUECD_REMOTE_HASH="0a55c61bf24edd04ce44cdf5c3736f739349652154a7e27c4b1caaeb19276ad1"
@@ -37,7 +36,7 @@ if [[ -f ./release && -s release ]]; then
 	export BUILD_BOX_VERSION=`echo $BUILD_RELEASE_VERSION | sed -e 's/\-/./g'`
 	export BUILD_OUTPUT_FILE="$BUILD_BOX_NAME-$BUILD_RELEASE_VERSION.box"
 	
-	BUILD_BOX_DESCRIPTION="Funtoo 1.4<br><br>$BUILD_BOX_NAME version $BUILD_BOX_VERSION ($BUILD_RELEASE_VERSION_ID)"
+	BUILD_BOX_DESCRIPTION="Funtoo 1.4 ($BUILD_FUNTOO_ARCHITECTURE)<br><br>$BUILD_BOX_NAME version $BUILD_BOX_VERSION ($BUILD_RELEASE_VERSION_ID)"
 	if [ -z ${BUILD_NUMBER+x} ] || [ -z ${BUILD_TAG+x} ]; then
 		# without build number/tag
 		BUILD_BOX_DESCRIPTION="$BUILD_BOX_DESCRIPTION"
@@ -45,7 +44,6 @@ if [[ -f ./release && -s release ]]; then
 		# for jenkins builds we got some additional information: BUILD_NUMBER, BUILD_ID, BUILD_DISPLAY_NAME, BUILD_TAG, BUILD_URL
 		BUILD_BOX_DESCRIPTION="$BUILD_BOX_DESCRIPTION build $BUILD_NUMBER ($BUILD_TAG)"
 	fi
-	
 fi
 
 export BUILD_BOX_DESCRIPTION="$BUILD_BOX_DESCRIPTION<br>created @$BUILD_TIMESTAMP"
