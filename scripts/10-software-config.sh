@@ -11,6 +11,11 @@ chroot /mnt/funtoo /bin/bash -uex <<'EOF'
 chown vagrant.vagrant ~vagrant/.$BUILD_BOX_NAME
 EOF
 
+# eclean-kernel: required to remove stale files of replaced kernel
+chroot /mnt/funtoo /bin/bash -uex <<'EOF'
+emerge -vt app-admin/eclean-kernel
+EOF
+
 # acpid: required for gracefully shutdown on close
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
 emerge -v sys-power/acpid

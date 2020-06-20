@@ -8,6 +8,8 @@ fi
 chroot /mnt/funtoo /bin/bash <<'EOF'
 emerge -v sys-fs/zerofree
 cd /usr/src/linux && make distclean
+eclean-kernel
+ego boot update
 EOF
 
 rm -f /mnt/funtoo/etc/resolv.conf
