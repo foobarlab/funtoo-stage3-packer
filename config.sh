@@ -4,7 +4,7 @@ export BUILD_BOX_NAME="funtoo-stage3"
 export BUILD_BOX_VERSION="0"
 
 export BUILD_GUEST_TYPE="Gentoo_64"
-export BUILD_GUEST_CPUS="4"
+export BUILD_GUEST_CPUS="8"
 export BUILD_GUEST_MEMORY="2048"
 export BUILD_GUEST_DISKSIZE="40000"
 
@@ -40,8 +40,8 @@ if [[ -f ./release && -s release ]]; then
 	
 	BUILD_BOX_DESCRIPTION="Funtoo 1.4<br><br>$BUILD_BOX_NAME version $BUILD_BOX_VERSION ($BUILD_RELEASE_VERSION_ID)"
 	if [ -z ${BUILD_NUMBER+x} ] || [ -z ${BUILD_TAG+x} ]; then
-		# without build number 
-		BUILD_BOX_DESCRIPTION="$BUILD_BOX_DESCRIPTION custom build"
+		# without build number/tag
+		BUILD_BOX_DESCRIPTION="$BUILD_BOX_DESCRIPTION"
 	else
 		# for jenkins builds we got some additional information: BUILD_NUMBER, BUILD_ID, BUILD_DISPLAY_NAME, BUILD_TAG, BUILD_URL
 		BUILD_BOX_DESCRIPTION="$BUILD_BOX_DESCRIPTION build $BUILD_NUMBER ($BUILD_TAG)"

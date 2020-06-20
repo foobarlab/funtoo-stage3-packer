@@ -13,7 +13,6 @@
       "type": "virtualbox-iso",
       "vm_name": "{{user `vm_name`}}",
       "disk_size": "{{user `disksize`}}",
-      "hard_drive_interface": "sata",
       "guest_additions_mode": "disable",
       "guest_os_type": "{{user `guest_os_type`}}",
       "headless": "{{user `headless`}}",

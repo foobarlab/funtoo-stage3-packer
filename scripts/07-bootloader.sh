@@ -40,5 +40,5 @@ display {
 }
 DATA
 rm -f /boot/memtest86.bin
-boot-update
+ego boot
 EOF
