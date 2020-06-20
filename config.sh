@@ -12,7 +12,6 @@ export BUILD_BOX_PROVIDER="virtualbox"
 export BUILD_BOX_USERNAME="foobarlab"
 
 export BUILD_STAGE3_FILE="stage3-latest.tar.xz"
-export BUILD_STAGE3_FILE_HASH="$BUILD_STAGE3_FILE.hash.txt"
 
 export BUILD_TIMESTAMP="$(date --iso-8601=seconds)"
 
