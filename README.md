@@ -12,7 +12,7 @@ This box serves for bootstrapping an initial base box for the [Funtoo Core Vagra
  - NAT Networking using DHCP (virtio)
  - Vagrant user *vagrant* with password *vagrant* (can get superuser via sudo without password), additionally using the default SSH authorized keys provided by Vagrant (see https://github.com/hashicorp/vagrant/tree/master/keys) 
  - No VirtualBox guest additions included, therefore no shared folders active
- - Kernel: default included from stage3 tarball (debian-sources-lts)
+ - Kernel: default included from stage3 tarball (debian-sources-lts), no custom .config
  - Additionally installed software:
    - *sudo*
    - *nfs-utils*, *usermode-utilities* and *bridge-utils* for advanced networking
