@@ -5,6 +5,10 @@ system("./config.sh >/dev/null")
 
 # second run to free some space
 $script_cleanup = <<SCRIPT
+# clean stale kernel files
+sudo eclean-kernel
+sudo ego boot update
+
 # /boot (initially not mounted)
 sudo mount -o ro /dev/sda1
 sudo zerofree /dev/sda1

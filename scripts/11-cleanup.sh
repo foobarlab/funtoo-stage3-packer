@@ -8,7 +8,6 @@ fi
 chroot /mnt/funtoo /bin/bash <<'EOF'
 emerge -v sys-fs/zerofree
 cd /usr/src/linux && make distclean
-eclean-kernel
 ego boot update
 EOF
 
