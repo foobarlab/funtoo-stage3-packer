@@ -18,6 +18,7 @@ This box serves for bootstrapping an initial base box for the [Funtoo Core Vagra
    - *nfs-utils*, *usermode-utilities* and *bridge-utils* for advanced networking
    - *acpid* (enables graceful acpi shutdown for VirtualBox)
    - *zerofree*
+   - *eclean-kernel*
 
 ### Download pre-build images
 
