@@ -28,7 +28,7 @@ chroot /mnt/funtoo /bin/bash -uex <<'EOF'
 emerge -v sys-apps/usermode-utilities net-misc/bridge-utils
 EOF
 
-# last step: perform @preserved-rebuild (just in case)
+# perform @preserved-rebuild (just in case)
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
 emerge -v @preserved-rebuild
 EOF

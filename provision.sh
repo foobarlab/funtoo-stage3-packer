@@ -18,13 +18,16 @@ for script in \
   02-mounts \
   03-stage3 \
   04-prepare_chroot \
-  05-fstab \
-  06-timezone \
-  07-bootloader \
-  08-networking \
-  09-vagrant-user \
-  10-software-config \
-  11-cleanup
+  05-portage \
+  06-update_world \
+  07-fstab \
+  08-timezone \
+  09-kernel \
+  10-bootloader \
+  11-networking \
+  12-vagrant-user \
+  13-software-config \
+  14-cleanup
 do
   echo "**** Running $script.sh ******"
   "$SCRIPTS/scripts/$script.sh"

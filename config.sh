@@ -4,9 +4,15 @@ export BUILD_BOX_NAME="funtoo-stage3"
 export BUILD_BOX_VERSION="0"
 
 export BUILD_GUEST_TYPE="Gentoo_64"
-export BUILD_GUEST_CPUS="8"
-export BUILD_GUEST_MEMORY="2048"
 export BUILD_GUEST_DISKSIZE="40000"
+
+# memory/cpus used during box creation:
+export BUILD_GUEST_CPUS="4"
+export BUILD_GUEST_MEMORY="2048"
+
+# memory/cpus used for final box:
+export BUILD_BOX_CPUS="2"
+export BUILD_BOX_MEMORY="2048"
 
 export BUILD_BOX_PROVIDER="virtualbox"
 export BUILD_BOX_USERNAME="foobarlab"
@@ -19,6 +25,8 @@ BUILD_BOX_DESCRIPTION="$BUILD_BOX_NAME"
 
 export BUILD_FUNTOO_ARCHITECTURE="x86-64bit/generic_64"
 export BUILD_FUNTOO_DOWNLOADPATH="https://build.funtoo.org/1.4-release-std/$BUILD_FUNTOO_ARCHITECTURE"
+
+#export BUILD_CUSTOM_KERNEL="true"  # experimental! compile a custom kernel (kernel.config)
 
 export BUILD_OUTPUT_FILE="$BUILD_BOX_NAME.box"
 export BUILD_OUTPUT_FILE_TEMP="$BUILD_BOX_NAME.tmp.box"

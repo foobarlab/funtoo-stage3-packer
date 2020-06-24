@@ -11,8 +11,3 @@ mount --rbind /sys sys
 mount --rbind /dev dev
 
 cp -L /etc/resolv.conf /mnt/funtoo/etc/
-
-chroot /mnt/funtoo /bin/bash -uex <<'EOF'
-ego sync
-emerge --update --newuse --deep --with-bdeps=y @world
-EOF
