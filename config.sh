@@ -8,7 +8,7 @@ export BUILD_GUEST_DISKSIZE="40000"
 
 # memory/cpus used during box creation:
 export BUILD_GUEST_CPUS="4"
-export BUILD_GUEST_MEMORY="2048"
+export BUILD_GUEST_MEMORY="4096"
 
 # memory/cpus used for final box:
 export BUILD_BOX_CPUS="2"
