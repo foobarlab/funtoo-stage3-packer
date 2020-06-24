@@ -11,7 +11,7 @@ This is a minimal stage3 snapshot of Funtoo Linux that is packaged into a Vagran
  - NAT Networking using DHCP (virtio)
  - Vagrant user *vagrant* with password *vagrant* (can get superuser via sudo without password), additionally using the default SSH authorized keys provided by Vagrant (see https://github.com/hashicorp/vagrant/tree/master/keys) 
  - VirtualBox 6.1 Guest Additions (shared folders not configured)
- - Kernel: default included from stage3 tarball (debian-sources-lts), no custom .config
+ - Kernel: default included from stage3 tarball (debian-sources-lts)
  - Additionally installed software:
    - *sudo*
    - *nfs-utils*, *usermode-utilities* and *bridge-utils* for advanced networking

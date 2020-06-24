@@ -26,8 +26,6 @@ BUILD_BOX_DESCRIPTION="$BUILD_BOX_NAME"
 export BUILD_FUNTOO_ARCHITECTURE="x86-64bit/generic_64"
 export BUILD_FUNTOO_DOWNLOADPATH="https://build.funtoo.org/1.4-release-std/$BUILD_FUNTOO_ARCHITECTURE"
 
-#export BUILD_CUSTOM_KERNEL="true"  # experimental! compile a custom kernel (kernel.config)
-
 export BUILD_OUTPUT_FILE="$BUILD_BOX_NAME.box"
 export BUILD_OUTPUT_FILE_TEMP="$BUILD_BOX_NAME.tmp.box"
 

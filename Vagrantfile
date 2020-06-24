@@ -4,12 +4,6 @@
 system("./config.sh >/dev/null")
 
 $script_guest_additions = <<SCRIPT
-# FIXME cleanup/prepare kernel sources if BUILD_CUSTOM_KERNEL is "true"?
-# prepare kernel
-#sudo cp /usr/src/kernel.config /usr/src/linux/.config
-#cd /usr/src/linux
-#sudo make olddefconfig
-#sudo make modules_prepare
 # copy iso and start install
 sudo mkdir -p /mnt/temp
 sudo mount -o loop /VBoxGuestAdditions.iso /mnt/temp
@@ -20,6 +14,8 @@ sudo cat /var/log/vboxadd-setup.log
 sudo gpasswd -a vagrant vboxsf
 # auto-load vboxsf (vboxguest already loaded by udev rule):
 cat <<'DATA' | sudo tee -a /etc/conf.d/modules
+
+# Virtualbox shared folders
 modules="vboxsf"
 DATA
 # remove iso
@@ -30,7 +26,9 @@ $script_cleanup = <<SCRIPT
 # clean stale kernel files
 sudo eclean-kernel
 sudo ego boot update
-
+# clean kernel sources
+cd /usr/src/linux
+sudo make distclean
 # /boot (initially not mounted)
 sudo mount -o ro /dev/sda1
 sudo zerofree /dev/sda1

@@ -22,12 +22,11 @@ for script in \
   06-update_world \
   07-fstab \
   08-timezone \
-  09-kernel \
-  10-bootloader \
-  11-networking \
-  12-vagrant-user \
-  13-software-config \
-  14-cleanup
+  09-bootloader \
+  10-networking \
+  11-vagrant-user \
+  12-software-config \
+  13-cleanup
 do
   echo "**** Running $script.sh ******"
   "$SCRIPTS/scripts/$script.sh"

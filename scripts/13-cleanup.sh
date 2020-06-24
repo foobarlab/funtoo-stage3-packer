@@ -15,11 +15,6 @@ find /etc/ -name '._cfg*'              # DEBUG: list all config files needing an
 etc-update --verbose --preen           # auto-merge trivial changes
 EOF
 
-# FIXME: clean kernel sources if BUILD_CUSTOM_KERNEL is "true"?
-#chroot /mnt/funtoo /bin/bash <<'EOF'
-#cd /usr/src/linux && make distclean
-#EOF
-
 rm -f /mnt/funtoo/etc/resolv.conf
 rm -f /mnt/funtoo/etc/resolv.conf.bak
 rm -rf /mnt/funtoo/var/cache/portage/distfiles/*
