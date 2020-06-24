@@ -1,7 +1,6 @@
 # Funtoo Stage3 Vagrant box
 
 This is a minimal stage3 snapshot of Funtoo Linux that is packaged into a Vagrant box file. Currently only a VirtualBox version is provided.
-This box serves for bootstrapping an initial base box for the [Funtoo Core Vagrant box](https://github.com/foobarlab/funtoo-core-packer).
 
 ### What's included?
 
@@ -11,14 +10,14 @@ This box serves for bootstrapping an initial base box for the [Funtoo Core Vagra
  - Timezone: ```UTC```
  - NAT Networking using DHCP (virtio)
  - Vagrant user *vagrant* with password *vagrant* (can get superuser via sudo without password), additionally using the default SSH authorized keys provided by Vagrant (see https://github.com/hashicorp/vagrant/tree/master/keys) 
- - No VirtualBox guest additions included, therefore no shared folders active
+ - VirtualBox 6.1 Guest Additions (shared folders not configured)
  - Kernel: default included from stage3 tarball (debian-sources-lts), no custom .config
  - Additionally installed software:
    - *sudo*
    - *nfs-utils*, *usermode-utilities* and *bridge-utils* for advanced networking
    - *acpid* (enables graceful acpi shutdown for VirtualBox)
-   - *zerofree*
-   - *eclean-kernel*
+   - *zerofree* (fills empty hdd space with zeros)
+   - *eclean-kernel* (cleanup kernel sources and stale files)
 
 ### Download pre-build images
 
