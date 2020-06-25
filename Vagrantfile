@@ -6,7 +6,7 @@ system("./config.sh >/dev/null")
 $script_guest_additions = <<SCRIPT
 # copy iso and start install
 sudo mkdir -p /mnt/temp
-sudo mount -o loop /home/vagrant/VBoxGuestAdditions.iso /mnt/temp
+sudo mount -o loop /root/VBoxGuestAdditions.iso /mnt/temp
 sudo /mnt/temp/VBoxLinuxAdditions.run
 sudo umount /mnt/temp
 sudo cat /var/log/vboxadd-setup.log
@@ -19,7 +19,7 @@ cat <<'DATA' | sudo tee -a /etc/conf.d/modules
 modules="vboxsf"
 DATA
 # remove iso
-sudo rm -f /home/vagrant/VBoxGuestAdditions.iso
+sudo rm -f /root/VBoxGuestAdditions.iso
 SCRIPT
 
 $script_cleanup = <<SCRIPT

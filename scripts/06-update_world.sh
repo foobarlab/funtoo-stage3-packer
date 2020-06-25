@@ -18,8 +18,6 @@ etc-update --automode -5
 emerge --depclean
 # ensure we use a valid gcc version (see also FL-6143)
 gcc-config -l || gcc-config 1
-# re-sync
-ego sync
 EOF
 
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'

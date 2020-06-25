@@ -17,7 +17,7 @@
       "iso_interface": "sata",
       "hard_drive_nonrotational": "true",
       "guest_additions_mode": "upload",
-      "guest_additions_path": "/home/vagrant/VBoxGuestAdditions_{{.Version}}.iso",
+      "guest_additions_path": "/tmp/VBoxGuestAdditions.iso",
       "guest_os_type": "{{user `guest_os_type`}}",
       "headless": "{{user `headless`}}",
       "ssh_pty": "true",
