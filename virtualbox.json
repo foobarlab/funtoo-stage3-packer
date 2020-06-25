@@ -41,7 +41,7 @@
         ["modifyvm","{{.Name}}","--hwvirtex", "on"],
         ["modifyvm","{{.Name}}","--vtxvpid", "on"],
         ["modifyvm","{{.Name}}","--spec-ctrl", "on"],
-        ["modifyvm","{{.Name}}","--largepages", "on"]
+        ["modifyvm","{{.Name}}","--largepages", "off"]
       ]
   }],
   "description": "{{user `box_description`}}",
