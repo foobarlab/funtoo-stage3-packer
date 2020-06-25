@@ -5,21 +5,6 @@ if [ -z ${BUILD_RUN:-} ]; then
   exit 1
 fi
 
-# this is a workaround for now
-# upgrade to latest ego and re-sync
-chroot /mnt/funtoo /bin/bash -uex <<'EOF'
-emerge -s app-admin/ego
-emerge -vt app-admin/ego
-env-update
-source /etc/profile
-etc-update --preen
-etc-update --automode -5
-emerge --depclean
-# workaround for FL-6143: ensure we use a valid gcc version:
-gcc-config -l || gcc-config 1
-ego sync
-EOF
-
 # install bootloader
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
 emerge -vt sys-boot/grub
@@ -40,5 +25,5 @@ display {
 }
 DATA
 rm -f /boot/memtest86.bin
-ego boot
+ego boot update
 EOF

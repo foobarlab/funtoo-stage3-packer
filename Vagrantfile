@@ -3,8 +3,32 @@
 
 system("./config.sh >/dev/null")
 
-# second run to free some space
+$script_guest_additions = <<SCRIPT
+# copy iso and start install
+sudo mkdir -p /mnt/temp
+sudo mount -o loop /root/VBoxGuestAdditions.iso /mnt/temp
+sudo /mnt/temp/VBoxLinuxAdditions.run
+sudo umount /mnt/temp
+sudo cat /var/log/vboxadd-setup.log
+# add user vagrant to vboxsf group
+sudo gpasswd -a vagrant vboxsf
+# auto-load vboxsf (vboxguest already loaded by udev rule):
+cat <<'DATA' | sudo tee -a /etc/conf.d/modules
+
+# Virtualbox shared folders
+modules="vboxsf"
+DATA
+# remove iso
+sudo rm -f /root/VBoxGuestAdditions.iso
+SCRIPT
+
 $script_cleanup = <<SCRIPT
+# clean stale kernel files
+sudo eclean-kernel
+sudo ego boot update
+# clean kernel sources
+cd /usr/src/linux
+sudo make distclean
 # /boot (initially not mounted)
 sudo mount -o ro /dev/sda1
 sudo zerofree /dev/sda1
@@ -23,8 +47,8 @@ Vagrant.configure("2") do |config|
   config.vm.hostname = "#{ENV['BUILD_BOX_NAME']}"
   config.vm.provider "virtualbox" do |vb|
     vb.gui = false
-    vb.memory = "#{ENV['BUILD_GUEST_MEMORY']}"
-    vb.cpus = "#{ENV['BUILD_GUEST_CPUS']}"
+    vb.memory = "#{ENV['BUILD_BOX_MEMORY']}"
+    vb.cpus = "#{ENV['BUILD_BOX_CPUS']}"
     # customize VirtualBox settings, see also 'virtualbox.json'
     vb.customize ["modifyvm", :id, "--nictype1", "virtio"]
     vb.customize ["modifyvm", :id, "--audio", "none"]
@@ -37,10 +61,11 @@ Vagrant.configure("2") do |config|
     vb.customize ["modifyvm", :id, "--hwvirtex", "on"]
     vb.customize ["modifyvm", :id, "--vtxvpid", "on"]
     vb.customize ["modifyvm", :id, "--spec-ctrl", "on"]
-    vb.customize ["modifyvm", :id, "--largepages", "on"]
+    vb.customize ["modifyvm", :id, "--largepages", "off"]
   end
   config.ssh.pty = true
   config.ssh.insert_key = false
   config.vm.synced_folder '.', '/vagrant', disabled: true
+  config.vm.provision "guest-additions", type: "shell", inline: $script_guest_additions
   config.vm.provision "cleanup", type: "shell", inline: $script_cleanup
 end

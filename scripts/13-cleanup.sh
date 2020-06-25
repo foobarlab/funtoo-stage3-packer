@@ -7,7 +7,12 @@ fi
 
 chroot /mnt/funtoo /bin/bash <<'EOF'
 emerge -v sys-fs/zerofree
-cd /usr/src/linux && make distclean
+EOF
+
+chroot /mnt/funtoo /bin/bash <<'EOF'
+emerge --depclean
+find /etc/ -name '._cfg*'              # DEBUG: list all config files needing an update
+etc-update --verbose --preen           # auto-merge trivial changes
 EOF
 
 rm -f /mnt/funtoo/etc/resolv.conf

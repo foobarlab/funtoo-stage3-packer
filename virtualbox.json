@@ -13,12 +13,15 @@
       "type": "virtualbox-iso",
       "vm_name": "{{user `vm_name`}}",
       "disk_size": "{{user `disksize`}}",
-      "guest_additions_mode": "disable",
+      "hard_drive_interface": "sata",
+      "iso_interface": "sata",
+      "hard_drive_nonrotational": "true",
+      "guest_additions_mode": "upload",
+      "guest_additions_path": "/tmp/VBoxGuestAdditions.iso",
       "guest_os_type": "{{user `guest_os_type`}}",
       "headless": "{{user `headless`}}",
       "ssh_pty": "true",
-      "iso_checksum": "{{user `systemrescuecd_checksum`}}",
-      "iso_checksum_type": "sha256",
+      "iso_checksum": "sha256:{{user `systemrescuecd_checksum`}}",
       "iso_url": "{{user `systemrescuecd_url`}}",
       "shutdown_command": "shutdown -hP now",
       "ssh_username": "{{user `username`}}",
@@ -38,7 +41,7 @@
         ["modifyvm","{{.Name}}","--hwvirtex", "on"],
         ["modifyvm","{{.Name}}","--vtxvpid", "on"],
         ["modifyvm","{{.Name}}","--spec-ctrl", "on"],
-        ["modifyvm","{{.Name}}","--largepages", "on"]
+        ["modifyvm","{{.Name}}","--largepages", "off"]
       ]
   }],
   "description": "{{user `box_description`}}",
