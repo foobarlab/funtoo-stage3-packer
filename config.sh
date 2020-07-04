@@ -33,6 +33,17 @@ export BUILD_SYSTEMRESCUECD_VERSION="5.3.2"
 export BUILD_SYSTEMRESCUECD_FILE="systemrescuecd-x86-$BUILD_SYSTEMRESCUECD_VERSION.iso"
 export BUILD_SYSTEMRESCUECD_REMOTE_HASH="0a55c61bf24edd04ce44cdf5c3736f739349652154a7e27c4b1caaeb19276ad1"
 
+export BUILD_GUEST_ADDITIONS=false          # set to true to install virtualbox guest additions
+
+if [ "$BUILD_GUEST_ADDITIONS" = true ]; then
+    BUILD_GUEST_ADDITIONS_MODE="upload"
+    BUILD_GUEST_ADDITIONS_PATH="/tmp/VBoxGuestAdditions.iso"
+else
+    BUILD_GUEST_ADDITIONS_MODE="disable"
+    BUILD_GUEST_ADDITIONS_PATH=""
+fi
+export BUILD_GUEST_ADDITIONS_MODE BUILD_GUEST_ADDITIONS_PATH
+ 
 if [[ -f ./release && -s release ]]; then
 	while read line; do
 		line_name=`echo $line |cut -d "=" -f1`

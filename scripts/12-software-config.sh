@@ -11,8 +11,22 @@ chroot /mnt/funtoo /bin/bash -uex <<'EOF'
 chown vagrant.vagrant ~vagrant/.$BUILD_BOX_NAME
 EOF
 
-# temp copy virtualbox additions iso for later install
-cp /tmp/VBoxGuestAdditions.iso /mnt/funtoo/root
+# replace motd
+rm -f /mnt/funtoo/etc/motd
+cat <<'DATA' | tee -a /mnt/funtoo/etc/motd
+Funtoo GNU/Linux (BUILD_BOX_NAME) - Vagrant box BUILD_BOX_VERSION
+DATA
+sed -i 's/BUILD_BOX_NAME/'"$BUILD_BOX_NAME"'/g' /mnt/funtoo/etc/motd
+sed -i 's/BUILD_BOX_VERSION/'"$BUILD_BOX_VERSION"'/g' /mnt/funtoo/etc/motd
+cat /mnt/funtoo/etc/motd
+
+# (optional) temp copy virtualbox additions iso for later install
+if [ -f /tmp/VBoxGuestAdditions.iso ]; then
+    echo "Found Virtualbox Guest Additions iso..."
+    mv -f /tmp/VBoxGuestAdditions.iso /mnt/funtoo/root
+else
+    echo "Virtualbox Guest Additions iso not found or disabled."
+fi
 
 # eclean-kernel: required to remove stale files of replaced kernel
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'

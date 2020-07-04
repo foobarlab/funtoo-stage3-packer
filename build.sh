@@ -116,7 +116,7 @@ packer build virtualbox.json
 
 rm -f ./scripts/$BUILD_STAGE3_FILE
 
-echo "Optimizing box size (second run) ..."
+echo "Optimizing box size ..."
 
 if [ -f "$BUILD_OUTPUT_FILE_TEMP" ]; then
     echo "Suspending any running instances ..."

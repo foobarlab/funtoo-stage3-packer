@@ -66,6 +66,8 @@ Vagrant.configure("2") do |config|
   config.ssh.pty = true
   config.ssh.insert_key = false
   config.vm.synced_folder '.', '/vagrant', disabled: true
-  config.vm.provision "guest-additions", type: "shell", inline: $script_guest_additions
+  if ENV['BUILD_GUEST_ADDITIONS'] == 'true'
+    config.vm.provision "guest-additions", type: "shell", inline: $script_guest_additions
+  end
   config.vm.provision "cleanup", type: "shell", inline: $script_cleanup
 end
