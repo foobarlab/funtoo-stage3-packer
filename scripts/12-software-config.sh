@@ -14,10 +14,11 @@ EOF
 # replace motd
 rm -f /mnt/funtoo/etc/motd
 cat <<'DATA' | tee -a /mnt/funtoo/etc/motd
-Funtoo GNU/Linux (BUILD_BOX_NAME) - Vagrant box BUILD_BOX_VERSION
+Funtoo GNU/Linux (BUILD_BOX_NAME) - release BUILD_BOX_VERSION build BUILD_TIMESTAMP
 DATA
-sed -i 's/BUILD_BOX_NAME/'"$BUILD_BOX_NAME"'/g' /mnt/funtoo/etc/motd
-sed -i 's/BUILD_BOX_VERSION/'"$BUILD_BOX_VERSION"'/g' /mnt/funtoo/etc/motd
+sed -i 's/BUILD_BOX_NAME/'"${BUILD_BOX_NAME:-}"'/g' /mnt/funtoo/etc/motd
+sed -i 's/BUILD_BOX_VERSION/'"${BUILD_BOX_VERSION:-}"'/g' /mnt/funtoo/etc/motd
+sed -i 's/BUILD_TIMESTAMP/'"${BUILD_TIMESTAMP:-}"'/g' /mnt/funtoo/etc/motd
 cat /mnt/funtoo/etc/motd
 
 # (optional) temp copy virtualbox additions iso for later install
