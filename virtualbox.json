@@ -16,8 +16,7 @@
       "hard_drive_interface": "sata",
       "iso_interface": "sata",
       "hard_drive_nonrotational": "true",
-      "guest_additions_mode": "upload",
-      "guest_additions_path": "/tmp/VBoxGuestAdditions.iso",
+      "guest_additions_mode": "disable",
       "guest_os_type": "{{user `guest_os_type`}}",
       "headless": "{{user `headless`}}",
       "ssh_pty": "true",
@@ -40,7 +39,6 @@
         ["modifyvm","{{.Name}}","--hpet", "on"],
         ["modifyvm","{{.Name}}","--hwvirtex", "on"],
         ["modifyvm","{{.Name}}","--vtxvpid", "on"],
-        ["modifyvm","{{.Name}}","--spec-ctrl", "on"],
         ["modifyvm","{{.Name}}","--largepages", "off"]
       ]
   }],
@@ -63,9 +61,12 @@
           "TIMEZONE=UTC",
           "BUILD_RUN=true",
           "BUILD_BOX_NAME={{user `vm_name`}}",
+          "BUILD_BOX_VERSION={{user `version`}}",
+          "BUILD_TIMESTAMP={{user `timestamp`}}",
           "BUILD_STAGE3_FILE={{user `stage3_file`}}",
           "BUILD_STAGE3_URL={{user `stage3_url`}}",
-          "BUILD_STAGE3_PATH={{user `stage3_path`}}"
+          "BUILD_STAGE3_PATH={{user `stage3_path`}}",
+          "BUILD_GUEST_ADDITIONS={{user `guest_additions`}}"
       ],
       "expect_disconnect": false
   }],
@@ -79,9 +80,12 @@
     "box_description": "{{env `BUILD_BOX_DESCRIPTION`}}",
     "guest_os_type": "{{env `BUILD_GUEST_TYPE`}}",
     "vm_name": "{{env `BUILD_BOX_NAME`}}",
+    "version": "{{env `BUILD_BOX_VERSION`}}",
+    "timestamp": "{{env `BUILD_TIMESTAMP`}}",
     "memory": "{{env `BUILD_GUEST_MEMORY`}}",
     "cpus": "{{env `BUILD_GUEST_CPUS`}}",
     "disksize": "{{env `BUILD_GUEST_DISKSIZE`}}",
+    "guest_additions": "{{env `BUILD_GUEST_ADDITIONS`}}",
     "headless": "true",
     "username": "root",
     "password": "toor"

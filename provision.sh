@@ -28,8 +28,11 @@ for script in \
   12-software-config \
   13-cleanup
 do
-  echo "**** Running $script.sh ******"
+  echo "==============================================================================="
+  echo " >>> Running $script.sh"
+  echo "==============================================================================="
   "$SCRIPTS/scripts/$script.sh"
+  printf "\n\n"
 done
 
 echo "All done."

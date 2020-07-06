@@ -3,29 +3,12 @@
 
 system("./config.sh >/dev/null")
 
-$script_guest_additions = <<SCRIPT
-# copy iso and start install
-sudo mkdir -p /mnt/temp
-sudo mount -o loop /root/VBoxGuestAdditions.iso /mnt/temp
-sudo /mnt/temp/VBoxLinuxAdditions.run
-sudo umount /mnt/temp
-sudo cat /var/log/vboxadd-setup.log
-# add user vagrant to vboxsf group
-sudo gpasswd -a vagrant vboxsf
-# auto-load vboxsf (vboxguest already loaded by udev rule):
-cat <<'DATA' | sudo tee -a /etc/conf.d/modules
-
-# Virtualbox shared folders
-modules="vboxsf"
-DATA
-# remove iso
-sudo rm -f /root/VBoxGuestAdditions.iso
-SCRIPT
-
 $script_cleanup = <<SCRIPT
 # clean stale kernel files
 sudo eclean-kernel
 sudo ego boot update
+# backup kernel config
+cp /usr/src/linux/.config /usr/src/kernel.config 
 # clean kernel sources
 cd /usr/src/linux
 sudo make distclean
@@ -60,12 +43,10 @@ Vagrant.configure("2") do |config|
     vb.customize ["modifyvm", :id, "--hpet", "on"]
     vb.customize ["modifyvm", :id, "--hwvirtex", "on"]
     vb.customize ["modifyvm", :id, "--vtxvpid", "on"]
-    vb.customize ["modifyvm", :id, "--spec-ctrl", "on"]
     vb.customize ["modifyvm", :id, "--largepages", "off"]
   end
   config.ssh.pty = true
   config.ssh.insert_key = false
   config.vm.synced_folder '.', '/vagrant', disabled: true
-  config.vm.provision "guest-additions", type: "shell", inline: $script_guest_additions
   config.vm.provision "cleanup", type: "shell", inline: $script_cleanup
 end

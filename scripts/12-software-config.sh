@@ -11,8 +11,15 @@ chroot /mnt/funtoo /bin/bash -uex <<'EOF'
 chown vagrant.vagrant ~vagrant/.$BUILD_BOX_NAME
 EOF
 
-# temp copy virtualbox additions iso for later install
-cp /tmp/VBoxGuestAdditions.iso /mnt/funtoo/root
+# replace motd
+rm -f /mnt/funtoo/etc/motd
+cat <<'DATA' | tee -a /mnt/funtoo/etc/motd
+Funtoo GNU/Linux (BUILD_BOX_NAME) - release BUILD_BOX_VERSION build BUILD_TIMESTAMP
+DATA
+sed -i 's/BUILD_BOX_NAME/'"${BUILD_BOX_NAME:-}"'/g' /mnt/funtoo/etc/motd
+sed -i 's/BUILD_BOX_VERSION/'"${BUILD_BOX_VERSION:-}"'/g' /mnt/funtoo/etc/motd
+sed -i 's/BUILD_TIMESTAMP/'"${BUILD_TIMESTAMP:-}"'/g' /mnt/funtoo/etc/motd
+cat /mnt/funtoo/etc/motd
 
 # eclean-kernel: required to remove stale files of replaced kernel
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
@@ -30,6 +37,16 @@ EOF
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
 emerge -v sys-apps/usermode-utilities net-misc/bridge-utils
 EOF
+
+# install virtualbox-guest-additions?
+if [ ${BUILD_GUEST_ADDITIONS:"false"} == "true" ]; then
+    chroot /mnt/funtoo /bin/bash -uex <<'EOF'
+emerge -vt app-emulation/virtualbox-guest-additions
+rc-update add virtualbox-guest-additions default
+gpasswd -a vagrant vboxsf
+gpasswd -a vagrant vboxguest
+EOF
+fi
 
 # perform @preserved-rebuild (just in case)
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
