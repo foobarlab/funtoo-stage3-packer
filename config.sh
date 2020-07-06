@@ -33,7 +33,7 @@ export BUILD_SYSTEMRESCUECD_VERSION="5.3.2"
 export BUILD_SYSTEMRESCUECD_FILE="systemrescuecd-x86-$BUILD_SYSTEMRESCUECD_VERSION.iso"
 export BUILD_SYSTEMRESCUECD_REMOTE_HASH="0a55c61bf24edd04ce44cdf5c3736f739349652154a7e27c4b1caaeb19276ad1"
 
-export BUILD_GUEST_ADDITIONS=true          # set to true install virtualbox guest additions
+export BUILD_GUEST_ADDITIONS=true          # set to 'true': install virtualbox guest additions
  
 if [[ -f ./release && -s release ]]; then
 	while read line; do
