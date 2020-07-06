@@ -39,13 +39,20 @@ emerge -v sys-apps/usermode-utilities net-misc/bridge-utils
 EOF
 
 # install virtualbox-guest-additions?
-if [ ${BUILD_GUEST_ADDITIONS:"false"} == "true" ]; then
-    chroot /mnt/funtoo /bin/bash -uex <<'EOF'
+if [ -z ${BUILD_GUEST_ADDITIONS:-} ]; then
+    echo "BUILD_GUEST_ADDITIONS was not set. Skipping Virtualbox Guest Additions install."
+else
+    if [ "$BUILD_GUEST_ADDITIONS" = false ]; then
+        echo "BUILD_GUEST_ADDITIONS set to FALSE. Skipping Virtualbox Guest Additions install."
+    else
+        echo "BUILD_GUEST_ADDITIONS set to TRUE. Installing Virtualbox Guest Additions ..."
+        chroot /mnt/funtoo /bin/bash -uex <<'EOF'
 emerge -vt app-emulation/virtualbox-guest-additions
 rc-update add virtualbox-guest-additions default
 gpasswd -a vagrant vboxsf
 gpasswd -a vagrant vboxguest
 EOF
+    fi
 fi
 
 # perform @preserved-rebuild (just in case)
