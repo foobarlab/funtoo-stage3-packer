@@ -16,8 +16,7 @@
       "hard_drive_interface": "sata",
       "iso_interface": "sata",
       "hard_drive_nonrotational": "true",
-      "guest_additions_mode": "{{user `guest_additions_mode`}}",
-      "guest_additions_path": "{{user `guest_additions_path`}}",
+      "guest_additions_mode": "disable",
       "guest_os_type": "{{user `guest_os_type`}}",
       "headless": "{{user `headless`}}",
       "ssh_pty": "true",
@@ -40,7 +39,6 @@
         ["modifyvm","{{.Name}}","--hpet", "on"],
         ["modifyvm","{{.Name}}","--hwvirtex", "on"],
         ["modifyvm","{{.Name}}","--vtxvpid", "on"],
-        ["modifyvm","{{.Name}}","--spec-ctrl", "on"],
         ["modifyvm","{{.Name}}","--largepages", "off"]
       ]
   }],
@@ -67,7 +65,8 @@
           "BUILD_TIMESTAMP={{user `timestamp`}}",
           "BUILD_STAGE3_FILE={{user `stage3_file`}}",
           "BUILD_STAGE3_URL={{user `stage3_url`}}",
-          "BUILD_STAGE3_PATH={{user `stage3_path`}}"
+          "BUILD_STAGE3_PATH={{user `stage3_path`}}",
+          "BUILD_GUEST_ADDITIONS={{user `guest_additions`}}"
       ],
       "expect_disconnect": false
   }],
@@ -86,8 +85,7 @@
     "memory": "{{env `BUILD_GUEST_MEMORY`}}",
     "cpus": "{{env `BUILD_GUEST_CPUS`}}",
     "disksize": "{{env `BUILD_GUEST_DISKSIZE`}}",
-    "guest_additions_mode": "{{env `BUILD_GUEST_ADDITIONS_MODE`}}",
-    "guest_additions_path": "{{env `BUILD_GUEST_ADDITIONS_PATH`}}",
+    "guest_additions": "{{env `BUILD_GUEST_ADDITIONS`}}",
     "headless": "true",
     "username": "root",
     "password": "toor"
