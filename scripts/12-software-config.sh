@@ -55,6 +55,11 @@ EOF
     fi
 fi
 
+# add up-to-date intel cpu microcode
+chroot /mnt/funtoo /bin/bash -uex <<'EOF'
+emerge -vt sys-firmware/intel-microcode sys-apps/iucode_tool
+EOF
+
 # perform @preserved-rebuild (just in case)
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
 emerge -v @preserved-rebuild
