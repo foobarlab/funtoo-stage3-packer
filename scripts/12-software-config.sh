@@ -14,7 +14,8 @@ EOF
 # replace motd
 rm -f /mnt/funtoo/etc/motd
 cat <<'DATA' | tee -a /mnt/funtoo/etc/motd
-Funtoo GNU/Linux (BUILD_BOX_NAME) - release BUILD_BOX_VERSION build BUILD_TIMESTAMP
+Funtoo GNU/Linux Vagrant Box (BUILD_BOX_NAME) - release BUILD_BOX_VERSION build BUILD_TIMESTAMP
+
 DATA
 sed -i 's/BUILD_BOX_NAME/'"${BUILD_BOX_NAME:-}"'/g' /mnt/funtoo/etc/motd
 sed -i 's/BUILD_BOX_VERSION/'"${BUILD_BOX_VERSION:-}"'/g' /mnt/funtoo/etc/motd
