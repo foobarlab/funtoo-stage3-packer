@@ -15,13 +15,24 @@ EOF
 rm -f /mnt/funtoo/etc/motd
 cat <<'DATA' | tee -a /mnt/funtoo/etc/motd
 
-Funtoo GNU/Linux Vagrant Box (BUILD_BOX_NAME) - release BUILD_BOX_VERSION build BUILD_TIMESTAMP
+Funtoo GNU/Linux Vagrant Box (BUILD_BOX_USERNAME/BUILD_BOX_NAME) - release BUILD_BOX_VERSION build BUILD_TIMESTAMP
 
 DATA
 sed -i 's/BUILD_BOX_NAME/'"${BUILD_BOX_NAME:-}"'/g' /mnt/funtoo/etc/motd
+sed -i 's/BUILD_BOX_USERNAME/'"$BUILD_BOX_USERNAME"'/g' /mnt/funtoo/etc/motd
 sed -i 's/BUILD_BOX_VERSION/'"${BUILD_BOX_VERSION:-}"'/g' /mnt/funtoo/etc/motd
 sed -i 's/BUILD_TIMESTAMP/'"${BUILD_TIMESTAMP:-}"'/g' /mnt/funtoo/etc/motd
 cat /mnt/funtoo/etc/motd
+
+mv -f /mnt/funtoo/etc/issue /mnt/funtoo/etc/issue.old
+cat <<'DATA' | tee -a /mnt/funtoo/etc/issue
+This is a Funtoo GNU/Linux Vagrant Box (BUILD_BOX_USERNAME/BUILD_BOX_NAME BUILD_BOX_VERSION)
+
+DATA
+sed -i 's/BUILD_BOX_VERSION/'$BUILD_BOX_VERSION'/g' /mnt/funtoo/etc/issue
+sed -i 's/BUILD_BOX_NAME/'$BUILD_BOX_NAME'/g' /mnt/funtoo/etc/issue
+sed -i 's/BUILD_BOX_USERNAME/'"$BUILD_BOX_USERNAME"'/g' /mnt/funtoo/etc/issue
+cat /mnt/funtoo/etc/issue
 
 # eclean-kernel: required to remove stale files of replaced kernel
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
