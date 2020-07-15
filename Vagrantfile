@@ -43,7 +43,7 @@ Vagrant.configure("2") do |config|
     vb.customize ["modifyvm", :id, "--hpet", "on"]
     vb.customize ["modifyvm", :id, "--hwvirtex", "on"]
     vb.customize ["modifyvm", :id, "--vtxvpid", "on"]
-    vb.customize ["modifyvm", :id, "--largepages", "off"]
+    vb.customize ["modifyvm", :id, "--largepages", "on"]
   end
   config.ssh.pty = true
   config.ssh.insert_key = false
