@@ -73,6 +73,11 @@ chroot /mnt/funtoo /bin/bash -uex <<'EOF'
 emerge -vt sys-firmware/intel-microcode sys-apps/iucode_tool
 EOF
 
+# perl-cleaner
+chroot /mnt/funtoo /bin/bash -uex <<'EOF'
+perl-cleaner --all
+EOF
+
 # perform @preserved-rebuild (just in case)
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
 emerge -v @preserved-rebuild
