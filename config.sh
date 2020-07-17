@@ -54,9 +54,9 @@ if [[ -f ./release && -s release ]]; then
 	fi
 fi
 
-export BUILD_BOX_DESCRIPTION="$BUILD_BOX_DESCRIPTION<br>created @$BUILD_TIMESTAMP"
+export BUILD_BOX_DESCRIPTION="$BUILD_BOX_DESCRIPTION<br>created @$BUILD_TIMESTAMP<br><br>Source code: https://github.com/foobarlab/funtoo-stage3-packer"
 
-export BUILD_KEEP_MAX_CLOUD_BOXES=4		# set the maximum number of boxes to keep in Vagrant Cloud
+export BUILD_KEEP_MAX_CLOUD_BOXES=3		# set the maximum number of boxes to keep in Vagrant Cloud
 
 if [ $# -eq 0 ]; then
 	echo "Executing $0 ..."
