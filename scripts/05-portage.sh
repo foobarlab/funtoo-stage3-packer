@@ -7,4 +7,5 @@ fi
 
 cat <<'DATA' | tee -a /mnt/funtoo/etc/portage/make.conf
 ACCEPT_LICENSE="-* @FREE @BINARY-REDISTRIBUTABLE"
+USE="bindist"
 DATA
