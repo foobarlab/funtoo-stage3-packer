@@ -41,8 +41,10 @@ EOF
 
 # fix PATH in roots .bashrc
 cat <<'DATA' | tee -a /mnt/funtoo/root/.bashrc
+
 # add /usr/local paths
 export PATH=$PATH:/usr/local/bin:/usr/local/sbin
+
 DATA
 
 # eclean-kernel: required to remove stale files of replaced kernel
