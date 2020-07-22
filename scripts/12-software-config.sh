@@ -36,7 +36,7 @@ cat /mnt/funtoo/etc/issue
 
 # add roots .bashrc initial skeleton
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
-cat /mnt/funtoo/etc/skel/.bashrc > /mnt/funtoo/root/.bashrc
+cat /etc/skel/.bashrc > /root/.bashrc
 EOF
 
 # fix PATH in roots .bashrc
