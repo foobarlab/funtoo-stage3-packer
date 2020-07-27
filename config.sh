@@ -34,6 +34,8 @@ export BUILD_SYSTEMRESCUECD_FILE="systemrescuecd-x86-$BUILD_SYSTEMRESCUECD_VERSI
 export BUILD_SYSTEMRESCUECD_REMOTE_HASH="0a55c61bf24edd04ce44cdf5c3736f739349652154a7e27c4b1caaeb19276ad1"
 
 export BUILD_GUEST_ADDITIONS=true          # set to 'true': install virtualbox guest additions
+
+export BUILD_KEEP_MAX_CLOUD_BOXES=1        # set the maximum number of boxes to keep in Vagrant Cloud
  
 if [[ -f ./release && -s release ]]; then
 	while read line; do
@@ -55,8 +57,6 @@ if [[ -f ./release && -s release ]]; then
 fi
 
 export BUILD_BOX_DESCRIPTION="$BUILD_BOX_DESCRIPTION<br>created @$BUILD_TIMESTAMP<br><br>Source code: https://github.com/foobarlab/funtoo-stage3-packer"
-
-export BUILD_KEEP_MAX_CLOUD_BOXES=3		# set the maximum number of boxes to keep in Vagrant Cloud
 
 if [ $# -eq 0 ]; then
 	echo "Executing $0 ..."
