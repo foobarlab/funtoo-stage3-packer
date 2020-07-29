@@ -12,6 +12,7 @@ EOF
 chroot /mnt/funtoo /bin/bash <<'EOF'
 emerge --depclean
 find /etc/ -name '._cfg*'              # DEBUG: list all config files needing an update
+find /etc/ -name '._cfg*' -print -exec cat -n '{}' \;  # DEBUG: cat all config files needing an update
 etc-update --verbose --preen           # auto-merge trivial changes
 EOF
 
