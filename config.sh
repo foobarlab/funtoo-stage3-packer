@@ -4,7 +4,7 @@ export BUILD_BOX_NAME="funtoo-stage3"
 export BUILD_BOX_VERSION="0"
 
 export BUILD_GUEST_TYPE="Gentoo_64"
-export BUILD_GUEST_DISKSIZE="40000"
+export BUILD_GUEST_DISKSIZE="50000"    # dynamic disksize in MB, e.g. 50000 => 50 GB
 
 # memory/cpus used during box creation:
 export BUILD_GUEST_CPUS="4"
