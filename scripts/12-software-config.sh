@@ -34,11 +34,6 @@ sed -i 's/BUILD_BOX_NAME/'$BUILD_BOX_NAME'/g' /mnt/funtoo/etc/issue
 sed -i 's/BUILD_BOX_USERNAME/'"$BUILD_BOX_USERNAME"'/g' /mnt/funtoo/etc/issue
 cat /mnt/funtoo/etc/issue
 
-# add roots .bashrc initial skeleton
-chroot /mnt/funtoo /bin/bash -uex <<'EOF'
-cat /etc/skel/.bashrc > /root/.bashrc
-EOF
-
 # fix PATH in roots .bashrc
 cat <<'DATA' | tee -a /mnt/funtoo/root/.bashrc
 
