@@ -6,9 +6,9 @@ if [ -z ${BUILD_RUN:-} ]; then
 fi
 
 # copy stage3 release info to vagrant home
-cp /tmp/scripts/.$BUILD_BOX_NAME /mnt/funtoo/home/vagrant/.release_info_$BUILD_BOX_NAME
+cp /tmp/scripts/.$BUILD_BOX_NAME /mnt/funtoo/home/vagrant/.release_$BUILD_BOX_NAME
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
-chown vagrant.vagrant ~vagrant/.release_info_$BUILD_BOX_NAME
+chown vagrant.vagrant ~vagrant/.release_$BUILD_BOX_NAME
 EOF
 
 # replace motd
@@ -24,7 +24,7 @@ sed -i 's/BUILD_BOX_VERSION/'"${BUILD_BOX_VERSION:-}"'/g' /mnt/funtoo/etc/motd
 sed -i 's/BUILD_TIMESTAMP/'"${BUILD_TIMESTAMP:-}"'/g' /mnt/funtoo/etc/motd
 cat /mnt/funtoo/etc/motd
 
-mv -f /mnt/funtoo/etc/issue /mnt/funtoo/etc/issue.old
+rm -f /mnt/funtoo/etc/issue
 cat <<'DATA' | tee -a /mnt/funtoo/etc/issue
 This is a Funtoo GNU/Linux Vagrant Box (BUILD_BOX_USERNAME/BUILD_BOX_NAME BUILD_BOX_VERSION)
 
