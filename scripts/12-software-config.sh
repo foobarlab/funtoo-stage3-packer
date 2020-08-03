@@ -6,7 +6,7 @@ if [ -z ${BUILD_RUN:-} ]; then
 fi
 
 # copy stage3 release info to vagrant home
-cp /tmp/scripts/.$BUILD_BOX_NAME /mnt/funtoo/home/vagrant/.release_$BUILD_BOX_NAME
+cp /tmp/scripts/.release_$BUILD_BOX_NAME /mnt/funtoo/home/vagrant/
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
 chown vagrant.vagrant ~vagrant/.release_$BUILD_BOX_NAME
 EOF

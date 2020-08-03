@@ -9,4 +9,4 @@ output-virtualbox-iso/
 packer.log
 release
 vagrant-cloud-*
-scripts/.funtoo-stage3
+scripts/.release_*
