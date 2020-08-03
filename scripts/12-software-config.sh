@@ -6,9 +6,9 @@ if [ -z ${BUILD_RUN:-} ]; then
 fi
 
 # copy stage3 release info to vagrant home
-cp /tmp/scripts/.$BUILD_BOX_NAME /mnt/funtoo/home/vagrant/
+cp /tmp/scripts/.$BUILD_BOX_NAME /mnt/funtoo/home/vagrant/.release_info_$BUILD_BOX_NAME
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
-chown vagrant.vagrant ~vagrant/.$BUILD_BOX_NAME
+chown vagrant.vagrant ~vagrant/.release_info_$BUILD_BOX_NAME
 EOF
 
 # replace motd
@@ -83,10 +83,11 @@ EOF
 
 # perl-cleaner
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
-perl-cleaner --all
+perl-cleaner --reallyall
 EOF
 
-# perform @preserved-rebuild (just in case)
+# perform @preserved-rebuild, rebuild reverse dependencies
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
 emerge -v @preserved-rebuild
+revdep-rebuild
 EOF
