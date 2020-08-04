@@ -22,6 +22,15 @@ gcc-config -l || gcc-config 1
 ego sync
 EOF
 
+# prepare kernel config
+if [ -f ${SCRIPTS}/scripts/kernel.config ]; then
+	cp ${SCRIPTS}/scripts/kernel.config /mnt/funtoo/usr/src
+	cp /mnt/funtoo/usr/src/linux/.config /mnt/funtoo/usr/src/kernel.config.stage3-dist
+else
+	cp /mnt/funtoo/usr/src/linux/.config /mnt/funtoo/usr/src/kernel.config.stage3-dist
+fi
+
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
-emerge --update --newuse --deep --with-bdeps=y @world
+#genkernel --loglevel=1 --no-busybox --config=/usr/src/kernel.config  all  # FIXME
+emerge -vt --update --newuse --deep --with-bdeps=y @world
 EOF

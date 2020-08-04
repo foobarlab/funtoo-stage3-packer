@@ -7,8 +7,6 @@ $script_cleanup = <<SCRIPT
 # clean stale kernel files
 eclean-kernel
 ego boot update
-# backup kernel config
-cp /usr/src/linux/.config /usr/src/kernel.config 
 # clean kernel sources
 cd /usr/src/linux
 make distclean
