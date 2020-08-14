@@ -43,7 +43,23 @@ if [[ -f ./release && -s release ]]; then
 		line_value=`echo $line |cut -d "=" -f2 | sed -e 's/"//g'`
 		export "BUILD_RELEASE_$line_name=$line_value"
 	done < ./release
-	export BUILD_BOX_VERSION=`echo $BUILD_RELEASE_VERSION | sed -e 's/\-/./g'`
+	BUILD_BOX_VERSION=`echo $BUILD_RELEASE_VERSION | sed -e 's/\-/./g'`
+	# generate build_number
+	if [ -z ${BUILD_NUMBER:-} ] ; then
+		if [ -f build_number ]; then
+			# read from file and increase by one
+			BUILD_NUMBER=$(<build_number)
+			BUILD_NUMBER=$((BUILD_NUMBER+1))
+		else
+			BUILD_NUMBER=1
+		fi
+		# add leading zeros
+		BUILD_NUMBER=$(printf "%0*d" 4 $BUILD_NUMBER)
+		# store for later reuse in file 'build_number'
+		echo $BUILD_NUMBER > build_number
+		export BUILD_NUMBER
+	fi
+	export BUILD_BOX_VERSION=$BUILD_BOX_VERSION$BUILD_NUMBER
 	export BUILD_OUTPUT_FILE="$BUILD_BOX_NAME-$BUILD_RELEASE_VERSION.box"
 	
 	BUILD_BOX_DESCRIPTION="Funtoo 1.4 ($BUILD_FUNTOO_ARCHITECTURE)<br><br>$BUILD_BOX_NAME version $BUILD_BOX_VERSION ($BUILD_RELEASE_VERSION_ID)"
