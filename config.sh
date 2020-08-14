@@ -53,11 +53,10 @@ if [[ -f ./release && -s release ]]; then
 		else
 			BUILD_NUMBER=1
 		fi
-		# add leading zeros
-		BUILD_NUMBER=$(printf "%0*d" 4 $BUILD_NUMBER)
 		# store for later reuse in file 'build_number'
 		echo $BUILD_NUMBER > build_number
-		export BUILD_NUMBER
+		# add leading zeros
+		export BUILD_NUMBER=$(printf "%0*d" 4 $BUILD_NUMBER)
 	fi
 	export BUILD_BOX_VERSION=$BUILD_BOX_VERSION$BUILD_NUMBER
 	export BUILD_OUTPUT_FILE="$BUILD_BOX_NAME-$BUILD_RELEASE_VERSION.box"
