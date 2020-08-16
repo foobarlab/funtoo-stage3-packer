@@ -1,7 +1,8 @@
 #!/bin/bash
 
 export BUILD_BOX_NAME="funtoo-stage3"
-export BUILD_BOX_VERSION="0"
+export BUILD_BOX_FUNTOO_VERSION="1.4"
+export BUILD_BOX_SOURCES="https://github.com/foobarlab/funtoo-stage3-packer"
 
 export BUILD_GUEST_TYPE="Gentoo_64"
 export BUILD_GUEST_DISKSIZE="50000"    # dynamic disksize in MB, e.g. 50000 => 50 GB
@@ -36,14 +37,18 @@ export BUILD_SYSTEMRESCUECD_REMOTE_HASH="0a55c61bf24edd04ce44cdf5c3736f739349652
 export BUILD_GUEST_ADDITIONS=true          # set to 'true': install virtualbox guest additions
 
 export BUILD_KEEP_MAX_CLOUD_BOXES=1        # set the maximum number of boxes to keep in Vagrant Cloud
- 
+
+export BUILD_BOX_VERSION=`echo $BUILD_BOX_FUNTOO_VERSION | sed -e 's/\.//g'`
+
 if [[ -f ./release && -s release ]]; then
 	while read line; do
 		line_name=`echo $line |cut -d "=" -f1`
 		line_value=`echo $line |cut -d "=" -f2 | sed -e 's/"//g'`
 		export "BUILD_RELEASE_$line_name=$line_value"
 	done < ./release
-	BUILD_BOX_VERSION=`echo $BUILD_RELEASE_VERSION | sed -e 's/\-/./g'`
+	BUILD_BOX_RELEASE_VERSION=`echo $BUILD_RELEASE_VERSION | sed -e 's/\-//g'`
+	export BUILD_BOX_RELEASE_VERSION=`echo $BUILD_BOX_RELEASE_VERSION | sed -e 's/20//'`
+	BUILD_BOX_VERSION=$BUILD_BOX_VERSION.$BUILD_BOX_RELEASE_VERSION
 	# generate build_number
 	if [ -z ${BUILD_NUMBER:-} ] ; then
 		if [ -f build_number ]; then
@@ -53,15 +58,14 @@ if [[ -f ./release && -s release ]]; then
 		else
 			BUILD_NUMBER=1
 		fi
+		export BUILD_NUMBER
 		# store for later reuse in file 'build_number'
 		echo $BUILD_NUMBER > build_number
-		# add leading zeros
-		export BUILD_NUMBER=$(printf "%0*d" 4 $BUILD_NUMBER)
 	fi
-	export BUILD_BOX_VERSION=$BUILD_BOX_VERSION$BUILD_NUMBER
-	export BUILD_OUTPUT_FILE="$BUILD_BOX_NAME-$BUILD_RELEASE_VERSION.box"
+	export BUILD_BOX_VERSION=$BUILD_BOX_VERSION.$BUILD_NUMBER
+	export BUILD_OUTPUT_FILE="$BUILD_BOX_NAME-$BUILD_BOX_VERSION.box"
 	
-	BUILD_BOX_DESCRIPTION="Funtoo 1.4 ($BUILD_FUNTOO_ARCHITECTURE)<br><br>$BUILD_BOX_NAME version $BUILD_BOX_VERSION ($BUILD_RELEASE_VERSION_ID)"
+	BUILD_BOX_DESCRIPTION="Funtoo $BUILD_BOX_FUNTOO_VERSION ($BUILD_FUNTOO_ARCHITECTURE)<br><br>$BUILD_BOX_NAME version $BUILD_BOX_VERSION ($BUILD_RELEASE_VERSION_ID)"
 	if [ -z ${BUILD_NUMBER+x} ] || [ -z ${BUILD_TAG+x} ]; then
 		# without build number/tag
 		BUILD_BOX_DESCRIPTION="$BUILD_BOX_DESCRIPTION"
@@ -71,7 +75,7 @@ if [[ -f ./release && -s release ]]; then
 	fi
 fi
 
-export BUILD_BOX_DESCRIPTION="$BUILD_BOX_DESCRIPTION<br>created @$BUILD_TIMESTAMP<br><br>Source code: https://github.com/foobarlab/funtoo-stage3-packer"
+export BUILD_BOX_DESCRIPTION="$BUILD_BOX_DESCRIPTION<br>created @$BUILD_TIMESTAMP<br><br>Source code: $BUILD_BOX_SOURCES"
 
 if [ $# -eq 0 ]; then
 	echo "Executing $0 ..."
