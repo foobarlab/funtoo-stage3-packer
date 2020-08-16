@@ -59,6 +59,16 @@ chroot /mnt/funtoo /bin/bash -uex <<'EOF'
 emerge -v sys-apps/usermode-utilities net-misc/bridge-utils
 EOF
 
+# add up-to-date intel cpu microcode
+chroot /mnt/funtoo /bin/bash -uex <<'EOF'
+emerge -vt sys-firmware/intel-microcode sys-apps/iucode_tool
+EOF
+
+# perl-cleaner
+chroot /mnt/funtoo /bin/bash -uex <<'EOF'
+perl-cleaner --reallyall
+EOF
+
 # install virtualbox-guest-additions?
 if [ -z ${BUILD_GUEST_ADDITIONS:-} ]; then
     echo "BUILD_GUEST_ADDITIONS was not set. Skipping Virtualbox Guest Additions install."
@@ -75,16 +85,6 @@ gpasswd -a vagrant vboxguest
 EOF
     fi
 fi
-
-# add up-to-date intel cpu microcode
-chroot /mnt/funtoo /bin/bash -uex <<'EOF'
-emerge -vt sys-firmware/intel-microcode sys-apps/iucode_tool
-EOF
-
-# perl-cleaner
-chroot /mnt/funtoo /bin/bash -uex <<'EOF'
-perl-cleaner --reallyall
-EOF
 
 # perform @preserved-rebuild, rebuild reverse dependencies
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
