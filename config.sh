@@ -60,7 +60,7 @@ if [[ -f ./release && -s release ]]; then
 				BUILD_NUMBER=$(<build_number)
 				BUILD_NUMBER=$((BUILD_NUMBER+1))
 			else
-				BUILD_NUMBER=1
+				BUILD_NUMBER=0
 			fi
 			export BUILD_NUMBER
 			# store for later reuse in file 'build_number'
