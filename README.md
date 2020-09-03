@@ -10,7 +10,7 @@ This is a minimal stage3 snapshot of Funtoo Linux that is packaged into a Vagran
  - Timezone: ```UTC```
  - NAT Networking using DHCP (virtio)
  - Vagrant user *vagrant* with password *vagrant* (can get superuser via sudo without password), additionally using the default SSH authorized keys provided by Vagrant (see https://github.com/hashicorp/vagrant/tree/master/keys) 
- - Kernel: default included from stage3 tarball (debian-sources-lts with default config)
+ - Kernel 4.19 included from stage3 tarball (debian-sources-lts with default config)
  - (Optional, enabled by default) VirtualBox 6.1 Guest Additions
  - Additionally installed software:
    - *sudo*
