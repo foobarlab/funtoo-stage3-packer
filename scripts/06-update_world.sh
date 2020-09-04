@@ -15,7 +15,6 @@ env-update
 source /etc/profile
 etc-update --preen
 etc-update --automode -5
-emerge --depclean
 # ensure we use a valid gcc version (see also FL-6143)
 gcc-config -l || gcc-config 1
 # re-sync
@@ -30,7 +29,7 @@ else
 	cp /mnt/funtoo/usr/src/linux/.config /mnt/funtoo/usr/src/kernel.config.stage3-dist
 fi
 
+# update world, but skip kernel
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
-#genkernel --loglevel=1 --no-busybox --config=/usr/src/kernel.config  all  # FIXME
-emerge -vt --update --newuse --deep --with-bdeps=y @world
+emerge -vt --update --newuse --deep --with-bdeps=y @world --exclude="sys-kernel/debian-sources-lts"
 EOF

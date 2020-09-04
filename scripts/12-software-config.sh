@@ -66,7 +66,7 @@ EOF
 
 # perl-cleaner
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
-perl-cleaner --reallyall
+perl-cleaner --all
 EOF
 
 # install virtualbox-guest-additions?
