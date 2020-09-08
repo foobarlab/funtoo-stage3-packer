@@ -69,6 +69,8 @@ else
 	echo "Skipping extraction of stage3 release info. Already extracted."
 fi
 
+. config.sh
+
 BUILD_HASH_URL="${BUILD_FUNTOO_DOWNLOADPATH}/${BUILD_RELEASE_VERSION}/stage3-generic_64-1.4-release-std-${BUILD_RELEASE_VERSION}.tar.xz.hash.txt"
 BUILD_HASH_FILE="${BUILD_STAGE3_FILE}.hash.txt"
 
