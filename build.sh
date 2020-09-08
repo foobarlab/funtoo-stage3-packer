@@ -69,6 +69,39 @@ else
 	echo "Skipping extraction of stage3 release info. Already extracted."
 fi
 
+BUILD_HASH_URL="${BUILD_FUNTOO_DOWNLOADPATH}/${BUILD_RELEASE_VERSION}/stage3-generic_64-1.4-release-std-${BUILD_RELEASE_VERSION}.tar.xz.hash.txt"
+BUILD_HASH_FILE="${BUILD_STAGE3_FILE}.hash.txt"
+
+if [ -f "$BUILD_HASH_FILE" ]; then
+	rm -f "$BUILD_HASH_FILE"
+fi
+
+if [ ! -f ./${BUILD_HASH_FILE} ]; then
+	echo "Downloading hash of stage3 file ..."
+	wget ${BUILD_HASH_URL} -O ./${BUILD_HASH_FILE}
+fi
+
+BUILD_STAGE3_LOCAL_HASH=$(cat $BUILD_STAGE3_FILE | sha256sum | grep -o '^\S\+')
+BUILD_STAGE3_REMOTE_HASH=$(cat $BUILD_HASH_FILE | sed -e 's/^sha256\s//g')
+
+if [ "$BUILD_STAGE3_LOCAL_HASH" == "$BUILD_STAGE3_REMOTE_HASH" ]; then
+    echo "'$BUILD_STAGE3_FILE' checksums matched. Proceeding ..."
+else
+    echo "'$BUILD_STAGE3_FILE' checksums did NOT match. The file is possibly outdated or corrupted."
+	read -p "Do you want to delete it and try again (Y/n)? " choice
+	case "$choice" in 
+	  n|N ) echo "Canceled by user."
+	  		exit 1
+	        ;;
+	  * ) echo "Deleting '$BUILD_STAGE3_FILE' ..."
+	      rm -f $BUILD_STAGE3_FILE
+	      echo "Cleanup stage3 release info ..."
+	      rm -f ./release
+	      exec $0
+	      ;;
+	esac
+fi
+
 . config.sh
 
 # as we do not want to build an already existing release on vagrant cloud automatically we better ask the user
