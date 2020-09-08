@@ -15,6 +15,6 @@ else
 fi
 
 cd /mnt/funtoo
-tar xpf $BUILD_STAGE3_FILE
+tar --numeric-owner --xattrs --xattrs-include='*' -xpf $BUILD_STAGE3_FILE
 rm -f $BUILD_STAGE3_FILE
 ls -l
