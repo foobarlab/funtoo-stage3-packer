@@ -5,14 +5,14 @@ system("./config.sh >/dev/null")
 
 $script_cleanup = <<SCRIPT
 # clean stale kernel files
-mount /boot
+mount /boot || true
 eclean-kernel -l
 eclean-kernel -n 1
 ego boot update
 # clean kernel sources
 cd /usr/src/linux
 make distclean
-# /boot (initially not mounted)
+# /boot
 mount -o remount,ro /dev/sda1
 zerofree /dev/sda1
 # /
