@@ -69,6 +69,8 @@ else
 	echo "Skipping extraction of stage3 release info. Already extracted."
 fi
 
+. config.sh
+
 BUILD_HASH_URL="${BUILD_FUNTOO_DOWNLOADPATH}/${BUILD_RELEASE_VERSION}/stage3-generic_64-1.4-release-std-${BUILD_RELEASE_VERSION}.tar.xz.hash.txt"
 BUILD_HASH_FILE="${BUILD_STAGE3_FILE}.hash.txt"
 
@@ -149,7 +151,9 @@ packer build virtualbox.json
 
 rm -f ./scripts/$BUILD_STAGE3_FILE
 
-echo "Optimizing box size ..."
+echo "------------------------------------------------------------------------"
+echo "                         OPTIMIZING BOX SIZE"
+echo "------------------------------------------------------------------------"
 
 if [ -f "$BUILD_OUTPUT_FILE_TEMP" ]; then
     echo "Suspending any running instances ..."
