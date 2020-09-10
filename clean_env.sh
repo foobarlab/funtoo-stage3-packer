@@ -32,8 +32,6 @@ echo "Current Status for VirtualBox (if any): "
 $VBOXMANAGE list vms
 echo "Current Status for Vagrant (if any):"
 vagrant global-status
-#echo "Drop build number ..."
-#rm -f build_number || true
 
 # basic cleanup
 . clean.sh
