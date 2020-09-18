@@ -32,12 +32,12 @@ cat /dev/null > ~/.bash_history && history -c
 
 mount -o remount,ro /mnt/funtoo
 chroot /mnt/funtoo /bin/bash <<'EOF'
-zerofree /dev/sda4
+zerofree -v /dev/sda4
 EOF
 
 mount -o remount,ro /mnt/funtoo/boot
 chroot /mnt/funtoo /bin/bash <<'EOF'
-zerofree /dev/sda1
+zerofree -v /dev/sda1
 EOF
 
 swapoff /dev/sda3
