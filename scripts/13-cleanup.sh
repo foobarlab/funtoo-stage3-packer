@@ -9,6 +9,11 @@ chroot /mnt/funtoo /bin/bash <<'EOF'
 emerge -v sys-fs/zerofree
 EOF
 
+# regenerate 'world' file before depclean
+chroot /mnt/funtoo /bin/bash <<'EOF'
+REGEN_WORLD_FILE=(`regenworld | grep "  new: " | sed -e 's/  new: //g'`) && if [ -f "$REGEN_WORLD_FILE" ]; then mv /var/lib/portage/world /var/lib/portage/world.bak; mv "$REGEN_WORLD_FILE" /var/lib/portage/world; fi
+EOF
+
 chroot /mnt/funtoo /bin/bash <<'EOF'
 emerge --depclean
 find /etc/ -name '._cfg*'              # DEBUG: list all config files needing an update
@@ -18,6 +23,7 @@ EOF
 
 rm -f /mnt/funtoo/etc/resolv.conf
 rm -f /mnt/funtoo/etc/resolv.conf.bak
+rm -rf /mnt/funtoo/usr/tmp/*
 rm -rf /mnt/funtoo/var/cache/portage/distfiles/*
 rm -rf /mnt/funtoo/var/git/meta-repo
 rm -rf /mnt/funtoo/tmp/*
