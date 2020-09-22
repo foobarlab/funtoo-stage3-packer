@@ -14,10 +14,10 @@ cd /usr/src/linux
 make distclean
 # /boot
 mount -o remount,ro /dev/sda1
-zerofree /dev/sda1
+zerofree -v /dev/sda1
 # /
 mount -o remount,ro /dev/sda4
-zerofree /dev/sda4
+zerofree -v /dev/sda4
 # swap
 swapoff /dev/sda3
 bash -c 'dd if=/dev/zero of=/dev/sda3 2>/dev/null' || true
