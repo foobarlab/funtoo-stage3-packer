@@ -14,8 +14,7 @@ This is a minimal stage3 snapshot of Funtoo Linux that is packaged into a Vagran
  - (Optional, enabled by default) VirtualBox 6.1 Guest Additions
  - Additionally installed software:
    - *sudo*
-   - *usermode-utilities* and *bridge-utils* for advanced networking
-   - *nfs-utils* and *sshfs* for alternative shared folders
+   - *usermode-utilities*, *bridge-utils* and *nfs-utils* for advanced networking
    - *acpid* (enables graceful acpi shutdown for VirtualBox)
    - *zerofree* (fills empty hdd space with zeros)
    - *eclean-kernel* (cleanup kernel sources and stale files)

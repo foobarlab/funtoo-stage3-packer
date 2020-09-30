@@ -14,17 +14,4 @@ USE="bindist"
 
 ACCEPT_LICENSE="-* @FREE @BINARY-REDISTRIBUTABLE"
 
-CURL_SSL="libressl"
-
-DATA
-
-mkdir -p /mnt/funtoo/etc/portage/package.use
-cat <<'DATA' | tee -a /mnt/funtoo/etc/portage/package.use/stage3-libressl
-net-misc/curl http2
-net-libs/nghttp2 libressl
-DATA
-
-mkdir -p /mnt/funtoo/etc/portage/package.accept_keywords
-cat <<'DATA' | tee -a /mnt/funtoo/etc/portage/package.accept_keywords/stage3-libressl
-dev-libs/libressl **
 DATA
