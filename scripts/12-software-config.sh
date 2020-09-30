@@ -69,7 +69,7 @@ EOF
 
 # add fuse + sshfs
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
-emerge -vt sys-fs/fuse net-fs/sshfs 
+emerge -vt sys-fs/fuse net-fs/sshfs
 EOF
 
 # perl-cleaner
