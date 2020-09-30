@@ -5,6 +5,9 @@ if [ -z ${BUILD_RUN:-} ]; then
   exit 1
 fi
 
+# tweak sshd config (speed up logins) => "UseDNS no"
+sed -i 's/#UseDNS/UseDNS/g' /mnt/funtoo/etc/ssh/sshd_config
+
 # copy stage3 release info to vagrant home
 cp /tmp/scripts/.release_$BUILD_BOX_NAME /mnt/funtoo/home/vagrant/
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
@@ -62,6 +65,11 @@ EOF
 # add up-to-date intel cpu microcode
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
 emerge -vt sys-firmware/intel-microcode sys-apps/iucode_tool
+EOF
+
+# add fuse + sshfs
+chroot /mnt/funtoo /bin/bash -uex <<'EOF'
+emerge -vt sys-fs/fuse net-fs/sshfs
 EOF
 
 # perl-cleaner
