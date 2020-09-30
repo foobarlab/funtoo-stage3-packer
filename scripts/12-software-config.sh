@@ -5,6 +5,9 @@ if [ -z ${BUILD_RUN:-} ]; then
   exit 1
 fi
 
+# tweak sshd config (speed up logins) => "UseDNS no"
+sed -i 's/#UseDNS/UseDNS/g' /mnt/funtoo/etc/ssh/sshd_config
+
 # copy stage3 release info to vagrant home
 cp /tmp/scripts/.release_$BUILD_BOX_NAME /mnt/funtoo/home/vagrant/
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
