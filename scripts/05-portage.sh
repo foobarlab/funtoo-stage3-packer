@@ -19,7 +19,7 @@ CURL_SSL="libressl"
 DATA
 
 mkdir -p /mnt/funtoo/etc/portage/package.use
-cat <<'DATA' | tee -a /mnt/funtoo/etc/portage/package.use/stage3-libressl
+cat <<'DATA' | tee -a /mnt/funtoo/etc/portage/package.use/stage3
 net-misc/curl http2
 net-libs/nghttp2 libressl
 DATA

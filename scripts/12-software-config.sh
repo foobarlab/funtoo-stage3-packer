@@ -67,11 +67,6 @@ chroot /mnt/funtoo /bin/bash -uex <<'EOF'
 emerge -vt sys-firmware/intel-microcode sys-apps/iucode_tool
 EOF
 
-# add fuse + sshfs
-chroot /mnt/funtoo /bin/bash -uex <<'EOF'
-emerge -vt sys-fs/fuse net-fs/sshfs
-EOF
-
 # perl-cleaner
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
 perl-cleaner --all
