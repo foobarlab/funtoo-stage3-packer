@@ -40,7 +40,9 @@
         ["modifyvm","{{.Name}}","--hpet", "on"],
         ["modifyvm","{{.Name}}","--hwvirtex", "on"],
         ["modifyvm","{{.Name}}","--vtxvpid", "on"],
-        ["modifyvm","{{.Name}}","--largepages", "on"]
+        ["modifyvm","{{.Name}}","--largepages", "on"],
+        ["modifyvm","{{.Name}}","--graphicscontroller", "vmsvga"],
+        ["modifyvm","{{.Name}}","--accelerate3d", "off"]
       ]
   }],
   "description": "{{user `box_description`}}",
@@ -58,12 +60,12 @@
       "script": "provision.sh",
       "environment_vars": [
           "SCRIPTS=/tmp",
-          "MAKEOPTS=-j{{user `cpus`}}",
           "TIMEZONE=UTC",
           "BUILD_RUN=true",
           "BUILD_BOX_NAME={{user `vm_name`}}",
           "BUILD_BOX_USERNAME={{user `vm_username`}}",
           "BUILD_BOX_VERSION={{user `version`}}",
+          "BUILD_MAKEOPTS={{user `makeopts`}}",
           "BUILD_TIMESTAMP={{user `timestamp`}}",
           "BUILD_STAGE3_FILE={{user `stage3_file`}}",
           "BUILD_STAGE3_URL={{user `stage3_url`}}",
@@ -84,9 +86,10 @@
     "vm_name": "{{env `BUILD_BOX_NAME`}}",
     "vm_username": "{{env `BUILD_BOX_USERNAME`}}",
     "version": "{{env `BUILD_BOX_VERSION`}}",
+    "makeopts": "{{env `BUILD_MAKEOPTS`}}",
     "timestamp": "{{env `BUILD_TIMESTAMP`}}",
-    "memory": "{{env `BUILD_GUEST_MEMORY`}}",
-    "cpus": "{{env `BUILD_GUEST_CPUS`}}",
+    "cpus": "{{env `BUILD_CPUS`}}",
+    "memory": "{{env `BUILD_MEMORY`}}",
     "disksize": "{{env `BUILD_GUEST_DISKSIZE`}}",
     "guest_additions": "{{env `BUILD_GUEST_ADDITIONS`}}",
     "headless": "true",

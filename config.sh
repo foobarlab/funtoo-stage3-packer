@@ -7,9 +7,8 @@ export BUILD_BOX_SOURCES="https://github.com/foobarlab/funtoo-stage3-packer"
 export BUILD_GUEST_TYPE="Gentoo_64"
 export BUILD_GUEST_DISKSIZE="50000"    # dynamic disksize in MB, e.g. 50000 => 50 GB
 
-# memory/cpus used during box creation:
-export BUILD_GUEST_CPUS="4"
-export BUILD_GUEST_MEMORY="4096"
+# number of cores used during box creation (memory is calculated automatically):
+export BUILD_CPUS="4"
 
 # memory/cpus used for final box:
 export BUILD_BOX_CPUS="2"
@@ -18,12 +17,12 @@ export BUILD_BOX_MEMORY="2048"
 export BUILD_BOX_PROVIDER="virtualbox"
 export BUILD_BOX_USERNAME="foobarlab"
 
+export BUILD_GUEST_ADDITIONS=true          # set to 'true': install virtualbox guest additions
+export BUILD_KEEP_MAX_CLOUD_BOXES=1        # set the maximum number of boxes to keep in Vagrant Cloud
+
+# ----------------------------! do not edit below this line !----------------------------
+
 export BUILD_STAGE3_FILE="stage3-latest.tar.xz"
-
-export BUILD_TIMESTAMP="$(date --iso-8601=seconds)"
-
-BUILD_BOX_DESCRIPTION="$BUILD_BOX_NAME"
-
 export BUILD_FUNTOO_ARCHITECTURE="x86-64bit/generic_64"
 export BUILD_FUNTOO_DOWNLOADPATH="https://build.funtoo.org/1.4-release-std/$BUILD_FUNTOO_ARCHITECTURE"
 
@@ -34,11 +33,16 @@ export BUILD_SYSTEMRESCUECD_VERSION="5.3.2"
 export BUILD_SYSTEMRESCUECD_FILE="systemrescuecd-x86-$BUILD_SYSTEMRESCUECD_VERSION.iso"
 export BUILD_SYSTEMRESCUECD_REMOTE_HASH="0a55c61bf24edd04ce44cdf5c3736f739349652154a7e27c4b1caaeb19276ad1"
 
-export BUILD_GUEST_ADDITIONS=true          # set to 'true': install virtualbox guest additions
+export BUILD_TIMESTAMP="$(date --iso-8601=seconds)"
 
-export BUILD_KEEP_MAX_CLOUD_BOXES=1        # set the maximum number of boxes to keep in Vagrant Cloud
+let "jobs = $BUILD_CPUS + 1"       # calculate number of jobs (threads + 1)
+export BUILD_MAKEOPTS="-j${jobs}"
+let "memory = $jobs * 2048"        # recommended 2GB for each job
+export BUILD_MEMORY="${memory}"
 
 export BUILD_BOX_VERSION=`echo $BUILD_BOX_FUNTOO_VERSION | sed -e 's/\.//g'`
+
+BUILD_BOX_DESCRIPTION="$BUILD_BOX_NAME"
 
 if [[ -f ./release && -s release ]]; then
 	while read line; do
@@ -72,6 +76,8 @@ if [[ -f ./release && -s release ]]; then
 	echo "build version => $BUILD_BOX_VERSION"
 	echo $BUILD_BOX_VERSION > build_version
 	export BUILD_OUTPUT_FILE="$BUILD_BOX_NAME-$BUILD_BOX_VERSION.box"
+	
+	BUILD_BOX_DESCRIPTION="$BUILD_BOX_NAME"
 	
 	BUILD_BOX_DESCRIPTION="Funtoo $BUILD_BOX_FUNTOO_VERSION ($BUILD_FUNTOO_ARCHITECTURE)<br><br>$BUILD_BOX_NAME version $BUILD_BOX_VERSION ($BUILD_RELEASE_VERSION_ID)"
 	if [ -z ${BUILD_NUMBER+x} ] || [ -z ${BUILD_TAG+x} ]; then

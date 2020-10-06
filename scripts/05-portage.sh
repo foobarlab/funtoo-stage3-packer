@@ -16,7 +16,10 @@ ACCEPT_LICENSE="-* @FREE @BINARY-REDISTRIBUTABLE"
 
 CURL_SSL="libressl"
 
+MAKEOPTS="BUILD_MAKEOPTS"
+
 DATA
+sed -i 's/BUILD_MAKEOPTS/'"${BUILD_MAKEOPTS}"'/g' /mnt/funtoo/etc/portage/make.conf
 
 mkdir -p /mnt/funtoo/etc/portage/package.use
 cat <<'DATA' | tee -a /mnt/funtoo/etc/portage/package.use/stage3
