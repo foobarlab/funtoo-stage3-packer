@@ -31,12 +31,12 @@ rm -rf /mnt/funtoo/tmp/*
 
 cat /dev/null > ~/.bash_history && history -c
 
-mount -o remount,ro /mnt/funtoo
+mount -n -v -o remount,ro /mnt/funtoo
 chroot /mnt/funtoo /bin/bash <<'EOF'
 zerofree -v /dev/sda4
 EOF
 
-mount -o remount,ro /mnt/funtoo/boot
+mount -n -v -o remount,ro /mnt/funtoo/boot
 chroot /mnt/funtoo /bin/bash <<'EOF'
 zerofree -v /dev/sda1
 EOF
