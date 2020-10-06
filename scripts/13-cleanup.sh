@@ -16,6 +16,7 @@ EOF
 
 chroot /mnt/funtoo /bin/bash <<'EOF'
 emerge --depclean
+sed -i '/^MAKEOPTS/d' /etc/portage/make.conf   # delete MAKEOPTS (make.conf)
 find /etc/ -name '._cfg*'              # DEBUG: list all config files needing an update
 find /etc/ -name '._cfg*' -print -exec cat -n '{}' \;  # DEBUG: cat all config files needing an update
 etc-update --verbose --preen           # auto-merge trivial changes
@@ -30,12 +31,12 @@ rm -rf /mnt/funtoo/tmp/*
 
 cat /dev/null > ~/.bash_history && history -c
 
-mount -o remount,ro /mnt/funtoo
+mount -n -v -o remount,ro /mnt/funtoo
 chroot /mnt/funtoo /bin/bash <<'EOF'
 zerofree -v /dev/sda4
 EOF
 
-mount -o remount,ro /mnt/funtoo/boot
+mount -n -v -o remount,ro /mnt/funtoo/boot
 chroot /mnt/funtoo /bin/bash <<'EOF'
 zerofree -v /dev/sda1
 EOF

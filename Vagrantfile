@@ -12,11 +12,29 @@ ego boot update
 # clean kernel sources
 cd /usr/src/linux
 make distclean
-# /boot
-mount -o remount,ro /dev/sda1
+# clean all logs
+shopt -s globstar
+truncate -s 0 /var/log/*.log
+truncate -s 0 /var/log/**/*.log
+find /var/log -type f -name '*.[0-99].gz' -exec rm {} +
+logfiles=( messages dmesg lastlog wtmp )
+for i in "${logfiles[@]}"; do
+	truncate -s 0 /var/log/$i
+done
+logfiles=( emerge emerge-fetch genkernel )
+for i in "${logfiles[@]}"; do
+	rm -f /var/log/$i.log
+done
+rm -f /var/log/portage/elog/*.log
+# let it settle
+sync && sleep 30
+# debug: list running services
+rc-status
+# zerofree /boot
+mount -v -n -o remount,ro /dev/sda1
 zerofree -v /dev/sda1
-# /
-mount -o remount,ro /dev/sda4
+# zerofree root fs
+mount -v -n -o remount,ro /dev/sda4
 zerofree -v /dev/sda4
 # swap
 swapoff /dev/sda3
@@ -44,6 +62,8 @@ Vagrant.configure("2") do |config|
     vb.customize ["modifyvm", :id, "--hwvirtex", "on"]
     vb.customize ["modifyvm", :id, "--vtxvpid", "on"]
     vb.customize ["modifyvm", :id, "--largepages", "on"]
+    vb.customize ["modifyvm", :id, "--graphicscontroller", "vmsvga"]
+    vb.customize ["modifyvm", :id, "--accelerate3d", "off"]
   end
   config.ssh.pty = true
   config.ssh.insert_key = false
