@@ -5,6 +5,9 @@ if [ -z ${BUILD_RUN:-} ]; then
   exit 1
 fi
 
+# backup any kernel config
+cp /mnt/funtoo/usr/src/linux/.config /mnt/funtoo/usr/src/kernel.config.stage3-dist
+
 # tweak sshd config (speed up logins) => "UseDNS no"
 sed -i 's/#UseDNS/UseDNS/g' /mnt/funtoo/etc/ssh/sshd_config
 
@@ -45,30 +48,23 @@ export PATH=$PATH:/usr/local/bin:/usr/local/sbin
 
 DATA
 
-# eclean-kernel: required to remove stale files of replaced kernel
+# install recommended software
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
+# eclean-kernel: required to remove stale files of replaced kernel
 emerge -vt app-admin/eclean-kernel
-EOF
 
 # acpid: required for gracefully shutdown on close
-chroot /mnt/funtoo /bin/bash -uex <<'EOF'
 emerge -v sys-power/acpid
 rc-update add acpid default
-EOF
 
 # some utils required for advanced networking
 # see: https://wiki.gentoo.org/wiki/VirtualBox#Gentoo_guests
-chroot /mnt/funtoo /bin/bash -uex <<'EOF'
 emerge -v sys-apps/usermode-utilities net-misc/bridge-utils
-EOF
 
 # add up-to-date intel cpu microcode
-chroot /mnt/funtoo /bin/bash -uex <<'EOF'
 emerge -vt sys-firmware/intel-microcode sys-apps/iucode_tool
-EOF
 
 # perl-cleaner
-chroot /mnt/funtoo /bin/bash -uex <<'EOF'
 perl-cleaner --all
 EOF
 
