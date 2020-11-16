@@ -50,10 +50,12 @@ if [[ -f ./release && -s release ]]; then
 		line_value=`echo $line |cut -d "=" -f2 | sed -e 's/"//g'`
 		export "BUILD_RELEASE_$line_name=$line_value"
 	done < ./release
-	BUILD_BOX_RELEASE_VERSION=`echo $BUILD_RELEASE_VERSION | sed -e 's/\-//g'`
-	export BUILD_BOX_RELEASE_VERSION=`echo $BUILD_BOX_RELEASE_VERSION | sed -e 's/20//'`
+    export BUILD_RELEASE_VERSION_ID_SHORT=`echo ${BUILD_RELEASE_VERSION_ID:1}`
+	BUILD_BOX_RELEASE_VERSION=`echo $BUILD_RELEASE_VERSION_ID_SHORT | sed -e 's/\-//g'`
+	BUILD_BOX_RELEASE_VERSION=`echo $BUILD_BOX_RELEASE_VERSION | sed -e 's/20//'`
+    export BUILD_BOX_RELEASE_VERSION
 	BUILD_BOX_VERSION=$BUILD_BOX_VERSION.$BUILD_BOX_RELEASE_VERSION
-	
+
 	if [ -f build_version ]; then
 		BUILD_BOX_VERSION=$(<build_version)
 	else
@@ -79,7 +81,7 @@ if [[ -f ./release && -s release ]]; then
 	
 	BUILD_BOX_DESCRIPTION="$BUILD_BOX_NAME"
 	
-	BUILD_BOX_DESCRIPTION="Funtoo $BUILD_BOX_FUNTOO_VERSION ($BUILD_FUNTOO_ARCHITECTURE)<br><br>$BUILD_BOX_NAME version $BUILD_BOX_VERSION ($BUILD_RELEASE_VERSION_ID)"
+	BUILD_BOX_DESCRIPTION="Funtoo $BUILD_BOX_FUNTOO_VERSION ($BUILD_FUNTOO_ARCHITECTURE)<br><br>$BUILD_BOX_NAME version $BUILD_BOX_VERSION ($BUILD_RELEASE_VERSION_ID_SHORT)"
 	if [ -z ${BUILD_NUMBER+x} ] || [ -z ${BUILD_TAG+x} ]; then
 		# without build number/tag
 		BUILD_BOX_DESCRIPTION="$BUILD_BOX_DESCRIPTION"
