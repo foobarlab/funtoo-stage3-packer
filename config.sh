@@ -1,5 +1,7 @@
 #!/bin/bash
 
+command -v git >/dev/null 2>&1 || { echo "Command 'git' required but it's not installed.  Aborting." >&2; exit 1; }
+
 export BUILD_BOX_NAME="funtoo-stage3"
 export BUILD_BOX_FUNTOO_VERSION="1.4"
 export BUILD_BOX_SOURCES="https://github.com/foobarlab/funtoo-stage3-packer"
@@ -78,9 +80,7 @@ if [[ -f ./release && -s release ]]; then
 	echo "build version => $BUILD_BOX_VERSION"
 	echo $BUILD_BOX_VERSION > build_version
 	export BUILD_OUTPUT_FILE="$BUILD_BOX_NAME-$BUILD_BOX_VERSION.box"
-	
-	BUILD_BOX_DESCRIPTION="$BUILD_BOX_NAME"
-	
+
 	BUILD_BOX_DESCRIPTION="Funtoo $BUILD_BOX_FUNTOO_VERSION ($BUILD_FUNTOO_ARCHITECTURE)<br><br>$BUILD_BOX_NAME version $BUILD_BOX_VERSION ($BUILD_RELEASE_VERSION_ID_SHORT)"
 	if [ -z ${BUILD_NUMBER+x} ] || [ -z ${BUILD_TAG+x} ]; then
 		# without build number/tag
@@ -91,7 +91,11 @@ if [[ -f ./release && -s release ]]; then
 	fi
 fi
 
-export BUILD_BOX_DESCRIPTION="$BUILD_BOX_DESCRIPTION<br>created @$BUILD_TIMESTAMP<br><br>Source code: $BUILD_BOX_SOURCES"
+export BUILD_GIT_COMMIT_ID=`git rev-parse HEAD`
+export BUILD_GIT_COMMIT_ID_SHORT=`git rev-parse --short HEAD`
+export BUILD_GIT_COMMIT_ID_HREF="${BUILD_BOX_SOURCES}/tree/${BUILD_GIT_COMMIT_ID}"
+
+export BUILD_BOX_DESCRIPTION="$BUILD_BOX_DESCRIPTION<br>created @$BUILD_TIMESTAMP<br><br>Source code: $BUILD_BOX_SOURCES<br><br>Git Commit ID: <a href=\"$BUILD_GIT_COMMIT_ID_HREF\">$BUILD_GIT_COMMIT_ID_SHORT</a>"
 
 if [ $# -eq 0 ]; then
 	echo "Executing $0 ..."
