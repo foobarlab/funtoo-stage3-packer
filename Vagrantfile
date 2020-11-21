@@ -32,10 +32,10 @@ sync && sleep 30
 rc-status
 # zerofree /boot
 mount -v -n -o remount,ro /dev/sda1
-zerofree -v /dev/sda1
+zerofree /dev/sda1 && echo "zerofree: success on /dev/sda1 (boot)"
 # zerofree root fs
 mount -v -n -o remount,ro /dev/sda4
-zerofree -v /dev/sda4
+zerofree /dev/sda4 && echo "zerofree: success on /dev/sda4 (root)"
 # swap
 swapoff /dev/sda3
 bash -c 'dd if=/dev/zero of=/dev/sda3 2>/dev/null' || true
