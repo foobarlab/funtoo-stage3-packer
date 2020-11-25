@@ -2,6 +2,8 @@
 
 command -v git >/dev/null 2>&1 || { echo "Command 'git' required but it's not installed.  Aborting." >&2; exit 1; }
 
+export BUILD_RELEASE_VERSION_ID="-2020-11-16" # FIXME VERSION_ID has been stripped from /etc/os-release, hardcoding here
+
 export BUILD_BOX_NAME="funtoo-stage3"
 export BUILD_BOX_FUNTOO_VERSION="1.4"
 export BUILD_BOX_SOURCES="https://github.com/foobarlab/funtoo-stage3-packer"
