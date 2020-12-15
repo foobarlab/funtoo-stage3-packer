@@ -2,7 +2,7 @@
 
 command -v git >/dev/null 2>&1 || { echo "Command 'git' required but it's not installed.  Aborting." >&2; exit 1; }
 
-export BUILD_RELEASE_VERSION_ID="-2020-11-26" # FIXME detect version with curl/awk/sed
+export BUILD_RELEASE_VERSION_ID="2020-11-20" # FIXME auto-detect version (curl/awk/sed?)
 
 export BUILD_BOX_NAME="funtoo-stage3"
 export BUILD_BOX_FUNTOO_VERSION="1.4"
@@ -27,7 +27,7 @@ export BUILD_KEEP_MAX_CLOUD_BOXES=1        # set the maximum number of boxes to 
 # ----------------------------! do not edit below this line !----------------------------
 
 export BUILD_STAGE3_FILE="stage3-latest.tar.xz"
-export BUILD_FUNTOO_ARCHITECTURE="x86-64bit/generic_64"
+export BUILD_FUNTOO_ARCHITECTURE="x86-64bit/intel64-nehalem"
 export BUILD_FUNTOO_DOWNLOADPATH="https://build.funtoo.org/1.4-release-std/$BUILD_FUNTOO_ARCHITECTURE"
 
 export BUILD_OUTPUT_FILE="$BUILD_BOX_NAME.box"
@@ -54,8 +54,7 @@ if [[ -f ./release && -s release ]]; then
 		line_value=`echo $line |cut -d "=" -f2 | sed -e 's/"//g'`
 		export "BUILD_RELEASE_$line_name=$line_value"
 	done < ./release
-    BUILD_BOX_RELEASE_VERSION=`echo $BUILD_RELEASE_VERSION_ID | sed -e 's/\-//g'`
-	BUILD_BOX_RELEASE_VERSION=`echo $BUILD_BOX_RELEASE_VERSION | sed -e 's/20//'`
+    BUILD_BOX_RELEASE_VERSION=`echo $BUILD_RELEASE_VERSION_ID | sed -e 's/20//'`
     export BUILD_BOX_RELEASE_VERSION
 	BUILD_BOX_VERSION=$BUILD_BOX_VERSION.$BUILD_BOX_RELEASE_VERSION
 
