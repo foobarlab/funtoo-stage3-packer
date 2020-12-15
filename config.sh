@@ -2,7 +2,7 @@
 
 command -v git >/dev/null 2>&1 || { echo "Command 'git' required but it's not installed.  Aborting." >&2; exit 1; }
 
-export BUILD_RELEASE_VERSION_ID="-2020-11-16" # FIXME VERSION_ID has been stripped from /etc/os-release, hardcoding here
+export BUILD_RELEASE_VERSION_ID="-2020-11-26" # FIXME detect version with curl/awk/sed
 
 export BUILD_BOX_NAME="funtoo-stage3"
 export BUILD_BOX_FUNTOO_VERSION="1.4"
@@ -54,8 +54,7 @@ if [[ -f ./release && -s release ]]; then
 		line_value=`echo $line |cut -d "=" -f2 | sed -e 's/"//g'`
 		export "BUILD_RELEASE_$line_name=$line_value"
 	done < ./release
-    export BUILD_RELEASE_VERSION_ID_SHORT=`echo ${BUILD_RELEASE_VERSION_ID:1}`
-	BUILD_BOX_RELEASE_VERSION=`echo $BUILD_RELEASE_VERSION_ID_SHORT | sed -e 's/\-//g'`
+    BUILD_BOX_RELEASE_VERSION=`echo $BUILD_RELEASE_VERSION_ID | sed -e 's/\-//g'`
 	BUILD_BOX_RELEASE_VERSION=`echo $BUILD_BOX_RELEASE_VERSION | sed -e 's/20//'`
     export BUILD_BOX_RELEASE_VERSION
 	BUILD_BOX_VERSION=$BUILD_BOX_VERSION.$BUILD_BOX_RELEASE_VERSION
@@ -83,7 +82,7 @@ if [[ -f ./release && -s release ]]; then
 	echo $BUILD_BOX_VERSION > build_version
 	export BUILD_OUTPUT_FILE="$BUILD_BOX_NAME-$BUILD_BOX_VERSION.box"
 
-	BUILD_BOX_DESCRIPTION="Funtoo $BUILD_BOX_FUNTOO_VERSION ($BUILD_FUNTOO_ARCHITECTURE)<br><br>$BUILD_BOX_NAME version $BUILD_BOX_VERSION ($BUILD_RELEASE_VERSION_ID_SHORT)"
+	BUILD_BOX_DESCRIPTION="Funtoo $BUILD_BOX_FUNTOO_VERSION ($BUILD_FUNTOO_ARCHITECTURE)<br><br>$BUILD_BOX_NAME version $BUILD_BOX_VERSION ($BUILD_RELEASE_VERSION_ID)"
 	if [ -z ${BUILD_NUMBER+x} ] || [ -z ${BUILD_TAG+x} ]; then
 		# without build number/tag
 		BUILD_BOX_DESCRIPTION="$BUILD_BOX_DESCRIPTION"
