@@ -2,8 +2,6 @@
 
 command -v git >/dev/null 2>&1 || { echo "Command 'git' required but it's not installed.  Aborting." >&2; exit 1; }
 
-export BUILD_RELEASE_VERSION_ID="-2020-11-16" # FIXME VERSION_ID has been stripped from /etc/os-release, hardcoding here
-
 export BUILD_BOX_NAME="funtoo-stage3"
 export BUILD_BOX_FUNTOO_VERSION="1.4"
 export BUILD_BOX_SOURCES="https://github.com/foobarlab/funtoo-stage3-packer"
@@ -27,7 +25,7 @@ export BUILD_KEEP_MAX_CLOUD_BOXES=1        # set the maximum number of boxes to 
 # ----------------------------! do not edit below this line !----------------------------
 
 export BUILD_STAGE3_FILE="stage3-latest.tar.xz"
-export BUILD_FUNTOO_ARCHITECTURE="x86-64bit/generic_64"
+export BUILD_FUNTOO_ARCHITECTURE="x86-64bit/intel64-nehalem"
 export BUILD_FUNTOO_DOWNLOADPATH="https://build.funtoo.org/1.4-release-std/$BUILD_FUNTOO_ARCHITECTURE"
 
 export BUILD_OUTPUT_FILE="$BUILD_BOX_NAME.box"
@@ -54,9 +52,8 @@ if [[ -f ./release && -s release ]]; then
 		line_value=`echo $line |cut -d "=" -f2 | sed -e 's/"//g'`
 		export "BUILD_RELEASE_$line_name=$line_value"
 	done < ./release
-    export BUILD_RELEASE_VERSION_ID_SHORT=`echo ${BUILD_RELEASE_VERSION_ID:1}`
-	BUILD_BOX_RELEASE_VERSION=`echo $BUILD_RELEASE_VERSION_ID_SHORT | sed -e 's/\-//g'`
-	BUILD_BOX_RELEASE_VERSION=`echo $BUILD_BOX_RELEASE_VERSION | sed -e 's/20//'`
+    BUILD_BOX_RELEASE_VERSION=`echo $BUILD_RELEASE_VERSION_ID | sed -e 's/\-//g'`
+    BUILD_BOX_RELEASE_VERSION=`echo $BUILD_BOX_RELEASE_VERSION | sed -e 's/20//'`
     export BUILD_BOX_RELEASE_VERSION
 	BUILD_BOX_VERSION=$BUILD_BOX_VERSION.$BUILD_BOX_RELEASE_VERSION
 
@@ -83,7 +80,7 @@ if [[ -f ./release && -s release ]]; then
 	echo $BUILD_BOX_VERSION > build_version
 	export BUILD_OUTPUT_FILE="$BUILD_BOX_NAME-$BUILD_BOX_VERSION.box"
 
-	BUILD_BOX_DESCRIPTION="Funtoo $BUILD_BOX_FUNTOO_VERSION ($BUILD_FUNTOO_ARCHITECTURE)<br><br>$BUILD_BOX_NAME version $BUILD_BOX_VERSION ($BUILD_RELEASE_VERSION_ID_SHORT)"
+	BUILD_BOX_DESCRIPTION="Funtoo $BUILD_BOX_FUNTOO_VERSION ($BUILD_FUNTOO_ARCHITECTURE)<br><br>$BUILD_BOX_NAME version $BUILD_BOX_VERSION ($BUILD_RELEASE_VERSION_ID)"
 	if [ -z ${BUILD_NUMBER+x} ] || [ -z ${BUILD_TAG+x} ]; then
 		# without build number/tag
 		BUILD_BOX_DESCRIPTION="$BUILD_BOX_DESCRIPTION"
