@@ -22,6 +22,8 @@ export BUILD_BOX_USERNAME="foobarlab"
 export BUILD_GUEST_ADDITIONS=true          # set to 'true': install virtualbox guest additions
 export BUILD_KEEP_MAX_CLOUD_BOXES=1        # set the maximum number of boxes to keep in Vagrant Cloud
 
+export BUILD_RELEASE_VERSION_ID="2021-01-23"	# FIXME release file missing information
+
 # ----------------------------! do not edit below this line !----------------------------
 
 export BUILD_STAGE3_FILE="stage3-latest.tar.xz"
