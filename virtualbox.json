@@ -70,7 +70,11 @@
           "BUILD_STAGE3_FILE={{user `stage3_file`}}",
           "BUILD_STAGE3_URL={{user `stage3_url`}}",
           "BUILD_STAGE3_PATH={{user `stage3_path`}}",
-          "BUILD_GUEST_ADDITIONS={{user `guest_additions`}}"
+          "BUILD_GUEST_ADDITIONS={{user `guest_additions`}}",
+          "BUILD_CUSTOM_OVERLAY={{user `custom_overlay`}}",
+          "BUILD_CUSTOM_OVERLAY_NAME={{user `custom_overlay_name`}}",
+          "BUILD_CUSTOM_OVERLAY_URL={{user `custom_overlay_url`}}",
+          "BUILD_CUSTOM_OVERLAY_BRANCH={{user `custom_overlay_branch`}}"
       ],
       "expect_disconnect": false
   }],
@@ -92,6 +96,10 @@
     "memory": "{{env `BUILD_MEMORY`}}",
     "disksize": "{{env `BUILD_GUEST_DISKSIZE`}}",
     "guest_additions": "{{env `BUILD_GUEST_ADDITIONS`}}",
+    "custom_overlay": "{{env `BUILD_CUSTOM_OVERLAY`}}",
+    "custom_overlay_name": "{{env `BUILD_CUSTOM_OVERLAY_NAME`}}",
+    "custom_overlay_url": "{{env `BUILD_CUSTOM_OVERLAY_URL`}}",
+    "custom_overlay_branch": "{{env `BUILD_CUSTOM_OVERLAY_BRANCH`}}",
     "headless": "true",
     "username": "root",
     "password": "toor"
