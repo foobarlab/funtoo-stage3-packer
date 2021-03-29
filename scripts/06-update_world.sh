@@ -46,5 +46,5 @@ etc-update --automode -5
 gcc-config -l || gcc-config 1
 # re-sync
 ego sync
-emerge -vt --update --newuse --deep --with-bdeps=y @world --exclude="sys-kernel/debian-sources-lts"
+emerge -vt --update --newuse --deep --with-bdeps=y @world --exclude="sys-kernel/debian-sources-lts" --exclude="sys-kernel/debian-sources"
 EOF
