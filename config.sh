@@ -19,6 +19,8 @@ export BUILD_BOX_MEMORY="2048"
 export BUILD_BOX_PROVIDER="virtualbox"
 export BUILD_BOX_USERNAME="foobarlab"
 
+export BUILD_REBUILD_SYSTEM=true           # set to 'true': rebuild @system (e.g. required for toolchain rebuild)
+
 export BUILD_GUEST_ADDITIONS=true          # set to 'true': install virtualbox guest additions
 export BUILD_KEEP_MAX_CLOUD_BOXES=1        # set the maximum number of boxes to keep in Vagrant Cloud
 

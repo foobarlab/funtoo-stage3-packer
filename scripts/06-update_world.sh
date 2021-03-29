@@ -48,3 +48,11 @@ gcc-config -l || gcc-config 1
 ego sync
 emerge -vt --update --newuse --deep --with-bdeps=y @world --exclude="sys-kernel/debian-sources-lts" --exclude="sys-kernel/debian-sources"
 EOF
+
+# rebuild system?
+if [ "$BUILD_REBUILD_SYSTEM" = true ]; then
+chroot /mnt/funtoo /bin/bash -uex <<'EOF'
+ego sync
+emerge -vte --usepkg=n @system
+EOF
+fi
