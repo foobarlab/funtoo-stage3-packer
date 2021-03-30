@@ -31,7 +31,6 @@ mkdir -p /mnt/funtoo/etc/portage/package.accept_keywords
 cat <<'DATA' | tee -a /mnt/funtoo/etc/portage/package.accept_keywords/stage3-libressl
 dev-libs/libressl **
 DATA
-
 cat <<'DATA' | tee -a /mnt/funtoo/etc/portage/package.accept_keywords/stage3-grub
-sys-boot/grub **
+=sys-boot/grub-2.04-r1 **
 DATA
