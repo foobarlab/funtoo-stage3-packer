@@ -52,9 +52,9 @@ EOF
 # rebuild system?
 if [ "$BUILD_REBUILD_SYSTEM" = true ]; then
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
+env-update
 source /etc/profile
 emerge -vte --usepkg=n @system
 emerge -vt @preserved-rebuild
-source /etc/profile
 EOF
 fi
