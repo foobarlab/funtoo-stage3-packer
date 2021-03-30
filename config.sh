@@ -29,7 +29,7 @@ export BUILD_RELEASE_VERSION_ID="2021-03-10"	# FIXME release file sometimes miss
 # enable custom overlay?
 export BUILD_CUSTOM_OVERLAY=true
 export BUILD_CUSTOM_OVERLAY_NAME="foobarlab"
-export BUILD_CUSTOM_OVERLAY_BRANCH="main"
+export BUILD_CUSTOM_OVERLAY_BRANCH="development"
 export BUILD_CUSTOM_OVERLAY_URL="https://github.com/foobarlab/foobarlab-overlay.git"
 
 # ----------------------------! do not edit below this line !----------------------------
