@@ -19,6 +19,8 @@ export BUILD_BOX_MEMORY="2048"
 export BUILD_BOX_PROVIDER="virtualbox"
 export BUILD_BOX_USERNAME="foobarlab"
 
+export BUILD_REBUILD_SYSTEM=true           # set to 'true': rebuild @system (e.g. required for toolchain rebuild)
+
 export BUILD_GUEST_ADDITIONS=true          # set to 'true': install virtualbox guest additions
 export BUILD_KEEP_MAX_CLOUD_BOXES=1        # set the maximum number of boxes to keep in Vagrant Cloud
 
@@ -26,8 +28,8 @@ export BUILD_RELEASE_VERSION_ID="2021-03-10"	# FIXME release file sometimes miss
 
 # enable custom overlay?
 export BUILD_CUSTOM_OVERLAY=true
-export BUILD_CUSTOM_OVERLAY_NAME="foobarlab"
-export BUILD_CUSTOM_OVERLAY_BRANCH="main"
+export BUILD_CUSTOM_OVERLAY_NAME="foobarlab-stage3"
+export BUILD_CUSTOM_OVERLAY_BRANCH="stage3"
 export BUILD_CUSTOM_OVERLAY_URL="https://github.com/foobarlab/foobarlab-overlay.git"
 
 # ----------------------------! do not edit below this line !----------------------------

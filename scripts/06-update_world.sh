@@ -33,18 +33,33 @@ fi
 
 # update world, but skip kernel
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
-# initial sync
 ego sync
-# upgrade to latest ego
+# enforce latest ego
 emerge -s app-admin/ego
 emerge -vt app-admin/ego
 env-update
 source /etc/profile
 etc-update --preen
 etc-update --automode -5
-# ensure we use a valid gcc version (see also FL-6143)
+# ensure we use a valid gcc version (see FL-6143)
 gcc-config -l || gcc-config 1
-# re-sync
+# update world, keep exiting kernel
 ego sync
-emerge -vt --update --newuse --deep --with-bdeps=y @world --exclude="sys-kernel/debian-sources-lts"
+emerge -vt --update --newuse --deep --with-bdeps=y @world --exclude="sys-kernel/debian-sources-lts" --exclude="sys-kernel/debian-sources"
 EOF
+
+# rebuild system?
+if [ "$BUILD_REBUILD_SYSTEM" = true ]; then
+chroot /mnt/funtoo /bin/bash -uex <<'EOF'
+env-update
+source /etc/profile
+emerge -vt --update --newuse --deep --with-bdeps=y @world
+emerge --depclean
+emerge -vt @preserved-rebuild
+emerge -vte --usepkg=n @system
+env-update
+source /etc/profile
+emerge -vte --usepkg=n @world
+emerge -vt @preserved-rebuild
+EOF
+fi
