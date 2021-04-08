@@ -11,7 +11,7 @@ eclean-kernel -n 1
 ego boot update
 # clean kernel sources
 cd /usr/src/linux
-make distclean
+make clean
 # clean all logs
 shopt -s globstar
 truncate -s 0 /var/log/*.log
