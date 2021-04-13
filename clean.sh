@@ -31,6 +31,8 @@ echo "Cleanup old release info ..."
 rm -f release || true
 echo "Drop build version ..."
 rm -f build_version || true
+echo "Drop build runtime ..."
+rm -f build_time || true
 echo "Cleanup broken wget downloads ..."
 rm -f download || true
 echo "All done. You may now run './build.sh' to build a fresh box."
