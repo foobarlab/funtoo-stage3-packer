@@ -21,9 +21,7 @@ display {
 "Funtoo Linux" {
     kernel kernel[-v]
     initrd initramfs[-v]
-    params += root=auto
-    params += rootfstype=auto
-    params += nomodeset
+    params += root=auto rootfstype=auto
 }
 DATA
 rm -f /boot/memtest86.bin
