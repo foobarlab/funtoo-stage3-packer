@@ -12,3 +12,4 @@ vagrant-cloud-*
 scripts/.release_*
 build_number
 build_version
+build_time

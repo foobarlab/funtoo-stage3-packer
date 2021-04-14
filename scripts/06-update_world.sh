@@ -31,12 +31,13 @@ sed -i 's/BUILD_CUSTOM_OVERLAY_NAME/'"$BUILD_CUSTOM_OVERLAY_NAME"'/g' /etc/porta
 EOF
 fi
 
-# update world, but skip kernel
+# update portage/ego, and update world, but skip kernel
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
 ego sync
-# enforce latest ego
 emerge -s app-admin/ego
 emerge -vt app-admin/ego
+emerge -s sys-apps/portage
+emerge -vt sys-apps/portage
 env-update
 source /etc/profile
 etc-update --preen
