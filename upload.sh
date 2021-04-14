@@ -26,7 +26,7 @@ echo "Box:        $BUILD_BOX_NAME"
 echo "Provider:   $BUILD_BOX_PROVIDER"
 echo "Version:    $BUILD_BOX_VERSION"
 echo "File:       $BUILD_OUTPUT_FILE"
-echo "Build time: $BUILD_RUNTIME ($BUILD_RUNTIME_FANCY)"
+echo "Build time: $BUILD_RUNTIME"
 echo
 echo "Please verify if above information is correct."
 echo

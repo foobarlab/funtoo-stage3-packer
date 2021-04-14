@@ -184,4 +184,4 @@ hours=$((runtime / 3600));
 minutes=$(( (runtime % 3600) / 60 ));
 seconds=$(( (runtime % 3600) % 60 ));
 echo "$hours hours $minutes minutes $seconds seconds" >> build_time
-echo "Total build runtime is $hours hours $minutes minutes $seconds seconds."
+echo "Total build runtime was $hours hours $minutes minutes $seconds seconds."

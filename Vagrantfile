@@ -23,11 +23,11 @@ for i in "${logfiles[@]}"; do
 done
 logfiles=( emerge emerge-fetch genkernel )
 for i in "${logfiles[@]}"; do
-	rm -f /var/log/$i.log
+    rm -f /var/log/$i.log
 done
 rm -f /var/log/portage/elog/*.log
 # let it settle
-sync && sleep 30
+sync && sleep 10
 # debug: list running services
 rc-status
 # zerofree /boot
@@ -37,7 +37,7 @@ zerofree /dev/sda1 && echo "zerofree: success on /dev/sda1 (boot)"
 mount -v -n -o remount,ro /dev/sda4
 zerofree /dev/sda4 && echo "zerofree: success on /dev/sda4 (root)"
 # swap
-swapoff /dev/sda3
+swapoff -v /dev/sda3
 bash -c 'dd if=/dev/zero of=/dev/sda3 2>/dev/null' || true
 mkswap /dev/sda3
 SCRIPT
