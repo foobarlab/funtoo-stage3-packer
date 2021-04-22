@@ -9,9 +9,6 @@ export BUILD_BOX_SOURCES="https://github.com/foobarlab/funtoo-stage3-packer"
 export BUILD_GUEST_TYPE="Gentoo_64"
 export BUILD_GUEST_DISKSIZE="50000"    # dynamic disksize in MB, e.g. 50000 => 50 GB
 
-# number of cores used during box creation (memory is calculated automatically):
-export BUILD_CPUS="8"
-
 # memory/cpus used for final box:
 export BUILD_BOX_CPUS="2"
 export BUILD_BOX_MEMORY="2048"
@@ -47,9 +44,12 @@ export BUILD_SYSTEMRESCUECD_REMOTE_HASH="0a55c61bf24edd04ce44cdf5c3736f739349652
 
 export BUILD_TIMESTAMP="$(date --iso-8601=seconds)"
 
+# detect number of system cpus available (always select maximum for best performance)
+export BUILD_CPUS=`grep -c ^processor /proc/cpuinfo`
+
 let "jobs = $BUILD_CPUS + 1"       # calculate number of jobs (threads + 1)
 export BUILD_MAKEOPTS="-j${jobs}"
-let "memory = $jobs * 2048"        # recommended 2GB for each job
+let "memory = $BUILD_CPUS * 2048"  # recommended 2GB for each cpu
 export BUILD_MEMORY="${memory}"
 
 export BUILD_BOX_VERSION=`echo $BUILD_BOX_FUNTOO_VERSION | sed -e 's/\.//g'`
