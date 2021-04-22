@@ -45,7 +45,7 @@ export BUILD_SYSTEMRESCUECD_REMOTE_HASH="0a55c61bf24edd04ce44cdf5c3736f739349652
 export BUILD_TIMESTAMP="$(date --iso-8601=seconds)"
 
 # detect number of system cpus available (always select maximum for best performance)
-export BUILD_CPUS=`grep -c ^processor /proc/cpuinfo`
+export BUILD_CPUS=`nproc --all`
 
 let "jobs = $BUILD_CPUS + 1"       # calculate number of jobs (threads + 1)
 export BUILD_MAKEOPTS="-j${jobs}"
