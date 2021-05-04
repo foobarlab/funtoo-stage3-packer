@@ -69,6 +69,6 @@ Get the latest build from Vagrant Cloud: [foobarlab/funtoo-stage3](https://app.v
 
  - Run ```./clean_cloud.sh```
 
-## Feedback welcome
+## Feedback and bug reports welcome
 
-Please create an issue.
+Please create an issue or submit a pull request.
