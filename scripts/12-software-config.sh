@@ -21,7 +21,7 @@ EOF
 rm -f /mnt/funtoo/etc/motd
 cat <<'DATA' | tee -a /mnt/funtoo/etc/motd
 
-Funtoo GNU/Linux Vagrant Box (BUILD_BOX_USERNAME/BUILD_BOX_NAME) - release BUILD_BOX_VERSION build BUILD_TIMESTAMP
+Funtoo Linux Vagrant Box (BUILD_BOX_USERNAME/BUILD_BOX_NAME) - release BUILD_BOX_VERSION build BUILD_TIMESTAMP
 
 DATA
 sed -i 's/BUILD_BOX_NAME/'"${BUILD_BOX_NAME:-}"'/g' /mnt/funtoo/etc/motd
@@ -32,7 +32,7 @@ cat /mnt/funtoo/etc/motd
 
 rm -f /mnt/funtoo/etc/issue
 cat <<'DATA' | tee -a /mnt/funtoo/etc/issue
-This is a Funtoo GNU/Linux Vagrant Box (BUILD_BOX_USERNAME/BUILD_BOX_NAME-BUILD_BOX_VERSION)
+This is a Funtoo Linux Vagrant Box (BUILD_BOX_USERNAME/BUILD_BOX_NAME-BUILD_BOX_VERSION)
 
 DATA
 sed -i 's/BUILD_BOX_VERSION/'$BUILD_BOX_VERSION'/g' /mnt/funtoo/etc/issue
