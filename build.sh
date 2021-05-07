@@ -47,6 +47,8 @@ if [ -f "$BUILD_STAGE3_FILE" ]; then
         BUILD_DOWNLOAD_STAGE3=true
         echo "Deleting '$BUILD_STAGE3_FILE' ..."
         rm ./$BUILD_STAGE3_FILE
+        echo "Resetting 'build_number' ..."
+        rm ./build_number
     fi
 else
     echo "'$BUILD_STAGE3_FILE' not found."
