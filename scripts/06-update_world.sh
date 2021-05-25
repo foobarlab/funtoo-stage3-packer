@@ -46,6 +46,10 @@ etc-update --automode -5
 gcc-config -l || gcc-config 1
 # update world, keep existing kernel
 ego sync
+# TEMP FIX START: repair Manifest file
+ebuild /var/git/meta-repo/kits/core-kit/sys-libs/binutils-libs/binutils-libs-2.36.1-r1.ebuild digest
+chown portage.portage /var/git/meta-repo/kits/core-kit/sys-libs/binutils-libs/Manifest
+# TEMP FIX END: repair Manifest file
 emerge -vt --update --newuse --deep --with-bdeps=y @world --exclude="sys-kernel/debian-sources-lts" --exclude="sys-kernel/debian-sources"
 EOF
 
