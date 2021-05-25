@@ -44,7 +44,7 @@ etc-update --preen
 etc-update --automode -5
 # ensure we use a valid gcc version (see FL-6143)
 gcc-config -l || gcc-config 1
-# update world, keep exiting kernel
+# update world, keep existing kernel
 ego sync
 emerge -vt --update --newuse --deep --with-bdeps=y @world --exclude="sys-kernel/debian-sources-lts" --exclude="sys-kernel/debian-sources"
 EOF
