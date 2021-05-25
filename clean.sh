@@ -5,34 +5,35 @@ command -v vagrant >/dev/null 2>&1 || { echo "Command 'vagrant' required but it'
 . config.sh quiet
 
 echo "---------------------------------------------------------------------------"
-echo "  CLEANUP"
+echo "  CURRENT BOX CLEANUP"
 echo "---------------------------------------------------------------------------"
 
-echo "Suspending any running instances ..."
+echo ">>> Suspending any running instances ..."
 vagrant suspend && true
-echo "Destroying current box ..."
+echo ">>> Destroying current box ..."
 vagrant destroy -f || true
-echo "Removing box '$BUILD_BOX_NAME' ..."
+echo ">>> Removing box '$BUILD_BOX_NAME' ..."
 vagrant box remove -f "$BUILD_BOX_NAME" 2>/dev/null || true
-echo "Cleaning .vagrant dir ..."
+echo ">>> Cleaning .vagrant dir ..."
 rm -rf .vagrant/ || true
-echo "Cleaning packer_cache ..."
+echo ">>> Cleaning packer_cache ..."
 rm -rf packer_cache/ || true
-echo "Cleaning output iso dir ..."
+echo ">>> Cleaning packer output dir ..."
 rm -rf output-virtualbox-iso/ || true
-echo "Deleting any box file ..."
+echo ">>> Deleting any box file ..."
 rm -f *.box || true
-echo "Cleanup scripts dir ..."
+echo ">>> Cleanup scripts dir ..."
 rm -f scripts/*.tar.xz || true
 rm -f scripts/.release_$BUILD_BOX_NAME || true
-echo "Cleanup old logs ..."
+echo ">>> Cleanup old logs ..."
 rm -f *.log || true
-echo "Cleanup old release info ..."
+echo ">>> Cleanup old release info ..."
 rm -f release || true
-echo "Drop build version ..."
+echo ">>> Drop build version ..."
 rm -f build_version || true
-echo "Drop build runtime ..."
+echo ">>> Drop build runtime ..."
 rm -f build_time || true
-echo "Cleanup broken wget downloads ..."
+echo ">>> Cleanup broken wget downloads ..."
 rm -f download || true
+echo
 echo "All done. You may now run './build.sh' to build a fresh box."
