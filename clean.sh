@@ -18,7 +18,7 @@ echo ">>> Cleaning .vagrant dir ..."
 rm -rf .vagrant/ || true
 echo ">>> Cleaning packer_cache ..."
 rm -rf packer_cache/ || true
-echo ">>> Cleaning output iso dir ..."
+echo ">>> Cleaning packer output dir ..."
 rm -rf output-virtualbox-iso/ || true
 echo ">>> Deleting any box file ..."
 rm -f *.box || true
