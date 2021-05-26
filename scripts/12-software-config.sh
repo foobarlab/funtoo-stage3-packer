@@ -64,8 +64,8 @@ rc-update add acpid default
 # see: https://wiki.gentoo.org/wiki/VirtualBox#Gentoo_guests
 emerge -v sys-apps/usermode-utilities net-misc/bridge-utils
 
-# add up-to-date intel cpu microcode
-emerge -vt sys-firmware/intel-microcode sys-apps/iucode_tool
+# add up-to-date intel cpu microcode, uncomment if you want to run this vm on bare metal
+#emerge -vt sys-firmware/intel-microcode sys-apps/iucode_tool
 
 # perl-cleaner
 perl-cleaner --all
