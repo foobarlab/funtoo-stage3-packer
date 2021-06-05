@@ -46,9 +46,9 @@ if [ -f "$BUILD_STAGE3_FILE" ]; then
         echo "-> remote: $(date -d @${BUILD_REMOTE_TIMESTAMP})"
         BUILD_DOWNLOAD_STAGE3=true
         echo "Deleting '$BUILD_STAGE3_FILE' ..."
-        rm ./$BUILD_STAGE3_FILE
+        rm ./$BUILD_STAGE3_FILE || true
         echo "Resetting 'build_number' ..."
-        rm ./build_number
+        rm ./build_number || true
     fi
 else
     echo "'$BUILD_STAGE3_FILE' not found."
@@ -63,7 +63,7 @@ if [ "$BUILD_DOWNLOAD_STAGE3" = true ]; then
     	exit 1
     fi
     echo "Deleting possibly outdated release info ..."
-	rm -f ./release
+	rm -f ./release || true
 fi
 
 if [ ! -f ./release ]; then
