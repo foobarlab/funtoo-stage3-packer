@@ -6,6 +6,7 @@ output-virtualbox-iso/
 /*.tar.xz.hash.txt
 *.tar.xz
 .project
+.pydevproject
 packer.log*
 release
 vagrant-cloud-*
