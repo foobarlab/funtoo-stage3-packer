@@ -10,6 +10,7 @@ command -v vagrant >/dev/null 2>&1 || { echo "Command 'vagrant' required but it'
 command -v packer >/dev/null 2>&1 || { echo "Command 'packer' required but it's not installed.  Aborting." >&2; exit 1; }
 command -v wget >/dev/null 2>&1 || { echo "Command 'wget' required but it's not installed.  Aborting." >&2; exit 1; }
 command -v sha256sum >/dev/null 2>&1 || { echo "Command 'sha256sum' required but it's not installed.  Aborting." >&2; exit 1; }
+command -v pv >/dev/null 2>&1 || { echo "Command 'pv' required but it's not installed.  Aborting." >&2; exit 1; }
 
 if [ -f "$BUILD_SYSTEMRESCUECD_FILE" ]; then
 	echo "'$BUILD_SYSTEMRESCUECD_FILE' found. Skipping download ..."
@@ -22,7 +23,7 @@ else
     fi
 fi
 
-BUILD_SYSTEMRESCUECD_LOCAL_HASH=$(cat $BUILD_SYSTEMRESCUECD_FILE | sha256sum | grep -o '^\S\+')
+BUILD_SYSTEMRESCUECD_LOCAL_HASH=$(pv $BUILD_SYSTEMRESCUECD_FILE | sha256sum | grep -o '^\S\+')
 if [ "$BUILD_SYSTEMRESCUECD_LOCAL_HASH" == "$BUILD_SYSTEMRESCUECD_REMOTE_HASH" ]; then
     echo "'$BUILD_SYSTEMRESCUECD_FILE' checksums matched. Proceeding ..."
 else
@@ -60,7 +61,7 @@ if [ "$BUILD_DOWNLOAD_STAGE3" = true ]; then
     wget $BUILD_STAGE3_URL
 	if [ $? -ne 0 ]; then
     	echo "Could not download '$BUILD_STAGE3_URL'. Exit code from wget was $?."
-    	exit 1
+    	exit $?
     fi
     echo "Deleting possibly outdated release info ..."
 	rm -f ./release || true
@@ -87,7 +88,7 @@ if [ ! -f ./${BUILD_HASH_FILE} ]; then
 	wget ${BUILD_HASH_URL} -O ./${BUILD_HASH_FILE}
 fi
 
-BUILD_STAGE3_LOCAL_HASH=$(cat $BUILD_STAGE3_FILE | sha256sum | grep -o '^\S\+')
+BUILD_STAGE3_LOCAL_HASH=$(pv $BUILD_STAGE3_FILE | sha256sum | grep -o '^\S\+')
 BUILD_STAGE3_REMOTE_HASH=$(cat $BUILD_HASH_FILE | sed -e 's/^sha256\s//g')
 
 if [ "$BUILD_STAGE3_LOCAL_HASH" == "$BUILD_STAGE3_REMOTE_HASH" ]; then
@@ -175,6 +176,7 @@ if [ -f "$BUILD_OUTPUT_FILE_TEMP" ]; then
     vagrant package --output "$BUILD_OUTPUT_FILE"
     echo "Removing temporary box file ..."
     rm -f  "$BUILD_OUTPUT_FILE_TEMP"
+    # FIXME create sha1 checksum? and save to file for later comparison (include in build description?)
 else
     echo "There is no box file '$BUILD_OUTPUT_FILE_TEMP' in the current directory."
     exit 1
