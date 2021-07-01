@@ -1,5 +1,9 @@
 #!/bin/bash
 
+for COMMAND in curl jq; do
+  command -v $COMMAND >/dev/null 2>&1 || { echo "Command '${COMMAND}' required but it's not installed.  Aborting." >&2; exit 1; }
+done
+
 if [ -f ./vagrant-cloud-token ]; then
 	echo "Using previously stored auth token."
 	VAGRANT_CLOUD_TOKEN=`cat ./vagrant-cloud-token`	

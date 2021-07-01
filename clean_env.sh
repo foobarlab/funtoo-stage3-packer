@@ -5,8 +5,9 @@ VBOXMACHINEFOLDER="~/.VirtualBox/Machines"
 VBOXMANAGE=VBoxManage
 command -v $VBOXMANAGE >/dev/null 2>&1 || VBOXMANAGE=vboxmanage   # try alternative
 
-command -v vagrant >/dev/null 2>&1 || { echo "Command 'vagrant' required but it's not installed.  Aborting." >&2; exit 1; }
-command -v $VBOXMANAGE >/dev/null 2>&1 || { echo "Command '$VBOXMANAGE' required but it's not installed.  Aborting." >&2; exit 1; }
+for COMMAND in vagrant $VBOXMANAGE; do
+  command -v $COMMAND >/dev/null 2>&1 || { echo "Command '${COMMAND}' required but it's not installed.  Aborting." >&2; exit 1; }
+done
 
 . config.sh quiet
 

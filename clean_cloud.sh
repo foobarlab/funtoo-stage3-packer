@@ -4,8 +4,9 @@
 . config.sh
 . vagrant_cloud_token.sh
 
-command -v curl >/dev/null 2>&1 || { echo "Command 'curl' required but it's not installed.  Aborting." >&2; exit 1; }
-command -v jq >/dev/null 2>&1 || { echo "Command 'jq' required but it's not installed.  Aborting." >&2; exit 1; }
+for COMMAND in curl jq; do
+  command -v $COMMAND >/dev/null 2>&1 || { echo "Command '${COMMAND}' required but it's not installed.  Aborting." >&2; exit 1; }
+done
 
 echo "This script is marked as EXPERIMENTAL! Use at your own risk."
 echo "This script will remove outdated boxes from Vagrant Cloud."

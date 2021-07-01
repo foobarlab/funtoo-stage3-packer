@@ -15,10 +15,9 @@ else
 	fi 
 fi
 
-command -v curl >/dev/null 2>&1 || { echo "Command 'curl' required but it's not installed.  Aborting." >&2; exit 1; }
-command -v jq >/dev/null 2>&1 || { echo "Command 'jq' required but it's not installed.  Aborting." >&2; exit 1; }
-command -v sha1sum >/dev/null 2>&1 || { echo "Command 'sha1sum' required but it's not installed.  Aborting." >&2; exit 1; }
-command -v pv >/dev/null 2>&1 || { echo "Command 'pv' required but it's not installed.  Aborting." >&2; exit 1; }
+for COMMAND in curl jq sha1sum pv; do
+  command -v $COMMAND >/dev/null 2>&1 || { echo "Command '${COMMAND}' required but it's not installed.  Aborting." >&2; exit 1; }
+done
 
 echo "This script will upload the current build box to Vagrant Cloud."
 echo

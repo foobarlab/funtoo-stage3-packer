@@ -6,11 +6,9 @@ echo "Executing $0 ..."
 
 . config.sh quiet
 
-command -v vagrant >/dev/null 2>&1 || { echo "Command 'vagrant' required but it's not installed.  Aborting." >&2; exit 1; }
-command -v packer >/dev/null 2>&1 || { echo "Command 'packer' required but it's not installed.  Aborting." >&2; exit 1; }
-command -v wget >/dev/null 2>&1 || { echo "Command 'wget' required but it's not installed.  Aborting." >&2; exit 1; }
-command -v sha256sum >/dev/null 2>&1 || { echo "Command 'sha256sum' required but it's not installed.  Aborting." >&2; exit 1; }
-command -v pv >/dev/null 2>&1 || { echo "Command 'pv' required but it's not installed.  Aborting." >&2; exit 1; }
+for COMMAND in vagrant packer wget sha256sum pv; do
+  command -v $COMMAND >/dev/null 2>&1 || { echo "Command '${COMMAND}' required but it's not installed.  Aborting." >&2; exit 1; }
+done
 
 if [ -f "$BUILD_SYSTEMRESCUECD_FILE" ]; then
 	echo "'$BUILD_SYSTEMRESCUECD_FILE' found. Skipping download ..."
