@@ -47,6 +47,10 @@
   }],
   "description": "{{user `box_description`}}",
   "post-processors": [{
+      "type": "checksum",
+      "checksum_types": [ "sha1" ],
+      "output": "packer_{{.BuildName}}_{{.ChecksumType}}.checksum"
+    },{
       "output": "{{user `output_file`}}",
       "type": "vagrant"
   }],
