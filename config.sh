@@ -22,7 +22,7 @@ export BUILD_REBUILD_SYSTEM=false          # set to 'true': rebuild @system (e.g
 export BUILD_GUEST_ADDITIONS=true          # set to 'true': install virtualbox guest additions
 export BUILD_KEEP_MAX_CLOUD_BOXES=1        # set the maximum number of boxes to keep in Vagrant Cloud
 
-#export BUILD_RELEASE_VERSION_ID="2021-05-04"	# FIXME release file sometimes missing information (workaround: copy manually from https://www.funtoo.org/Intel64-nehalem, todo: determine from stage3 file date if not present in /etc/os-release)
+export BUILD_RELEASE_VERSION_ID="2021-06-21"	# FIXME release file sometimes missing information (workaround: copy manually from https://www.funtoo.org/Intel64-nehalem, todo: determine from stage3 file date if not present in /etc/os-release)
 
 # enable custom overlay?
 export BUILD_CUSTOM_OVERLAY=true
@@ -109,12 +109,27 @@ else
 	export BUILD_RUNTIME_FANCY="Total build runtime was not logged."
 fi
 
-export BUILD_GIT_COMMIT_BRANCH=`git rev-parse --abbrev-ref HEAD`
-export BUILD_GIT_COMMIT_ID=`git rev-parse HEAD`
-export BUILD_GIT_COMMIT_ID_SHORT=`git rev-parse --short HEAD`
-export BUILD_GIT_COMMIT_ID_HREF="${BUILD_BOX_SOURCES}/tree/${BUILD_GIT_COMMIT_ID}"
+BUILD_BOX_DESCRIPTION="$BUILD_BOX_DESCRIPTION<br>created @$BUILD_TIMESTAMP<br>"
 
-export BUILD_BOX_DESCRIPTION="$BUILD_BOX_DESCRIPTION<br>created @$BUILD_TIMESTAMP<br><br>Source code: $BUILD_BOX_SOURCES<br>This build is based on branch $BUILD_GIT_COMMIT_BRANCH (commit id <a href=\\\"$BUILD_GIT_COMMIT_ID_HREF\\\">$BUILD_GIT_COMMIT_ID_SHORT</a>)<br>$BUILD_RUNTIME_FANCY"
+# check if in git environment and collect git data (if any)
+export BUILD_GIT=$(echo `git rev-parse --is-inside-work-tree 2>/dev/null || echo "false"`)
+if [ $BUILD_GIT == "true" ]; then
+  export BUILD_GIT_COMMIT_REPO=`git config --get remote.origin.url`
+  export BUILD_GIT_COMMIT_BRANCH=`git rev-parse --abbrev-ref HEAD`
+  export BUILD_GIT_COMMIT_ID=`git rev-parse HEAD`
+  export BUILD_GIT_COMMIT_ID_SHORT=`git rev-parse --short HEAD`
+  export BUILD_GIT_COMMIT_ID_HREF="${BUILD_BOX_SOURCES}/tree/${BUILD_GIT_COMMIT_ID}"
+  export BUILD_GIT_LOCAL_MODIFICATIONS=$(if [ "`git diff --shortstat`" == "" ]; then echo 'false'; else echo 'true'; fi)
+  BUILD_BOX_DESCRIPTION="$BUILD_BOX_DESCRIPTION<br>Git repository: $BUILD_GIT_COMMIT_REPO"
+  if [ $BUILD_GIT_LOCAL_MODIFICATIONS == "true" ]; then
+    export BUILD_BOX_DESCRIPTION="$BUILD_BOX_DESCRIPTION<br>This build is in an experimental work-in-progress state. Local modifications have not been committed to Git repository yet.<br>$BUILD_RUNTIME_FANCY"
+  else
+    export BUILD_BOX_DESCRIPTION="$BUILD_BOX_DESCRIPTION<br>This build is based on branch $BUILD_GIT_COMMIT_BRANCH (commit id <a href=\\\"$BUILD_GIT_COMMIT_ID_HREF\\\">$BUILD_GIT_COMMIT_ID_SHORT</a>).<br>$BUILD_RUNTIME_FANCY"
+  fi
+else
+  BUILD_BOX_DESCRIPTION="$BUILD_BOX_DESCRIPTION<br>Origin source code: $BUILD_BOX_SOURCES"
+  export BUILD_BOX_DESCRIPTION="$BUILD_BOX_DESCRIPTION<br>This build is not version controlled yet.<br>$BUILD_RUNTIME_FANCY"
+fi
 
 if [ $# -eq 0 ]; then
 	echo "Executing $0 ..."
