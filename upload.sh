@@ -3,8 +3,7 @@
 
 . config.sh
 
-if [ -f "$BUILD_OUTPUT_FILE" ];
-then
+if [ -f "$BUILD_OUTPUT_FILE" ]; then
 	echo "Found box file '$BUILD_OUTPUT_FILE' in the current directory ..."
 else
 	echo "There is no box file '$BUILD_OUTPUT_FILE' in the current directory. Please run './build.sh' to build the box."
@@ -212,13 +211,20 @@ UPLOAD_URL=$(echo "$UPLOAD_PREPARE_UPLOADURL" | jq '.upload_path' | tr -d '"')
 UPLOAD_FINALIZE_URL=$(echo "$UPLOAD_PREPARE_UPLOADURL" | jq '.callback' | tr -d '"')
 
 # Perform the upload
-UPLOAD_PROGRESS="--progress-meter"   # TODO alternative: --progress-bar
+
+# TODO check curl version for progress-meter support? external script?
+#BUILD_CURL_VERSION=$(curl -V | cut -d' ' -f2 | head -n 1)
+
+# FIXME try --progress-meter and fallback to --progress-bar (curl is less than 7.6.7.0)
+UPLOAD_PROGRESS="--progress-bar"
 if [ -t 1 ]; then
   echo "Uploading ..."
   echo "--------------------------------------------------------------------------------"
 else
   echo "Not a terminal, disabling progress meter ..."
-  UPLOAD_PROGRESS="--no-progress-meter"  
+  # FIXME no-progress-meter: fallback to --silent if curl is less or equal version 7.67.0
+  #UPLOAD_PROGRESS="--no-progress-meter"
+  UPLOAD_PROGRESS="--silent"
   echo "Uploading ... This may take a while ..."
 fi
 
@@ -245,7 +251,7 @@ curl -sS \
 echo "Finalized with exit code $?."
 
 # DEBUG:
-echo "Finalize result: '$UPLOAD_FINALIZE'"
+echo "DEBUG: Finalize result: '$UPLOAD_FINALIZE'"
 
 # Release the version
 echo "Releasing box ..."
