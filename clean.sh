@@ -35,5 +35,7 @@ echo ">>> Drop build runtime ..."
 rm -f build_time || true
 echo ">>> Cleanup broken wget downloads ..."
 rm -f download || true
+echo ">>> Cleanup checksum files ..."
+rm -f *.checksum || true
 echo
 echo "All done. You may now run './build.sh' to build a fresh box."
