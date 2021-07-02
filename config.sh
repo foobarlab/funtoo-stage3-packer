@@ -46,25 +46,19 @@ export BUILD_SYSTEMRESCUECD_REMOTE_HASH="0a55c61bf24edd04ce44cdf5c3736f739349652
 
 export BUILD_TIMESTAMP="$(date --iso-8601=seconds)"
 
-# we want at least 2G RAM
-export BUILD_MEMORY_MIN=2048
-# calculate max memory (set to 1/4 of available memory)
-export BUILD_MEMORY_MAX=$(((`grep MemTotal /proc/meminfo | awk '{print $2}'` / 1024 / 1024 / 4 + 1 ) * 1024))
-
-# detect number of system cpus available (always select half of cpus for best performance)
+# detect number of system cpus available (select half of cpus for best performance)
 export BUILD_CPUS=$((`nproc --all` / 2))
-
 let "jobs = $BUILD_CPUS + 1"       # calculate number of jobs (threads + 1)
 export BUILD_MAKEOPTS="-j${jobs}"
-let "memory = $BUILD_CPUS * 512"   # calculate 512MB ram for each cpu
+
+# determine ram available (select min and max)
+export BUILD_MEMORY_MIN=4096 # we want at least 4G ram for our build
+# calculate max memory (set to 1/2 of available memory)
+export BUILD_MEMORY_MAX=$(((`grep MemTotal /proc/meminfo | awk '{print $2}'` / 1024 / 1024 / 2 + 1 ) * 1024))
+let "memory = $BUILD_CPUS * 1024"   # calculate 1G ram for each cpu
 BUILD_MEMORY="${memory}"
-
-# if we are below our limit set to lower limit
-BUILD_MEMORY=$(($BUILD_MEMORY < $BUILD_MEMORY_MIN ? $BUILD_MEMORY_MIN : $BUILD_MEMORY))
-
-# if we are above our limit, set to upper limit
-BUILD_MEMORY=$(($BUILD_MEMORY > $BUILD_MEMORY_MAX ? $BUILD_MEMORY_MAX : $BUILD_MEMORY))
-
+BUILD_MEMORY=$(($BUILD_MEMORY < $BUILD_MEMORY_MIN ? $BUILD_MEMORY_MIN : $BUILD_MEMORY)) # lower limit (min)
+BUILD_MEMORY=$(($BUILD_MEMORY > $BUILD_MEMORY_MAX ? $BUILD_MEMORY_MAX : $BUILD_MEMORY)) # upper limit (max)
 export BUILD_MEMORY
 
 export BUILD_BOX_VERSION=`echo $BUILD_BOX_FUNTOO_VERSION | sed -e 's/\.//g'`
