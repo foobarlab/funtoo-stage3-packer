@@ -52,9 +52,9 @@ let "jobs = $BUILD_CPUS + 1"       # calculate number of jobs (threads + 1)
 export BUILD_MAKEOPTS="-j${jobs}"
 
 # determine ram available (select min and max)
-export BUILD_MEMORY_MIN=4096 # we want at least 4G ram for our build
+BUILD_MEMORY_MIN=4096 # we want at least 4G ram for our build
 # calculate max memory (set to 1/2 of available memory)
-export BUILD_MEMORY_MAX=$(((`grep MemTotal /proc/meminfo | awk '{print $2}'` / 1024 / 1024 / 2 + 1 ) * 1024))
+BUILD_MEMORY_MAX=$(((`grep MemTotal /proc/meminfo | awk '{print $2}'` / 1024 / 1024 / 2 + 1 ) * 1024))
 let "memory = $BUILD_CPUS * 1024"   # calculate 1G ram for each cpu
 BUILD_MEMORY="${memory}"
 BUILD_MEMORY=$(($BUILD_MEMORY < $BUILD_MEMORY_MIN ? $BUILD_MEMORY_MIN : $BUILD_MEMORY)) # lower limit (min)
