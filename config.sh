@@ -23,7 +23,7 @@ export BUILD_REBUILD_SYSTEM=false          # set to 'true': rebuild @system (e.g
 export BUILD_GUEST_ADDITIONS=true          # set to 'true': install virtualbox guest additions
 export BUILD_KEEP_MAX_CLOUD_BOXES=1        # set the maximum number of boxes to keep in Vagrant Cloud
 
-export BUILD_RELEASE_VERSION_ID="2021-06-21"	# FIXME release file sometimes missing information (workaround: copy manually from https://www.funtoo.org/Intel64-nehalem, todo: determine from stage3 file date if not present in /etc/os-release)
+export BUILD_RELEASE_VERSION_ID="2021-07-01"	# FIXME release file sometimes missing information (workaround: copy manually from https://www.funtoo.org/Intel64-nehalem, todo: determine from stage3 file date if not present in /etc/os-release)
 
 # enable custom overlay?
 export BUILD_CUSTOM_OVERLAY=true
