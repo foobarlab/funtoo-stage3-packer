@@ -1,15 +1,13 @@
 #!/bin/bash -ue
 
-VBOXMACHINEFOLDER="~/.VirtualBox/Machines"
+vboxmachinefolder="~/.VirtualBox/Machines"
 
-VBOXMANAGE=VBoxManage
-command -v $VBOXMANAGE >/dev/null 2>&1 || VBOXMANAGE=vboxmanage   # try alternative
-
-for COMMAND in vagrant $VBOXMANAGE; do
-  command -v $COMMAND >/dev/null 2>&1 || { echo "Command '${COMMAND}' required but it's not installed.  Aborting." >&2; exit 1; }
-done
+vboxmanage=VBoxManage
+command -v $vboxmanage >/dev/null 2>&1 || vboxmanage=vboxmanage   # try alternative
 
 . config.sh quiet
+
+require_commands vagrant $vboxmanage
 
 echo "------------------------------------------------------------------------------"
 echo "  ENVIRONMENT CLEANUP"
@@ -25,13 +23,13 @@ vagrant global-status --prune >/dev/null
 echo ">>> Delete temporary Vagrant files ..."
 rm -rf ~/.vagrant.d/tmp/*
 echo ">>> Forcibly shutdown any running VirtualBox VMs ..."
-$VBOXMANAGE list runningvms | sed -r 's/.*\{(.*)\}/\1/' | awk '{print "$VBOXMANAGE controlvm "$1" acpipowerbutton\0"}' | xargs -0 >/dev/null
-$VBOXMANAGE list runningvms | sed -r 's/.*\{(.*)\}/\1/' | awk '{print "$VBOXMANAGE controlvm "$1" poweroff\0"}' | xargs -0 >/dev/null
+$vboxmanage list runningvms | sed -r 's/.*\{(.*)\}/\1/' | awk '{print "$vboxmanage controlvm "$1" acpipowerbutton\0"}' | xargs -0 >/dev/null
+$vboxmanage list runningvms | sed -r 's/.*\{(.*)\}/\1/' | awk '{print "$vboxmanage controlvm "$1" poweroff\0"}' | xargs -0 >/dev/null
 echo ">>> Delete all inaccessible VMs ..."
-$VBOXMANAGE list vms | grep "<inaccessible>" | sed -r 's/.*\{(.*)\}/\1/' | awk '{print "$VBOXMANAGE unregistervm --delete "$1"\0"}' | xargs -0 >/dev/null
+$vboxmanage list vms | grep "<inaccessible>" | sed -r 's/.*\{(.*)\}/\1/' | awk '{print "$vboxmanage unregistervm --delete "$1"\0"}' | xargs -0 >/dev/null
 echo ">>> Force remove of appliance from VirtualBox machine folder ..."
 # FIXME assumed path ~/.VirtualBox/Machines/ might be incorrect, better get this from VirtualBox config somehow
-rm -rf $VBOXMACHINEFOLDER/$BUILD_BOX_NAME/ || true
+rm -rf $vboxmachinefolder/$BUILD_BOX_NAME/ || true
 echo ">>> Drop build number ..."
 rm -f build_number || true
 

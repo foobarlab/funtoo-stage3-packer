@@ -1,8 +1,9 @@
 #!/bin/bash
 
-for COMMAND in git nproc; do
-  command -v $COMMAND >/dev/null 2>&1 || { echo "Command '${COMMAND}' required but it's not installed.  Aborting." >&2; exit 1; }
-done
+. ./lib/functions.sh
+require_commands git nproc
+
+set -a
 
 export BUILD_BOX_NAME="funtoo-stage3"
 export BUILD_BOX_FUNTOO_VERSION="1.4"
@@ -10,6 +11,8 @@ export BUILD_BOX_SOURCES="https://github.com/foobarlab/funtoo-stage3-packer"
 
 export BUILD_GUEST_TYPE="Gentoo_64"
 export BUILD_GUEST_DISKSIZE="50000"    # dynamic disksize in MB, e.g. 50000 => 50 GB
+
+export BUILD_TIMEZONE="UTC"
 
 # memory/cpus used for final box:
 export BUILD_BOX_CPUS="2"
@@ -141,7 +144,8 @@ fi
 
 if [ $# -eq 0 ]; then
 	echo "Executing $0 ..."
-	echo "=== Build settings ============================================================="
-	env | grep BUILD_ | sort
-	echo "================================================================================"
+	echo "=========================================================================="
+	echo "===========================[  Build settings  ]==========================="
+	echo "=========================================================================="
+	env | grep BUILD_ | sort | awk -F"=" '{ printf("\033[1;37m%.42s \033[0;37m%s\n",  $1 "\033[2;37m........................................\033[0;37m" , $2) }'
 fi

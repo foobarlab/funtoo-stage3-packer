@@ -5,13 +5,13 @@ if [ -z ${BUILD_RUN:-} ]; then
   exit 1
 fi
 
-if [ -z ${SCRIPTS:-} ]; then
+if [ -z ${scripts:-} ]; then
   SCRIPTS=.
 fi
 
-chmod +x $SCRIPTS/scripts/*.sh
+chmod +x ${scripts}/scripts/*.sh
 
-BUILD_STAGE3_PATH="$SCRIPTS/scripts/$BUILD_STAGE3_FILE"
+BUILD_STAGE3_PATH="${scripts}/scripts/$BUILD_STAGE3_FILE"
 
 for script in \
   01-partition \
@@ -31,7 +31,7 @@ do
   echo "==============================================================================="
   echo " >>> Running $script.sh"
   echo "==============================================================================="
-  "$SCRIPTS/scripts/$script.sh"
+  "$scripts/scripts/$script.sh"
   printf "\n\n"
 done
 

@@ -6,15 +6,13 @@ echo "Executing $0 ..."
 
 . config.sh quiet
 
-for COMMAND in vagrant packer wget sha256sum pv; do
-  command -v $COMMAND >/dev/null 2>&1 || { echo "Command '${COMMAND}' required but it's not installed.  Aborting." >&2; exit 1; }
-done
+require_commands vagrant packer wget sha256sum pv
 
 if [ -f "$BUILD_SYSTEMRESCUECD_FILE" ]; then
 	echo "'$BUILD_SYSTEMRESCUECD_FILE' found. Skipping download ..."
 else
     echo "'$BUILD_SYSTEMRESCUECD_FILE' NOT found. Starting download ..."
-    wget --content-disposition "https://sourceforge.net/projects/systemrescuecd/files/sysresccd-x86/$BUILD_SYSTEMRESCUECD_VERSION/$BUILD_SYSTEMRESCUECD_FILE/download"
+    wget -c --content-disposition "https://sourceforge.net/projects/systemrescuecd/files/sysresccd-x86/$BUILD_SYSTEMRESCUECD_VERSION/$BUILD_SYSTEMRESCUECD_FILE/download"
 	if [ $? -ne 0 ]; then
     	echo "Could not download '$BUILD_SYSTEMRESCUECD_FILE'. Exit code from wget was $?."
     	exit 1
@@ -30,7 +28,9 @@ else
     exit 1
 fi
 
-BUILD_STAGE3_URL="$BUILD_FUNTOO_DOWNLOADPATH/$BUILD_STAGE3_FILE"
+# FIXME
+#BUILD_STAGE3_URL="$BUILD_FUNTOO_DOWNLOADPATH/$BUILD_STAGE3_FILE"
+BUILD_STAGE3_URL="$BUILD_FUNTOO_DOWNLOADPATH/${BUILD_RELEASE_VERSION_ID}/stage3-intel64-nehalem-${BUILD_BOX_FUNTOO_VERSION}-release-std-${BUILD_RELEASE_VERSION_ID}.tar.xz"
 
 if [ -f "$BUILD_STAGE3_FILE" ]; then
     BUILD_REMOTE_TIMESTAMP=$(date -d "$(curl -s -v -X HEAD $BUILD_STAGE3_URL 2>&1 | grep '^< last-modified:' | sed 's/^.\{17\}//')" +%s)
@@ -56,7 +56,7 @@ fi
 
 if [ "$BUILD_DOWNLOAD_STAGE3" = true ]; then
     echo "Starting download ..."
-    wget $BUILD_STAGE3_URL
+    wget -c $BUILD_STAGE3_URL -O $BUILD_STAGE3_FILE
 	if [ $? -ne 0 ]; then
     	echo "Could not download '$BUILD_STAGE3_URL'. Exit code from wget was $?."
     	exit $?
@@ -109,9 +109,9 @@ fi
 
 . config.sh
 
-# as we do not want to build an already existing release on vagrant cloud automatically we better ask the user
-	
-if [ $# -eq 0 ]; then
+# do not build an already existing release on vagrant cloud by default
+
+if [ ! $# -eq 0 ]; then
 	BUILD_SKIP_VERSION_CHECK=true
 else
 	BUILD_SKIP_VERSION_CHECK=false

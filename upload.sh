@@ -14,9 +14,7 @@ else
 	fi 
 fi
 
-for COMMAND in curl jq sha1sum pv; do
-  command -v $COMMAND >/dev/null 2>&1 || { echo "Command '${COMMAND}' required but it's not installed.  Aborting." >&2; exit 1; }
-done
+require_commands curl jq sha1sum pv
 
 echo "This script will upload the current build box to Vagrant Cloud."
 echo

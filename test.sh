@@ -1,8 +1,8 @@
 #!/bin/bash -ue
 
-command -v vagrant >/dev/null 2>&1 || { echo "Command 'vagrant' required but it's not installed.  Aborting." >&2; exit 1; }
-
 . config.sh
+
+require_commands vagrant
 
 echo "--- Testing '$BUILD_BOX_NAME' box ..."
 

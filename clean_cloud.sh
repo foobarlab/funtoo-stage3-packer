@@ -4,9 +4,7 @@
 . config.sh
 . vagrant_cloud_token.sh
 
-for COMMAND in curl jq; do
-  command -v $COMMAND >/dev/null 2>&1 || { echo "Command '${COMMAND}' required but it's not installed.  Aborting." >&2; exit 1; }
-done
+require_commands curl jq
 
 echo "This script is marked as EXPERIMENTAL! Use at your own risk."
 echo "This script will remove outdated boxes from Vagrant Cloud."
@@ -77,7 +75,7 @@ do
 			echo "Skipping box version $ITEM (latest version will always be kept)."
 		else
 			echo "Found outdated box version $ITEM ..."
-					
+
 			# revoke that version:
 			echo "Revoking version $ITEM ..."
 			CLOUD_BOX_REVOKE=$( \
@@ -94,7 +92,7 @@ curl -sS \
   --request DELETE \
   https://app.vagrantup.com/api/v1/box/$BUILD_BOX_USERNAME/$BUILD_BOX_NAME/version/$ITEM \
 )
-			echo "Done."			
+			echo "Done."
 		fi
 	else
 		if [ "$ITEM" = "$LATEST_CLOUD_VERSION" ]; then

@@ -1,8 +1,8 @@
 #!/bin/bash -ue
 
-command -v vagrant >/dev/null 2>&1 || { echo "Command 'vagrant' required but it's not installed.  Aborting." >&2; exit 1; }
-
 . config.sh quiet
+
+require_commands vagrant
 
 echo "------------------------------------------------------------------------------"
 echo "  CURRENT BOX CLEANUP"
