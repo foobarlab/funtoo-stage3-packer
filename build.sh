@@ -9,7 +9,7 @@ echo "Executing $0 ..."
 require_commands vagrant packer wget sha256sum pv
 
 echo "------------------------------------------------------------------------"
-echo "   Building $BUILD_BOX_NAME v$BUILD_BOX_VERSION"
+echo "   Building $BUILD_BOX_NAME v$BUILD_BOX_VERSION ..."
 echo "------------------------------------------------------------------------"
 
 if [ -f "$BUILD_SYSTEMRESCUECD_FILE" ]; then
@@ -139,7 +139,7 @@ if [ "$BUILD_SKIP_VERSION_CHECK" = false ]; then
 	echo "Latest cloud version: $LATEST_CLOUD_VERSION"
 	
 	if [[ $BUILD_BOX_VERSION = $LATEST_CLOUD_VERSION ]]; then
-		echo "Attention: an equal version number already exists. Hint: run './clean.sh' and try again. This will increment your build number automatically."
+		echo "An equal version number already exists. Hint: run './clean.sh' and try again. This will increment your build number automatically."
 		exit 0
 	else 
 		echo "Looks like we have a new version to provide. Proceeding build ..."
