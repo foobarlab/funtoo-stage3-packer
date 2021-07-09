@@ -97,7 +97,7 @@
     "version": "{{env `BUILD_BOX_VERSION`}}",
     "makeopts": "{{env `BUILD_MAKEOPTS`}}",
     "timestamp": "{{env `BUILD_TIMESTAMP`}}",
-    "timezone": "((env `BUILD_TIMEZONE`}}",
+    "timezone": "{{env `BUILD_TIMEZONE`}}",
     "cpus": "{{env `BUILD_CPUS`}}",
     "memory": "{{env `BUILD_MEMORY`}}",
     "disksize": "{{env `BUILD_GUEST_DISKSIZE`}}",
