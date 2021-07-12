@@ -21,4 +21,4 @@ else
 	exit 1
 fi
 
-echo "==> Box is installed and ready to use. You may now enter './startup.sh' to start the box."
+echo "Box installed and ready to use. You may now enter './startup.sh' to boot the box."

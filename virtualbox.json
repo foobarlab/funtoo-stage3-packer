@@ -21,8 +21,8 @@
       "guest_os_type": "{{user `guest_os_type`}}",
       "headless": "{{user `headless`}}",
       "ssh_pty": "true",
-      "iso_checksum": "sha256:{{user `systemrescuecd_checksum`}}",
-      "iso_url": "{{user `systemrescuecd_url`}}",
+      "iso_checksum": "sha256:{{user `sysrescuecd_checksum`}}",
+      "iso_url": "{{user `sysrescuecd_url`}}",
       "shutdown_command": "shutdown -hP now",
       "ssh_username": "{{user `username`}}",
       "ssh_password": "{{user `password`}}",
@@ -84,8 +84,8 @@
       "expect_disconnect": false
   }],
   "variables": {
-  	"systemrescuecd_url": "{{env `BUILD_SYSTEMRESCUECD_FILE`}}",
-    "systemrescuecd_checksum": "{{env `BUILD_SYSTEMRESCUECD_REMOTE_HASH`}}",
+  	"sysrescuecd_url": "{{env `BUILD_SYSRESCUECD_FILE`}}",
+    "sysrescuecd_checksum": "{{env `BUILD_SYSRESCUECD_REMOTE_HASH`}}",
     "stage3_file": "{{env `BUILD_STAGE3_FILE`}}",
     "stage3_url": "{{env `BUILD_STAGE3_URL`}}",
     "stage3_path": "{{env `BUILD_STAGE3_PATH`}}",

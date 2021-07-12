@@ -1,8 +1,8 @@
 #!/bin/bash
 
-for COMMAND in curl jq; do
-  command -v $COMMAND >/dev/null 2>&1 || { echo "Command '${COMMAND}' required but it's not installed.  Aborting." >&2; exit 1; }
-done
+# imports
+. ./lib/functions.sh
+require_commands curl jq
 
 if [ -f ./vagrant-cloud-token ]; then
 	echo "Using previously stored auth token."
@@ -17,30 +17,30 @@ else
 	echo "Please enter your Vagrant Cloud credentials to proceed:"
 	echo
 	echo -n "Username: "
-	read AUTH_USERNAME
+	read auth_username
 	echo -n "Password: "
-	read -s AUTH_PASSWORD
+	read -s auth_password
 	echo
 	echo
 	
 	# Request auth token
-	UPLOAD_AUTH_REQUEST=$( \
+	upload_auth_request=$( \
 	curl -sS \
 	  --header "Content-Type: application/json" \
 	  https://app.vagrantup.com/api/v1/authenticate \
-	  --data '{"token": {"description": "Login from cURL"},"user": {"login": "'$AUTH_USERNAME'","password": "'$AUTH_PASSWORD'"}}' \
+	  --data '{"token": {"description": "Login from cURL"},"user": {"login": "'$auth_username'","password": "'$auth_password'"}}' \
 	)
 	
-	UPLOAD_AUTH_REQUEST_SUCCESS=`echo $UPLOAD_AUTH_REQUEST | jq '.success'`
-	if [ $UPLOAD_AUTH_REQUEST_SUCCESS == 'false' ]; then
+	upload_auth_request_success=`echo $upload_auth_request | jq '.success'`
+	if [ $upload_auth_request_success == 'false' ]; then
 		echo "Request for auth token failed."
 		echo "Response from API:"
-		echo $UPLOAD_AUTH_REQUEST | jq
+		echo $upload_auth_request | jq
 		echo "Please consult the error above and try again."
 		exit 1
 	fi
 	
-	VAGRANT_CLOUD_TOKEN=`echo $UPLOAD_AUTH_REQUEST | jq '.token' | tr -d '"'`
+	VAGRANT_CLOUD_TOKEN=`echo $upload_auth_request | jq '.token' | tr -d '"'`
 	
 	echo "OK, we got authorized."
 	

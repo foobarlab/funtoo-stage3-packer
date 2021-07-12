@@ -2,18 +2,14 @@
 
 . config.sh quiet
 
-require_commands vagrant
-
 echo "------------------------------------------------------------------------------"
-echo "  CURRENT BOX CLEANUP"
+echo "  CLEANUP"
 echo "------------------------------------------------------------------------------"
 
-echo ">>> Suspending any running instances ..."
-vagrant suspend && true
-echo ">>> Destroying current box ..."
-vagrant destroy -f || true
-echo ">>> Removing box '$BUILD_BOX_NAME' ..."
-vagrant box remove -f "$BUILD_BOX_NAME" 2>/dev/null || true
+. clean_box.sh
+
+echo
+echo "Cleaning sources ..."
 echo ">>> Cleaning .vagrant dir ..."
 rm -rf .vagrant/ || true
 echo ">>> Cleaning packer_cache ..."

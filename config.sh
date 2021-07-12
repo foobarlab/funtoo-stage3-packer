@@ -1,9 +1,12 @@
 #!/bin/bash
 
+# imports
 . ./lib/functions.sh
 require_commands git nproc
 
 set -a
+
+# ----------------------------!  edit settings below  !----------------------------
 
 export BUILD_BOX_NAME="funtoo-stage3"
 export BUILD_BOX_FUNTOO_VERSION="1.4"
@@ -34,7 +37,7 @@ export BUILD_CUSTOM_OVERLAY_NAME="foobarlab-stage3"
 export BUILD_CUSTOM_OVERLAY_BRANCH="stage3"
 export BUILD_CUSTOM_OVERLAY_URL="https://github.com/foobarlab/foobarlab-overlay.git"
 
-# ----------------------------! do not edit below this line !----------------------------
+# ----------------------------!  do not edit below this line  !----------------------------
 
 export BUILD_STAGE3_FILE="stage3-latest.tar.xz"
 export BUILD_FUNTOO_ARCHITECTURE="x86-64bit/intel64-nehalem"
@@ -43,9 +46,9 @@ export BUILD_FUNTOO_DOWNLOADPATH="https://build.funtoo.org/1.4-release-std/$BUIL
 export BUILD_OUTPUT_FILE="$BUILD_BOX_NAME.box"
 export BUILD_OUTPUT_FILE_TEMP="$BUILD_BOX_NAME.tmp.box"
 
-export BUILD_SYSTEMRESCUECD_VERSION="5.3.2"
-export BUILD_SYSTEMRESCUECD_FILE="systemrescuecd-x86-$BUILD_SYSTEMRESCUECD_VERSION.iso"
-export BUILD_SYSTEMRESCUECD_REMOTE_HASH="0a55c61bf24edd04ce44cdf5c3736f739349652154a7e27c4b1caaeb19276ad1"
+export BUILD_SYSRESCUECD_VERSION="5.3.2"
+export BUILD_SYSRESCUECD_FILE="systemrescuecd-x86-$BUILD_SYSRESCUECD_VERSION.iso"
+export BUILD_SYSRESCUECD_REMOTE_HASH="0a55c61bf24edd04ce44cdf5c3736f739349652154a7e27c4b1caaeb19276ad1"
 
 export BUILD_TIMESTAMP="$(date --iso-8601=seconds)"
 
@@ -98,7 +101,9 @@ if [[ -f ./release && -s release ]]; then
 		fi
 	fi
 	export BUILD_BOX_VERSION
-	echo "build version => $BUILD_BOX_VERSION"
+	if [ $# -eq 0 ]; then
+		echo "build version => $BUILD_BOX_VERSION"
+	fi
 	echo $BUILD_BOX_VERSION > build_version
 	export BUILD_OUTPUT_FILE="$BUILD_BOX_NAME-$BUILD_BOX_VERSION.box"
 
@@ -147,5 +152,6 @@ if [ $# -eq 0 ]; then
 	echo "=========================================================================="
 	echo "===========================[  Build settings  ]==========================="
 	echo "=========================================================================="
-	env | grep BUILD_ | sort | awk -F"=" '{ printf("\033[1;37m%.42s \033[0;37m%s\n",  $1 "\033[2;37m........................................\033[0;37m" , $2) }'
+	env | grep BUILD_ | sort | awk -F"=" '{ printf("\033[1;37m%.40s \033[0;37m%s\n",  $1 "\033[2;37m........................................\033[0;37m" , $2) }'
+	echo "=========================================================================="
 fi

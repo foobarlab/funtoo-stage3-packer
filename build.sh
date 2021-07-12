@@ -8,31 +8,35 @@ echo "Executing $0 ..."
 
 require_commands vagrant packer wget sha256sum pv
 
-echo "------------------------------------------------------------------------"
-echo "   Building $BUILD_BOX_NAME v$BUILD_BOX_VERSION ..."
-echo "------------------------------------------------------------------------"
+echo
+echo "=========================================================================="
+echo
+echo "                    Building box '$BUILD_BOX_NAME'"
+echo
+echo "=========================================================================="
+echo
 
-if [ -f "$BUILD_SYSTEMRESCUECD_FILE" ]; then
-	echo "'$BUILD_SYSTEMRESCUECD_FILE' found. Skipping download ..."
+if [ -f "$BUILD_SYSRESCUECD_FILE" ]; then
+	echo "'$BUILD_SYSRESCUECD_FILE' found. Skipping download ..."
 else
-    echo "'$BUILD_SYSTEMRESCUECD_FILE' NOT found. Starting download ..."
-    wget -c --content-disposition "https://sourceforge.net/projects/systemrescuecd/files/sysresccd-x86/$BUILD_SYSTEMRESCUECD_VERSION/$BUILD_SYSTEMRESCUECD_FILE/download"
+    echo "'$BUILD_SYSRESCUECD_FILE' NOT found. Starting download ..."
+    wget -c --content-disposition "https://sourceforge.net/projects/systemrescuecd/files/sysresccd-x86/$BUILD_SYSRESCUECD_VERSION/$BUILD_SYSRESCUECD_FILE/download"
 	if [ $? -ne 0 ]; then
-    	echo "Could not download '$BUILD_SYSTEMRESCUECD_FILE'. Exit code from wget was $?."
+    	echo "Could not download '$BUILD_SYSRESCUECD_FILE'. Exit code from wget was $?."
     	exit 1
     fi
 fi
 
-BUILD_SYSTEMRESCUECD_LOCAL_HASH=$(pv $BUILD_SYSTEMRESCUECD_FILE | sha256sum | grep -o '^\S\+')
-if [ "$BUILD_SYSTEMRESCUECD_LOCAL_HASH" == "$BUILD_SYSTEMRESCUECD_REMOTE_HASH" ]; then
-    echo "'$BUILD_SYSTEMRESCUECD_FILE' checksums matched. Proceeding ..."
+BUILD_SYSRESCUECD_LOCAL_HASH=$(pv $BUILD_SYSRESCUECD_FILE | sha256sum | grep -o '^\S\+')
+if [ "$BUILD_SYSRESCUECD_LOCAL_HASH" == "$BUILD_SYSRESCUECD_REMOTE_HASH" ]; then
+    echo "'$BUILD_SYSRESCUECD_FILE' checksums matched. Proceeding ..."
 else
 	# FIXME: let the user decide to delete and try downloading again
-    echo "'$BUILD_SYSTEMRESCUECD_FILE' checksum did NOT match with expected checksum. The file is possibly corrupted, please delete it and try again."
+    echo "'$BUILD_SYSRESCUECD_FILE' checksum did NOT match with expected checksum. The file is possibly corrupted, please delete it and try again."
     exit 1
 fi
 
-# FIXME
+# FIXME: downloading stage3-latest is not relieable
 #BUILD_STAGE3_URL="$BUILD_FUNTOO_DOWNLOADPATH/$BUILD_STAGE3_FILE"
 BUILD_STAGE3_URL="$BUILD_FUNTOO_DOWNLOADPATH/${BUILD_RELEASE_VERSION_ID}/stage3-intel64-nehalem-${BUILD_BOX_FUNTOO_VERSION}-release-std-${BUILD_RELEASE_VERSION_ID}.tar.xz"
 
@@ -76,7 +80,7 @@ else
 	echo "Skipping extraction of stage3 release info. Already extracted."
 fi
 
-. config.sh
+. config.sh quiet
 
 BUILD_HASH_URL="${BUILD_FUNTOO_DOWNLOADPATH}/${BUILD_RELEASE_VERSION_ID}/stage3-intel64-nehalem-${BUILD_BOX_FUNTOO_VERSION}-release-std-${BUILD_RELEASE_VERSION_ID}.tar.xz.hash.txt"
 BUILD_HASH_FILE="${BUILD_STAGE3_FILE}.hash.txt"
@@ -96,7 +100,7 @@ BUILD_STAGE3_REMOTE_HASH=$(cat $BUILD_HASH_FILE | sed -e 's/^sha256\s//g')
 if [ "$BUILD_STAGE3_LOCAL_HASH" == "$BUILD_STAGE3_REMOTE_HASH" ]; then
     echo "'$BUILD_STAGE3_FILE' checksums matched. Proceeding ..."
 else
-    echo "'$BUILD_STAGE3_FILE' checksums did NOT match. The file is possibly outdated or corrupted."
+	echo "'$BUILD_STAGE3_FILE' checksums did NOT match. The file is possibly outdated or corrupted."
 	read -p "Do you want to delete it and try again (Y/n)? " choice
 	case "$choice" in 
 	  n|N ) echo "Canceled by user."
@@ -128,21 +132,27 @@ if [ "$BUILD_SKIP_VERSION_CHECK" = false ]; then
 	# check version match on cloud and abort if same
 	echo "Comparing local and cloud version ..."
 	# FIXME check if box already exists (should give us a 200 HTTP response, if not we will get a 404)
-	LATEST_CLOUD_VERSION=$( \
+	latest_cloud_version=$( \
 	curl -sS \
 	  --header "Authorization: Bearer $VAGRANT_CLOUD_TOKEN" \
 	  https://app.vagrantup.com/api/v1/box/$BUILD_BOX_USERNAME/$BUILD_BOX_NAME \
 	)
 	
-	LATEST_CLOUD_VERSION=$(echo $LATEST_CLOUD_VERSION | jq .current_version.version | tr -d '"')
-	echo "Our latest version: $BUILD_BOX_VERSION"
-	echo "Latest cloud version: $LATEST_CLOUD_VERSION"
+	latest_cloud_version=$(echo $latest_cloud_version | jq .current_version.version | tr -d '"')
+	echo
+	echo "Latest cloud version..: $latest_cloud_version"
+	echo "This version..........: $BUILD_BOX_VERSION"
+	echo
 	
-	if [[ $BUILD_BOX_VERSION = $LATEST_CLOUD_VERSION ]]; then
+  if [[ $BUILD_BOX_VERSION = $latest_cloud_version ]]; then
 		echo "An equal version number already exists. Hint: run './clean.sh' and try again. This will increment your build number automatically."
 		exit 0
 	else 
-		echo "Looks like we have a new version to provide. Proceeding build ..."
+	  version_too_small=`version_lt $BUILD_BOX_VERSION $latest_cloud_version && echo "true" || echo "false"`
+	  if [[ "$version_too_small" = "true" ]]; then
+      printf "\033[1;33mWarning! This version is smaller than the cloud version!\033[0;37m\n\n"
+    fi
+	  echo "Looks like we have an unreleased version to provide. Proceeding build ..."
 	fi
 
 else
@@ -155,7 +165,7 @@ cp ./release ./scripts/.release_$BUILD_BOX_NAME
 export PACKER_LOG_PATH="$PWD/packer.log"
 export PACKER_LOG="1"
 packer validate virtualbox.json
-packer build virtualbox.json
+packer build -force -on-error=abort virtualbox.json # TODO on-error: cleanup
 
 rm -f ./scripts/$BUILD_STAGE3_FILE
 
