@@ -156,7 +156,7 @@ if [ "$BUILD_SKIP_VERSION_CHECK" = false ]; then
 	fi
 
 else
-	echo "Skipping cloud version check."
+	echo "Skipped cloud version check."
 fi
 
 cp $BUILD_STAGE3_FILE ./scripts
