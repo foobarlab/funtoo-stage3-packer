@@ -5,10 +5,7 @@
 echo "------------------------------------------------------------------------------"
 echo "  CLEANUP"
 echo "------------------------------------------------------------------------------"
-
 . clean_box.sh
-
-echo
 echo "Cleaning sources ..."
 echo ">>> Cleaning .vagrant dir ..."
 rm -rf .vagrant/ || true
