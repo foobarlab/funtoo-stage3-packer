@@ -16,6 +16,7 @@ echo
 echo "=========================================================================="
 echo
 
+echo ">>> Looking for '$BUILD_SYSRESCUECD_FILE' ..."
 if [ -f "$BUILD_SYSRESCUECD_FILE" ]; then
 	echo "'$BUILD_SYSRESCUECD_FILE' found. Skipping download ..."
 else
@@ -27,6 +28,7 @@ else
     fi
 fi
 
+echo ">>> Checking '$BUILD_SYSRESCUECD_FILE' ..."
 BUILD_SYSRESCUECD_LOCAL_HASH=$(pv $BUILD_SYSRESCUECD_FILE | sha256sum | grep -o '^\S\+')
 if [ "$BUILD_SYSRESCUECD_LOCAL_HASH" == "$BUILD_SYSRESCUECD_REMOTE_HASH" ]; then
     echo "'$BUILD_SYSRESCUECD_FILE' checksums matched. Proceeding ..."
@@ -40,6 +42,7 @@ fi
 #BUILD_STAGE3_URL="$BUILD_FUNTOO_DOWNLOADPATH/$BUILD_STAGE3_FILE"
 BUILD_STAGE3_URL="$BUILD_FUNTOO_DOWNLOADPATH/${BUILD_RELEASE_VERSION_ID}/stage3-intel64-nehalem-${BUILD_BOX_FUNTOO_VERSION}-release-std-${BUILD_RELEASE_VERSION_ID}.tar.xz"
 
+echo ">>> Looking for '$BUILD_STAGE3_FILE' ..."
 if [ -f "$BUILD_STAGE3_FILE" ]; then
     BUILD_REMOTE_TIMESTAMP=$(date -d "$(curl -s -v -X HEAD $BUILD_STAGE3_URL 2>&1 | grep '^< last-modified:' | sed 's/^.\{17\}//')" +%s)
     BUILD_LOCAL_TIMESTAMP=$(date -d "$(find $BUILD_STAGE3_FILE -exec stat \{} --printf="%y\n" \;)" +%s)
@@ -73,6 +76,7 @@ if [ "$BUILD_DOWNLOAD_STAGE3" = true ]; then
 	rm -f ./release || true
 fi
 
+echo ">>> Looking for release info ..."
 if [ ! -f ./release ]; then
 	echo "Extracting stage3 release info ..."
 	tar -xvf $BUILD_STAGE3_FILE ./etc/os-release -O > ./release
@@ -82,6 +86,7 @@ fi
 
 . config.sh quiet
 
+echo ">>> Checking '$BUILD_STAGE3_FILE' ..."
 BUILD_HASH_URL="${BUILD_FUNTOO_DOWNLOADPATH}/${BUILD_RELEASE_VERSION_ID}/stage3-intel64-nehalem-${BUILD_BOX_FUNTOO_VERSION}-release-std-${BUILD_RELEASE_VERSION_ID}.tar.xz.hash.txt"
 BUILD_HASH_FILE="${BUILD_STAGE3_FILE}.hash.txt"
 
@@ -114,6 +119,8 @@ else
 	      ;;
 	esac
 fi
+
+echo "All preparations done."
 
 . config.sh
 
