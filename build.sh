@@ -99,6 +99,7 @@ if [ ! -f ./${BUILD_HASH_FILE} ]; then
 	wget ${BUILD_HASH_URL} -O ./${BUILD_HASH_FILE}
 fi
 
+echo ">>> Comparing hash sums ..."
 BUILD_STAGE3_LOCAL_HASH=$(pv $BUILD_STAGE3_FILE | sha256sum | grep -o '^\S\+')
 BUILD_STAGE3_REMOTE_HASH=$(cat $BUILD_HASH_FILE | sed -e 's/^sha256\s//g')
 
