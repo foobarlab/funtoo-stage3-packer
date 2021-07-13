@@ -6,8 +6,8 @@ echo "Removing Vagrant box ..."
 
 require_commands vagrant
 
-echo ">>> Suspending any running instances ..."
-vagrant suspend && true
+echo ">>> Suspending any running instances named '$BUILD_BOX_NAME' ..."
+vagrant suspend "$BUILD_BOX_NAME" 2>/dev/null || true
 echo ">>> Destroying current box ..."
 vagrant destroy -f || true
 echo ">>> Removing box '$BUILD_BOX_NAME' ..."
