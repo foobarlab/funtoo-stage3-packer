@@ -172,7 +172,7 @@ cp ./release ./scripts/.release_$BUILD_BOX_NAME
 export PACKER_LOG_PATH="$PWD/packer.log"
 export PACKER_LOG="1"
 packer validate virtualbox.json
-packer build -force -on-error=abort virtualbox.json # TODO on-error: cleanup
+packer build -force -on-error=abort virtualbox.json
 
 rm -f ./scripts/$BUILD_STAGE3_FILE
 
