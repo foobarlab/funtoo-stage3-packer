@@ -194,9 +194,10 @@ if [ -f "$BUILD_OUTPUT_FILE_TEMP" ]; then
     vagrant --provision up || { echo "Unable to startup '$BUILD_BOX_NAME'."; exit 1; }
     echo "Halting '$BUILD_BOX_NAME' ..."
     vagrant halt
-    # TODO vboxmanage modifymedium --compress
+    # TODO vboxmanage modifymedium --compact <path to vdi>
     echo "Exporting base box ..."
     # TODO package additional optional files with --include
+    # TODO use configuration values inside template (BUILD_BOX_MEMORY, etc.)
     vagrant package --vagrantfile "Vagrantfile.template" --output "$BUILD_OUTPUT_FILE"
     echo "Removing temporary box file ..."
     rm -f  "$BUILD_OUTPUT_FILE_TEMP"

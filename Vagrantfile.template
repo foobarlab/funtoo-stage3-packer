@@ -3,14 +3,16 @@
 
 Vagrant.require_version ">= 2.1.0"
 
+# TODO grow size?
+
 Vagrant.configure("2") do |config|
   config.vm.box_check_update = true
-  config.vm.box = "funtoo-stage3"
-  config.vm.hostname = "stage3"
+  config.vm.box = "funtoo-stage3"  # TODO set from config
+  config.vm.hostname = "stage3"  # TODO set from config
   config.vm.provider "virtualbox" do |vb|
     vb.gui = false
-    vb.memory = "2048"
-    vb.cpus = "2"
+    vb.memory = "2048"  # TODO set from config
+    vb.cpus = "2"  # TODO set from config
     # customize VirtualBox settings
     vb.customize ["modifyvm", :id, "--nictype1", "virtio"]
     vb.customize ["modifyvm", :id, "--audio", "none"]
@@ -26,7 +28,8 @@ Vagrant.configure("2") do |config|
     vb.customize ["modifyvm", :id, "--graphicscontroller", "vmsvga"]
     vb.customize ["modifyvm", :id, "--accelerate3d", "off"]
   end
+  # TODO add more options here?
   config.ssh.insert_key = true
   config.ssh.connect_timeout = 60
-  config.vm.synced_folder '.', '/vagrant', disabled: true
+  config.vm.synced_folder '.', '/vagrant', disabled: true  # TODO should we enable this?
 end

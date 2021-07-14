@@ -6,7 +6,7 @@ This is a minimal stage3 snapshot of Funtoo Linux that is packaged into a Vagran
 
  - Latest Funtoo 1.4 stage3 tarball from [https://build.funtoo.org/1.4-release-std/x86-64bit/intel64-nehalem/stage3-latest.tar.xz](https://build.funtoo.org/1.4-release-std/x86-64bit/intel64-nehalem/stage3-latest.tar.xz) using [SystemRescueCD](http://www.system-rescue-cd.org)
  - Architecture: x86-64bit, intel64-nehalem (compatible with most CPUs since 2008)
- - 50 GB dynamic sized HDD image (ext4)
+ - Initial 20 GB dynamic sized HDD image (ext4), can be expanded
  - Timezone: ```UTC```
  - NAT Networking using DHCP (virtio)
  - Vagrant user *vagrant* with password *vagrant* (can get superuser via sudo without password), additionally using the default SSH authorized keys provided by Vagrant (see https://github.com/hashicorp/vagrant/tree/master/keys) 

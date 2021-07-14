@@ -13,7 +13,7 @@ export BUILD_BOX_FUNTOO_VERSION="1.4"
 export BUILD_BOX_SOURCES="https://github.com/foobarlab/funtoo-stage3-packer"
 
 export BUILD_GUEST_TYPE="Gentoo_64"
-export BUILD_GUEST_DISKSIZE="50000"    # dynamic disksize in MB, e.g. 50000 => 50 GB
+export BUILD_GUEST_DISKSIZE="20000"    # dynamic disksize in MB, e.g. 20000 => 20 GB
 
 export BUILD_TIMEZONE="UTC"
 
