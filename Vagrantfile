@@ -72,4 +72,5 @@ Vagrant.configure("2") do |config|
   config.ssh.connect_timeout = 60
   config.vm.synced_folder '.', '/vagrant', disabled: true
   config.vm.provision "cleanup", type: "shell", inline: $script_cleanup, privileged: true
+  # TODO add trigger for disk compaction?
 end
