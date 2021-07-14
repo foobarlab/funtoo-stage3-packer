@@ -192,8 +192,12 @@ if [ -f "$BUILD_OUTPUT_FILE_TEMP" ]; then
     vagrant box add --name "$BUILD_BOX_NAME" "$BUILD_OUTPUT_FILE_TEMP"
     echo "Powerup and provision '$BUILD_BOX_NAME' ..."
     vagrant --provision up || { echo "Unable to startup '$BUILD_BOX_NAME'."; exit 1; }
+    echo "Halting '$BUILD_BOX_NAME' ..."
+    vagrant halt
+    # TODO vboxmanage modifymedium --compress
     echo "Exporting base box ..."
-    vagrant package --output "$BUILD_OUTPUT_FILE"
+    # TODO package additional optional files with --include
+    vagrant package --vagrantfile "Vagrantfile.template" --output "$BUILD_OUTPUT_FILE"
     echo "Removing temporary box file ..."
     rm -f  "$BUILD_OUTPUT_FILE_TEMP"
     # FIXME create sha1 checksum? and save to file for later comparison (include in build description?)

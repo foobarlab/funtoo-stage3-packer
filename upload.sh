@@ -217,7 +217,6 @@ UPLOAD_FINALIZE_URL=$(echo "$UPLOAD_PREPARE_UPLOADURL" | jq '.callback' | tr -d 
 UPLOAD_PROGRESS="--progress-bar"
 if [ -t 1 ]; then
   echo "Uploading ..."
-  echo "--------------------------------------------------------------------------------"
 else
   echo "Not a terminal, disabling progress meter ..."
   # FIXME no-progress-meter: fallback to --silent if curl is less or equal version 7.67.0
@@ -232,9 +231,6 @@ curl -f $UPLOAD_URL \
      --upload-file $BUILD_OUTPUT_FILE \
 | tee /dev/null
 
-if [ -t 1 ]; then
-  echo "--------------------------------------------------------------------------------"
-fi
 echo "Upload ended with exit code $?."
 
 # Finalize upload

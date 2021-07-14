@@ -3,6 +3,8 @@
 
 system("./config.sh >/dev/null")
 
+Vagrant.require_version ">= 2.1.0"
+
 $script_cleanup = <<SCRIPT
 # clean stale kernel files
 mount /boot || true
@@ -43,6 +45,7 @@ mkswap /dev/sda3
 SCRIPT
 
 Vagrant.configure("2") do |config|
+  #config.vagrant.sensitive = ["MySecretPassword", ENV["MY_TOKEN"]] # TODO hide sensitive information
   config.vm.box_check_update = false
   config.vm.box = "#{ENV['BUILD_BOX_NAME']}"
   config.vm.hostname = "#{ENV['BUILD_BOX_NAME']}"
