@@ -1,20 +1,22 @@
 #!/bin/bash -e
 # NOTE: Vagrant Cloud API see: https://www.vagrantup.com/docs/vagrant-cloud/api.html
 
-. config.sh
+. config.sh quiet
+
+title "CLEAN CLOUD"
+
 . vagrant_cloud_token.sh
 
 require_commands curl jq
 
-echo "This script is marked as EXPERIMENTAL! Use at your own risk."
-echo "This script will remove outdated boxes from Vagrant Cloud."
-echo
-echo "A maximum number of $BUILD_KEEP_MAX_CLOUD_BOXES boxes will be kept."
-echo "The current version will always be kept."
-echo
-echo "User:     $BUILD_BOX_USERNAME"
-echo "Box:      $BUILD_BOX_NAME"
-echo "Provider: $BUILD_BOX_PROVIDER"
+note "This script will remove outdated boxes from Vagrant Cloud."
+note
+note "A maximum number of $BUILD_KEEP_MAX_CLOUD_BOXES boxes will be kept."
+note "The current version will always be kept."
+note
+note "User:     $BUILD_BOX_USERNAME"
+note "Box:      $BUILD_BOX_NAME"
+note "Provider: $BUILD_BOX_PROVIDER"
 
 CLOUD_BOX_INFO=$( \
 curl -sS -f \
@@ -24,9 +26,8 @@ curl -sS -f \
 
 LATEST_CLOUD_VERSION=$(echo $CLOUD_BOX_INFO | jq .current_version.version | tr -d '"')
 if [ $LATEST_CLOUD_VERSION = "null" ]; then
-	echo
-	echo "Successful request, but no boxes were found."
-	echo "Nothing to remove. Please upload a box first."
+	result "Successful request, but no boxes were found."
+	result "Nothing to remove. Please upload a box first."
 	exit 0
 fi
 

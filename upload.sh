@@ -1,12 +1,13 @@
 #!/bin/bash -e
 # NOTE: Vagrant Cloud API see: https://www.vagrantup.com/docs/vagrant-cloud/api.html
 
-. config.sh
+. config.sh quiet
 
+title "UPLOAD BOX"
 if [ -f "$BUILD_OUTPUT_FILE" ]; then
-	echo "Found box file '$BUILD_OUTPUT_FILE' in the current directory ..."
+	result "Found box file '$BUILD_OUTPUT_FILE' in the current directory."
 else
-	echo "There is no box file '$BUILD_OUTPUT_FILE' in the current directory. Please run './build.sh' to build the box."
+	error "There is no box file '$BUILD_OUTPUT_FILE' in the current directory. Please run './build.sh' to build a box."
 	if [ $# -eq 0 ]; then
 		exit 1	# exit with error when running without param
 	else
