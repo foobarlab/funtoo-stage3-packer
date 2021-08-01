@@ -15,7 +15,7 @@ boot {
     default "Funtoo Linux"
     timeout 1
 }
-display { 
+display {
 	gfxmode 800x600
 }
 "Funtoo Linux" {

@@ -45,7 +45,7 @@ if [ -f "$BUILD_STAGE3_FILE" ]; then
         info "'$BUILD_STAGE3_FILE' already exists and seems up-to-date."
         BUILD_DOWNLOAD_STAGE3=false
     else
-        warn "'$BUILD_STAGE3_FILE' already exists but seems outdated:"    
+        warn "'$BUILD_STAGE3_FILE' already exists but seems outdated:"
         echo "-> local : $(date -d @${BUILD_LOCAL_TIMESTAMP})"
         echo "-> remote: $(date -d @${BUILD_REMOTE_TIMESTAMP})"
         BUILD_DOWNLOAD_STAGE3=true
@@ -102,7 +102,7 @@ if [ "$BUILD_STAGE3_LOCAL_HASH" == "$BUILD_STAGE3_REMOTE_HASH" ]; then
 else
 	warn "'$BUILD_STAGE3_FILE' checksums did NOT match. The file is possibly outdated or corrupted."
 	read -p "Do you want to delete it and try again (Y/n)? " choice
-	case "$choice" in 
+	case "$choice" in
 	  n|N ) echo "Canceled by user."
 	  		exit 1
 	        ;;
@@ -128,9 +128,9 @@ else
 fi
 
 if [ "$BUILD_SKIP_VERSION_CHECK" = false ]; then
-	
+
 	. vagrant_cloud_token.sh
-	
+
 	# check version match on cloud and abort if same
 	highlight "Comparing local and cloud version ..."
 	# FIXME check if box already exists (should give us a 200 HTTP response, if not we will get a 404)
@@ -139,17 +139,17 @@ if [ "$BUILD_SKIP_VERSION_CHECK" = false ]; then
 	  --header "Authorization: Bearer $VAGRANT_CLOUD_TOKEN" \
 	  https://app.vagrantup.com/api/v1/box/$BUILD_BOX_USERNAME/$BUILD_BOX_NAME \
 	)
-	
+
 	latest_cloud_version=$(echo $latest_cloud_version | jq .current_version.version | tr -d '"')
 	echo
 	echo "Latest cloud version..: $latest_cloud_version"
 	echo "This version..........: $BUILD_BOX_VERSION"
 	echo
-	
+
   if [[ $BUILD_BOX_VERSION = $latest_cloud_version ]]; then
 		error "An equal version number already exists. Hint: run './clean.sh' and try again. This will increment your build number automatically."
 		exit 0
-	else 
+	else
 	  version_too_small=`version_lt $BUILD_BOX_VERSION $latest_cloud_version && echo "true" || echo "false"`
 	  if [[ "$version_too_small" = "true" ]]; then
       warn "This version is smaller than the cloud version!"
