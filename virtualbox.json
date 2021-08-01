@@ -84,7 +84,7 @@
       "expect_disconnect": false
   }],
   "variables": {
-  	"sysrescuecd_url": "{{env `BUILD_SYSRESCUECD_FILE`}}",
+    "sysrescuecd_url": "{{env `BUILD_SYSRESCUECD_FILE`}}",
     "sysrescuecd_checksum": "{{env `BUILD_SYSRESCUECD_REMOTE_HASH`}}",
     "stage3_file": "{{env `BUILD_STAGE3_FILE`}}",
     "stage3_url": "{{env `BUILD_STAGE3_URL`}}",
