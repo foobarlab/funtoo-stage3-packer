@@ -8,14 +8,6 @@ echo "Executing $0 ..."
 
 require_commands vagrant packer wget sha256sum pv
 
-#echo
-#echo "=========================================================================="
-#echo
-#echo "                    Building box '$BUILD_BOX_NAME'"
-#echo
-#echo "=========================================================================="
-#echo
-
 header "Building box '$BUILD_BOX_NAME'"
 
 highlight "Looking for '$BUILD_SYSRESCUECD_FILE' ..."
