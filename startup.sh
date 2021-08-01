@@ -4,9 +4,9 @@
 
 require_commands vagrant
 
-echo "==> Starting '$BUILD_BOX_NAME' box ..."
+title "Starting '$BUILD_BOX_NAME'"
 
-echo "Powerup '$BUILD_BOX_NAME' ..."
+step "Powerup '$BUILD_BOX_NAME' ..."
 vagrant up --no-provision || { echo "Unable to startup '$BUILD_BOX_NAME'."; exit 1; }
-echo "Establishing SSH connection to '$BUILD_BOX_NAME' ..."
+step "Establishing SSH connection to '$BUILD_BOX_NAME' ..."
 vagrant ssh
