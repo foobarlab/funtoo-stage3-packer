@@ -10,7 +10,7 @@ if [ -f "$BUILD_OUTPUT_FILE" ]; then
   highlight "Initializing a fresh '$BUILD_BOX_NAME' box ..."
 	step "Suspending any running instances ..."
 	vagrant suspend
-	tep"Destroying current box ..."
+	step"Destroying current box ..."
 	vagrant destroy -f || true
 	step "Removing '$BUILD_BOX_NAME' ..."
 	vagrant box remove -f "$BUILD_BOX_NAME" 2>/dev/null || true
@@ -22,4 +22,3 @@ else
 fi
 
 final "Box installed and ready to use. You may now enter './startup.sh' to boot the box."
-
