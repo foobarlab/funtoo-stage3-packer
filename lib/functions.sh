@@ -151,6 +151,18 @@ version_lt() {
 
 # ---- Formatting / Colored output
 
+success() {
+  local text="$*"
+  if [ "${ANSI}" = "true" ]; then
+    color="${default}"
+    if [ "${ANSI_COLOR}" = "true" ]; then color="${light_magenta}"; fi
+    text=`bracket_to_bold "${text}"`
+    echo -e "${color}${bold}+++${color} ${text}${default}"
+  else
+    echo "+++ ${text}"
+  fi
+}
+
 warn() {
   local text="$*"
   if [ "${ANSI}" = "true" ]; then
