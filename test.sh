@@ -8,7 +8,7 @@ title "TEST BOX"
 
 if [ -f "$BUILD_OUTPUT_FILE" ];
 then
-  highlight "Testing '$BUILD_BOX_NAME' box ..."
+	highlight "Testing '$BUILD_BOX_NAME' box ..."
 	step "Suspending any running instances ..."
 	vagrant suspend
 	step "Destroying current box ..."

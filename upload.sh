@@ -67,9 +67,9 @@ echo "Our version: $BUILD_BOX_VERSION"
 echo "Latest cloud version: $LATEST_CLOUD_VERSION"
 
 if [[ $BUILD_BOX_VERSION = $LATEST_CLOUD_VERSION ]]; then
-	echo "Same version already exists."
+  echo "Same version already exists."
 else 
-	echo "Looks like we got a new version to provide."
+  echo "Looks like we got a new version to provide."
 fi
 
 # Create a new box
