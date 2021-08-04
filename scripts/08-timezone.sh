@@ -6,6 +6,6 @@ if [ -z ${BUILD_RUN:-} ]; then
 fi
 
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
-ln -snf /usr/share/zoneinfo/$TIMEZONE /etc/localtime
-echo $TIMEZONE > /etc/timezone
+ln -snf /usr/share/zoneinfo/$BUILD_TIMEZONE /etc/localtime
+echo $BUILD_TIMEZONE > /etc/timezone
 EOF

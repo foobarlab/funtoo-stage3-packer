@@ -21,8 +21,8 @@
       "guest_os_type": "{{user `guest_os_type`}}",
       "headless": "{{user `headless`}}",
       "ssh_pty": "true",
-      "iso_checksum": "sha256:{{user `systemrescuecd_checksum`}}",
-      "iso_url": "{{user `systemrescuecd_url`}}",
+      "iso_checksum": "sha256:{{user `sysrescuecd_checksum`}}",
+      "iso_url": "{{user `sysrescuecd_url`}}",
       "shutdown_command": "shutdown -hP now",
       "ssh_username": "{{user `username`}}",
       "ssh_password": "{{user `password`}}",
@@ -47,6 +47,10 @@
   }],
   "description": "{{user `box_description`}}",
   "post-processors": [{
+      "type": "checksum",
+      "checksum_types": [ "sha1" ],
+      "output": "packer_{{.BuildName}}_{{.ChecksumType}}.checksum"
+    },{
       "output": "{{user `output_file`}}",
       "type": "vagrant"
   }],
@@ -59,14 +63,14 @@
       "type": "shell",
       "script": "provision.sh",
       "environment_vars": [
-          "SCRIPTS=/tmp",
-          "TIMEZONE=UTC",
+          "scripts=/tmp",
           "BUILD_RUN=true",
           "BUILD_BOX_NAME={{user `vm_name`}}",
           "BUILD_BOX_USERNAME={{user `vm_username`}}",
           "BUILD_BOX_VERSION={{user `version`}}",
           "BUILD_MAKEOPTS={{user `makeopts`}}",
           "BUILD_TIMESTAMP={{user `timestamp`}}",
+          "BUILD_TIMEZONE={{user `timezone`}}",
           "BUILD_STAGE3_FILE={{user `stage3_file`}}",
           "BUILD_STAGE3_URL={{user `stage3_url`}}",
           "BUILD_STAGE3_PATH={{user `stage3_path`}}",
@@ -80,8 +84,8 @@
       "expect_disconnect": false
   }],
   "variables": {
-  	"systemrescuecd_url": "{{env `BUILD_SYSTEMRESCUECD_FILE`}}",
-    "systemrescuecd_checksum": "{{env `BUILD_SYSTEMRESCUECD_REMOTE_HASH`}}",
+    "sysrescuecd_url": "{{env `BUILD_SYSRESCUECD_FILE`}}",
+    "sysrescuecd_checksum": "{{env `BUILD_SYSRESCUECD_REMOTE_HASH`}}",
     "stage3_file": "{{env `BUILD_STAGE3_FILE`}}",
     "stage3_url": "{{env `BUILD_STAGE3_URL`}}",
     "stage3_path": "{{env `BUILD_STAGE3_PATH`}}",
@@ -93,6 +97,7 @@
     "version": "{{env `BUILD_BOX_VERSION`}}",
     "makeopts": "{{env `BUILD_MAKEOPTS`}}",
     "timestamp": "{{env `BUILD_TIMESTAMP`}}",
+    "timezone": "{{env `BUILD_TIMEZONE`}}",
     "cpus": "{{env `BUILD_CPUS`}}",
     "memory": "{{env `BUILD_MEMORY`}}",
     "disksize": "{{env `BUILD_GUEST_DISKSIZE`}}",
