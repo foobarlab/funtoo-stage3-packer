@@ -190,7 +190,8 @@ if [ -f "$BUILD_OUTPUT_FILE_TEMP" ]; then
     step "Exporting base box ..."
     # TODO package additional optional files with --include
     # TODO use configuration values inside template (BUILD_BOX_MEMORY, etc.)
-    vagrant package --vagrantfile "Vagrantfile.template" --output "$BUILD_OUTPUT_FILE"
+    #vagrant package --vagrantfile "Vagrantfile.template" --output "$BUILD_OUTPUT_FILE"
+    vagrant package --output "$BUILD_OUTPUT_FILE"
     step "Removing temporary box file ..."
     rm -f  "$BUILD_OUTPUT_FILE_TEMP"
     # FIXME create sha1 checksum? and save to file for later comparison (include in build description?)
