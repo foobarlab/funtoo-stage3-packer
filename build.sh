@@ -2,8 +2,6 @@
 
 start=`date +%s`
 
-echo "Executing $0 ..."
-
 . config.sh quiet
 
 require_commands vagrant packer wget sha256sum pv
