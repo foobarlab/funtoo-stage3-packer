@@ -1,9 +1,7 @@
 #!/bin/bash
 
-# imports
 . ./lib/functions.sh
 require_commands git nproc
-
 set -a
 
 # ----------------------------!  edit settings below  !----------------------------
