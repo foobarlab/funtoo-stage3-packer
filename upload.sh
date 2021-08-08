@@ -7,7 +7,8 @@ title "UPLOAD BOX"
 if [ -f "$BUILD_OUTPUT_FILE" ]; then
 	result "Found box file '$BUILD_OUTPUT_FILE' in the current directory."
 else
-	error "There is no box file '$BUILD_OUTPUT_FILE' in the current directory. Please run './build.sh' to build a box."
+	error "There is no box file '$BUILD_OUTPUT_FILE' in the current directory."
+	result "Please run './build.sh' to build a box."
 	if [ $# -eq 0 ]; then
 		exit 1	# exit with error when running without param
 	else
@@ -17,23 +18,26 @@ fi
 
 require_commands curl jq sha1sum pv
 
-echo "This script will upload the current build box to Vagrant Cloud."
 echo
-echo "User:       $BUILD_BOX_USERNAME"
-echo "Box:        $BUILD_BOX_NAME"
-echo "Provider:   $BUILD_BOX_PROVIDER"
-echo "Version:    $BUILD_BOX_VERSION"
-echo "File:       $BUILD_OUTPUT_FILE"
-echo "Build time: $BUILD_RUNTIME"
+info "This script will upload the current build box to Vagrant Cloud."
+echo
+info "User.........: '$BUILD_BOX_USERNAME'"
+info "Box..........: '$BUILD_BOX_NAME'"
+info "Provider.....: '$BUILD_BOX_PROVIDER'"
+info "Version......: '$BUILD_BOX_VERSION'"
+info "File.........: '$BUILD_OUTPUT_FILE'"
+info "Build time...: '$BUILD_RUNTIME'"
 # FIXME show and compare sha1 checksum?
 echo
-echo "Please verify if above information is correct."
+info "Please verify if above information is correct."
 echo
 
-read -p "Continue (Y/n)? " choice
+read -p "    Continue (Y/n)? " choice
 case "$choice" in
-  n|N ) echo "User cancelled."
-  		exit 0
+  n|N ) echo
+		warn "User cancelled."
+		echo
+		exit 0
         ;;
   * ) echo
   		;;
