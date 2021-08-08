@@ -62,7 +62,7 @@ fi
 result "Total ${COUNT} boxes found."
 
 read -p "Continue (Y/n)? " choice
-case "$choice" in 
+case "$choice" in
   n|N ) echo
   		warn "User cancelled."
   		echo
