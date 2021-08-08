@@ -334,7 +334,7 @@ bracket_to_bold() {
   #local default="\\\0033[0;39m"
   color="\\${color}"
   text=`echo $text | sed -re "/\'/ s/(^|\s|\.|:)+[\']/\0$bold/g"`
-  text=`echo $text | sed -re "/\'/ s/[\'](\.|:|\s|$)/$color\0\1/g"`
+  text=`echo $text | sed -re "/\'/ s/[\'](\.|:|\s|$)/$color\0/g"`
   echo `echo $text`
 }
 
