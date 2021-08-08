@@ -147,7 +147,8 @@ if [ "$BUILD_SKIP_VERSION_CHECK" = false ]; then
 	echo
 
   if [[ $BUILD_BOX_VERSION = $latest_cloud_version ]]; then
-		error "An equal version number already exists. Hint: run './clean.sh' and try again. This will increment your build number automatically."
+		error "An equal version number already exists."
+		info "Hint: run './clean.sh' and try again. This will increment your build number automatically."
 		exit 0
 	else
 	  version_too_small=`version_lt $BUILD_BOX_VERSION $latest_cloud_version && echo "true" || echo "false"`
