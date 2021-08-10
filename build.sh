@@ -1,4 +1,5 @@
 #!/bin/bash -ue
+# vim: ts=4 sw=4 et
 
 start=`date +%s`
 
@@ -10,13 +11,13 @@ header "Building box '$BUILD_BOX_NAME'"
 
 highlight "Looking for '$BUILD_SYSRESCUECD_FILE' ..."
 if [ -f "$BUILD_SYSRESCUECD_FILE" ]; then
-	info "'$BUILD_SYSRESCUECD_FILE' found. Skipping download ..."
+    info "'$BUILD_SYSRESCUECD_FILE' found. Skipping download ..."
 else
     warn "'$BUILD_SYSRESCUECD_FILE' NOT found. Starting download ..."
     wget -c --content-disposition "https://sourceforge.net/projects/systemrescuecd/files/sysresccd-x86/$BUILD_SYSRESCUECD_VERSION/$BUILD_SYSRESCUECD_FILE/download"
-	if [ $? -ne 0 ]; then
-    	error "Could not download '$BUILD_SYSRESCUECD_FILE'. Exit code from wget was $?."
-    	exit 1
+    if [ $? -ne 0 ]; then
+        error "Could not download '$BUILD_SYSRESCUECD_FILE'. Exit code from wget was $?."
+        exit 1
     fi
 fi
 
@@ -25,7 +26,7 @@ BUILD_SYSRESCUECD_LOCAL_HASH=$(pv $BUILD_SYSRESCUECD_FILE | sha256sum | grep -o 
 if [ "$BUILD_SYSRESCUECD_LOCAL_HASH" == "$BUILD_SYSRESCUECD_REMOTE_HASH" ]; then
   info "'$BUILD_SYSRESCUECD_FILE' checksums matched. Proceeding ..."
 else
-	# FIXME: let the user decide to delete and try downloading again
+    # FIXME: let the user decide to delete and try downloading again
   error "'$BUILD_SYSRESCUECD_FILE' checksum did NOT match with expected checksum. The file is possibly corrupted, please delete it and try again."
   exit 1
 fi
@@ -60,20 +61,20 @@ fi
 if [ "$BUILD_DOWNLOAD_STAGE3" = true ]; then
     highlight "Starting download of stage3 tarball ..."
     wget -c $BUILD_STAGE3_URL -O $BUILD_STAGE3_FILE
-	if [ $? -ne 0 ]; then
-    	error "Could not download '$BUILD_STAGE3_URL'. Exit code from wget was $?."
-    	exit $?
+    if [ $? -ne 0 ]; then
+        error "Could not download '$BUILD_STAGE3_URL'. Exit code from wget was $?."
+        exit $?
     fi
     step "Deleting possibly outdated release info ..."
-	rm -f ./release || true
+    rm -f ./release || true
 fi
 
 highlight "Looking for release info ..."
 if [ ! -f ./release ]; then
-	step "Extracting stage3 release info ..."
-	tar -xvf $BUILD_STAGE3_FILE ./etc/os-release -O > ./release
+    step "Extracting stage3 release info ..."
+    tar -xvf $BUILD_STAGE3_FILE ./etc/os-release -O > ./release
 else
-	info "Skipping extraction of stage3 release info. Already extracted."
+    info "Skipping extraction of stage3 release info. Already extracted."
 fi
 
 . config.sh quiet
@@ -83,12 +84,12 @@ BUILD_HASH_URL="${BUILD_FUNTOO_DOWNLOADPATH}/${BUILD_RELEASE_VERSION_ID}/stage3-
 BUILD_HASH_FILE="${BUILD_STAGE3_FILE}.hash.txt"
 
 if [ -f "$BUILD_HASH_FILE" ]; then
-	rm -f "$BUILD_HASH_FILE"
+    rm -f "$BUILD_HASH_FILE"
 fi
 
 if [ ! -f ./${BUILD_HASH_FILE} ]; then
-	step "Downloading hash of stage3 file ..."
-	wget ${BUILD_HASH_URL} -O ./${BUILD_HASH_FILE}
+    step "Downloading hash of stage3 file ..."
+    wget ${BUILD_HASH_URL} -O ./${BUILD_HASH_FILE}
 fi
 
 highlight "Comparing hash sums ..."
@@ -98,19 +99,19 @@ BUILD_STAGE3_REMOTE_HASH=$(cat $BUILD_HASH_FILE | sed -e 's/^sha256\s//g')
 if [ "$BUILD_STAGE3_LOCAL_HASH" == "$BUILD_STAGE3_REMOTE_HASH" ]; then
     info "'$BUILD_STAGE3_FILE' checksums matched. Proceeding ..."
 else
-	warn "'$BUILD_STAGE3_FILE' checksums did NOT match. The file is possibly outdated or corrupted."
-	read -p "Do you want to delete it and try again (Y/n)? " choice
-	case "$choice" in
-	  n|N ) echo "Canceled by user."
-	  		exit 1
-	        ;;
-	  * ) step "Deleting '$BUILD_STAGE3_FILE' ..."
-	      rm -f $BUILD_STAGE3_FILE
-	      step "Cleanup stage3 release info ..."
-	      rm -f ./release
-	      exec $0
-	      ;;
-	esac
+    warn "'$BUILD_STAGE3_FILE' checksums did NOT match. The file is possibly outdated or corrupted."
+    read -p "Do you want to delete it and try again (Y/n)? " choice
+    case "$choice" in
+      n|N ) echo "Canceled by user."
+            exit 1
+            ;;
+      * ) step "Deleting '$BUILD_STAGE3_FILE' ..."
+          rm -f $BUILD_STAGE3_FILE
+          step "Cleanup stage3 release info ..."
+          rm -f ./release
+          exec $0
+          ;;
+    esac
 fi
 
 final "All preparations done."
@@ -120,44 +121,44 @@ final "All preparations done."
 # do not build an already existing release on vagrant cloud by default
 
 if [ ! $# -eq 0 ]; then
-	BUILD_SKIP_VERSION_CHECK=true
+    BUILD_SKIP_VERSION_CHECK=true
 else
-	BUILD_SKIP_VERSION_CHECK=false
+    BUILD_SKIP_VERSION_CHECK=false
 fi
 
 if [ "$BUILD_SKIP_VERSION_CHECK" = false ]; then
 
-	. vagrant_cloud_token.sh
+    . vagrant_cloud_token.sh
 
-	# check version match on cloud and abort if same
-	highlight "Comparing local and cloud version ..."
-	# FIXME check if box already exists (should give us a 200 HTTP response, if not we will get a 404)
-	latest_cloud_version=$( \
-	curl -sS \
-	  --header "Authorization: Bearer $VAGRANT_CLOUD_TOKEN" \
-	  https://app.vagrantup.com/api/v1/box/$BUILD_BOX_USERNAME/$BUILD_BOX_NAME \
-	)
+    # check version match on cloud and abort if same
+    highlight "Comparing local and cloud version ..."
+    # FIXME check if box already exists (should give us a 200 HTTP response, if not we will get a 404)
+    latest_cloud_version=$( \
+    curl -sS \
+      --header "Authorization: Bearer $VAGRANT_CLOUD_TOKEN" \
+      https://app.vagrantup.com/api/v1/box/$BUILD_BOX_USERNAME/$BUILD_BOX_NAME \
+    )
 
-	latest_cloud_version=$(echo $latest_cloud_version | jq .current_version.version | tr -d '"')
-	echo
-	echo "Latest cloud version..: $latest_cloud_version"
-	echo "This version..........: $BUILD_BOX_VERSION"
-	echo
+    latest_cloud_version=$(echo $latest_cloud_version | jq .current_version.version | tr -d '"')
+    echo
+    echo "Latest cloud version..: $latest_cloud_version"
+    echo "This version..........: $BUILD_BOX_VERSION"
+    echo
 
-  if [[ $BUILD_BOX_VERSION = $latest_cloud_version ]]; then
-		error "An equal version number already exists."
-		info "Hint: run './clean.sh' and try again. This will increment your build number automatically."
-		exit 0
-	else
-	  version_too_small=`version_lt $BUILD_BOX_VERSION $latest_cloud_version && echo "true" || echo "false"`
-	  if [[ "$version_too_small" = "true" ]]; then
+    if [[ $BUILD_BOX_VERSION = $latest_cloud_version ]]; then
+        error "An equal version number already exists."
+        info "Hint: run './clean.sh' and try again. This will increment your build number automatically."
+        exit 0
+    else
+      version_too_small=`version_lt $BUILD_BOX_VERSION $latest_cloud_version && echo "true" || echo "false"`
+      if [[ "$version_too_small" = "true" ]]; then
       warn "This version is smaller than the cloud version!"
     fi
-	  final "Looks like we have an unreleased version to provide. Proceeding build ..."
-	fi
+      final "Looks like we have an unreleased version to provide. Proceeding build ..."
+    fi
 
 else
-	warn "Skipped cloud version check."
+    warn "Skipped cloud version check."
 fi
 
 cp $BUILD_STAGE3_FILE ./scripts
