@@ -1,4 +1,5 @@
 #!/bin/bash -uex
+# vim: ts=2 sw=2 et
 
 if [ -z ${BUILD_RUN:-} ]; then
   echo "This script can not be run directly! Aborting."
@@ -12,6 +13,6 @@ cat > /etc/fstab <<'DATA'
 /dev/sda3     none        swap        sw                  0 0
 /dev/sda4     /           ext4        noatime             0 1
 /dev/cdrom    /mnt/cdrom  auto        noauto,ro           0 0
-tmpfs	      /tmp	      tmpfs	      rw,nosuid,noatime,nodev,size=2G,mode=1777   0 0
+tmpfs         /tmp        tmpfs       rw,nosuid,noatime,nodev,size=2G,mode=1777   0 0
 DATA
 EOF

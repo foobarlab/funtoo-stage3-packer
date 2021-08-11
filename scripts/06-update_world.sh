@@ -1,4 +1,5 @@
 #!/bin/bash -uex
+# vim: ts=2 sw=2 et
 
 if [ -z ${BUILD_RUN:-} ]; then
   echo "This script can not be run directly! Aborting."
@@ -7,7 +8,7 @@ fi
 
 # add custom overlay?
 if [ "$BUILD_CUSTOM_OVERLAY" = true ]; then
-	chroot /mnt/funtoo /bin/bash -uex <<'EOF'
+  chroot /mnt/funtoo /bin/bash -uex <<'EOF'
 cd /var/git
 mkdir -p overlay
 cd overlay
@@ -17,7 +18,7 @@ git config pull.ff only       # strategy: fast forward only
 chown -R portage.portage /var/git/overlay
 EOF
 
-	chroot /mnt/funtoo /bin/bash -uex <<'EOF'
+  chroot /mnt/funtoo /bin/bash -uex <<'EOF'
 cat > /etc/portage/repos.conf/$BUILD_CUSTOM_OVERLAY_NAME <<'DATA'
 [DEFAULT]
 main-repo = core-kit
