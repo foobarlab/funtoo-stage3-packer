@@ -1,5 +1,5 @@
 # -*- mode: ruby -*-
-# vi: set ft=ruby :
+# vim: ts=2 sw=2 et ft=ruby :
 
 system("./config.sh >/dev/null")
 
@@ -21,7 +21,7 @@ truncate -s 0 /var/log/**/*.log
 find /var/log -type f -name '*.[0-99].gz' -exec rm {} +
 logfiles=( messages dmesg lastlog wtmp )
 for i in "${logfiles[@]}"; do
-	truncate -s 0 /var/log/$i
+  truncate -s 0 /var/log/$i
 done
 logfiles=( emerge emerge-fetch genkernel )
 for i in "${logfiles[@]}"; do
