@@ -7,6 +7,7 @@ if [ -z ${BUILD_RUN:-} ]; then
 fi
 
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
+emerge -v sys-block/parted
 USE="-sendmail" emerge -v app-admin/sudo
 USE="-keyutils" emerge -v net-fs/nfs-utils
 useradd -m -G audio,video,cdrom,wheel,users -s /bin/bash vagrant
