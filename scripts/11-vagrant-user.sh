@@ -7,7 +7,6 @@ if [ -z ${BUILD_RUN:-} ]; then
 fi
 
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
-emerge -v sys-block/parted
 USE="-sendmail" emerge -v app-admin/sudo
 USE="-keyutils" emerge -v net-fs/nfs-utils
 useradd -m -G audio,video,cdrom,wheel,users -s /bin/bash vagrant
@@ -19,4 +18,8 @@ chmod 0700 ~vagrant/.ssh
 chmod 0600 ~vagrant/.ssh/authorized_keys
 chown -R vagrant: ~vagrant/.ssh
 rc-update add sshd default
+EOF
+
+chroot /mnt/funtoo /bin/bash -uex <<'EOF'
+emerge -v sys-block/parted sys-apps/dmidecode sys-fs/growpart  
 EOF
