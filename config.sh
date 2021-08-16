@@ -70,50 +70,43 @@ export BUILD_BOX_VERSION=`echo $BUILD_BOX_FUNTOO_VERSION | sed -e 's/\.//g'`
 
 BUILD_BOX_DESCRIPTION="$BUILD_BOX_NAME"
 
-if [[ -f ./release && -s release ]]; then
-    while read line; do
-        line_name=`echo $line |cut -d "=" -f1`
-        line_value=`echo $line |cut -d "=" -f2 | sed -e 's/"//g'`
-        export "BUILD_RELEASE_$line_name=$line_value"
-    done < ./release
-    BUILD_BOX_RELEASE_VERSION=`echo $BUILD_RELEASE_VERSION_ID | sed -e 's/\-//g'`
-    BUILD_BOX_RELEASE_VERSION=`echo $BUILD_BOX_RELEASE_VERSION | sed -e 's/20//'`
-    export BUILD_BOX_RELEASE_VERSION
-    BUILD_BOX_VERSION=$BUILD_BOX_VERSION.$BUILD_BOX_RELEASE_VERSION
+BUILD_BOX_RELEASE_VERSION=`echo $BUILD_RELEASE_VERSION_ID | sed -e 's/\-//g'`
+BUILD_BOX_RELEASE_VERSION=`echo $BUILD_BOX_RELEASE_VERSION | sed -e 's/20//'`
+export BUILD_BOX_RELEASE_VERSION
+BUILD_BOX_VERSION=$BUILD_BOX_VERSION.$BUILD_BOX_RELEASE_VERSION
 
-    if [ -f build_version ]; then
-        BUILD_BOX_VERSION=$(<build_version)
-    else
-        # generate build_number
-        if [ -z ${BUILD_NUMBER:-} ] ; then
-            if [ -f build_number ]; then
-                # read from file and increase by one
-                BUILD_NUMBER=$(<build_number)
-                BUILD_NUMBER=$((BUILD_NUMBER+1))
-            else
-                BUILD_NUMBER=0
-            fi
-            export BUILD_NUMBER
-            # store for later reuse in file 'build_number'
-            echo $BUILD_NUMBER > build_number
-            BUILD_BOX_VERSION=$BUILD_BOX_VERSION.$BUILD_NUMBER
+if [ -f build_version ]; then
+    BUILD_BOX_VERSION=$(<build_version)
+else
+    # generate build_number
+    if [ -z ${BUILD_NUMBER:-} ] ; then
+        if [ -f build_number ]; then
+            # read from file and increase by one
+            BUILD_NUMBER=$(<build_number)
+            BUILD_NUMBER=$((BUILD_NUMBER+1))
+        else
+            BUILD_NUMBER=0
         fi
+        export BUILD_NUMBER
+        # store for later reuse in file 'build_number'
+        echo $BUILD_NUMBER > build_number
+        BUILD_BOX_VERSION=$BUILD_BOX_VERSION.$BUILD_NUMBER
     fi
-    export BUILD_BOX_VERSION
-    if [ $# -eq 0 ]; then
-        echo "build version => $BUILD_BOX_VERSION"
-    fi
-    echo $BUILD_BOX_VERSION > build_version
-    export BUILD_OUTPUT_FILE="$BUILD_BOX_NAME-$BUILD_BOX_VERSION.box"
+fi
+export BUILD_BOX_VERSION
+if [ $# -eq 0 ]; then
+    echo "build version => $BUILD_BOX_VERSION"
+fi
+echo $BUILD_BOX_VERSION > build_version
+export BUILD_OUTPUT_FILE="$BUILD_BOX_NAME-$BUILD_BOX_VERSION.box"
 
-    BUILD_BOX_DESCRIPTION="Funtoo $BUILD_BOX_FUNTOO_VERSION ($BUILD_FUNTOO_ARCHITECTURE)<br><br>$BUILD_BOX_NAME version $BUILD_BOX_VERSION ($BUILD_RELEASE_VERSION_ID)"
-    if [ -z ${BUILD_NUMBER+x} ] || [ -z ${BUILD_TAG+x} ]; then
-        # without build number/tag
-        BUILD_BOX_DESCRIPTION="$BUILD_BOX_DESCRIPTION"
-    else
-        # for jenkins builds we got some additional information: BUILD_NUMBER, BUILD_ID, BUILD_DISPLAY_NAME, BUILD_TAG, BUILD_URL
-        BUILD_BOX_DESCRIPTION="$BUILD_BOX_DESCRIPTION build $BUILD_NUMBER ($BUILD_TAG)"
-    fi
+BUILD_BOX_DESCRIPTION="Funtoo $BUILD_BOX_FUNTOO_VERSION ($BUILD_FUNTOO_ARCHITECTURE)<br><br>$BUILD_BOX_NAME version $BUILD_BOX_VERSION ($BUILD_RELEASE_VERSION_ID)"
+if [ -z ${BUILD_NUMBER+x} ] || [ -z ${BUILD_TAG+x} ]; then
+    # without build number/tag
+    BUILD_BOX_DESCRIPTION="$BUILD_BOX_DESCRIPTION"
+else
+    # for jenkins builds we got some additional information: BUILD_NUMBER, BUILD_ID, BUILD_DISPLAY_NAME, BUILD_TAG, BUILD_URL
+    BUILD_BOX_DESCRIPTION="$BUILD_BOX_DESCRIPTION build $BUILD_NUMBER ($BUILD_TAG)"
 fi
 
 if [[ -f ./build_time && -s build_time ]]; then
