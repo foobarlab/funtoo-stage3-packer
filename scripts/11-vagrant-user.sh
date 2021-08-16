@@ -1,4 +1,5 @@
 #!/bin/bash -uex
+# vim: ts=2 sw=2 et
 
 if [ -z ${BUILD_RUN:-} ]; then
   echo "This script can not be run directly! Aborting."
@@ -17,4 +18,8 @@ chmod 0700 ~vagrant/.ssh
 chmod 0600 ~vagrant/.ssh/authorized_keys
 chown -R vagrant: ~vagrant/.ssh
 rc-update add sshd default
+EOF
+
+chroot /mnt/funtoo /bin/bash -uex <<'EOF'
+emerge -v sys-block/parted sys-apps/dmidecode sys-fs/growpart  
 EOF

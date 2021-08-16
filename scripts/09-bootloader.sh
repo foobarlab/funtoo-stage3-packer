@@ -1,4 +1,5 @@
 #!/bin/bash -uex
+# vim: ts=2 sw=2 et
 
 if [ -z ${BUILD_RUN:-} ]; then
   echo "This script can not be run directly! Aborting."
@@ -16,12 +17,12 @@ boot {
     timeout 1
 }
 display {
-	gfxmode 800x600
+  gfxmode 800x600
 }
 "Funtoo Linux" {
-    kernel kernel[-v]
-    initrd initramfs[-v]
-    params += root=auto rootfstype=auto
+  kernel kernel[-v]
+  initrd initramfs[-v]
+  params += root=auto rootfstype=auto
 }
 DATA
 rm -f /boot/memtest86.bin
