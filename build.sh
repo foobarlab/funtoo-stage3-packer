@@ -31,8 +31,6 @@ else
   exit 1
 fi
 
-# FIXME: downloading stage3-latest is not relieable
-#BUILD_STAGE3_URL="$BUILD_FUNTOO_DOWNLOADPATH/$BUILD_STAGE3_FILE"
 BUILD_STAGE3_URL="$BUILD_FUNTOO_DOWNLOADPATH/${BUILD_RELEASE_VERSION_ID}/stage3-intel64-nehalem-${BUILD_BOX_FUNTOO_VERSION}-release-std-${BUILD_RELEASE_VERSION_ID}.tar.xz"
 
 highlight "Looking for '$BUILD_STAGE3_FILE' ..."
@@ -65,16 +63,6 @@ if [ "$BUILD_DOWNLOAD_STAGE3" = true ]; then
         error "Could not download '$BUILD_STAGE3_URL'. Exit code from wget was $?."
         exit $?
     fi
-    step "Deleting possibly outdated release info ..."
-    rm -f ./release || true
-fi
-
-highlight "Looking for release info ..."
-if [ ! -f ./release ]; then
-    step "Extracting stage3 release info ..."
-    tar -xvf $BUILD_STAGE3_FILE ./etc/os-release -O > ./release
-else
-    info "Skipping extraction of stage3 release info. Already extracted."
 fi
 
 . config.sh quiet
@@ -107,9 +95,8 @@ else
             ;;
       * ) step "Deleting '$BUILD_STAGE3_FILE' ..."
           rm -f $BUILD_STAGE3_FILE
-          step "Cleanup stage3 release info ..."
-          rm -f ./release
           exec $0
+          exit 0
           ;;
     esac
 fi
@@ -150,19 +137,18 @@ if [ "$BUILD_SKIP_VERSION_CHECK" = false ]; then
         info "Hint: run './clean.sh' and try again. This will increment your build number automatically."
         exit 0
     else
-      version_too_small=`version_lt $BUILD_BOX_VERSION $latest_cloud_version && echo "true" || echo "false"`
-      if [[ "$version_too_small" = "true" ]]; then
-      warn "This version is smaller than the cloud version!"
+        version_too_small=`version_lt $BUILD_BOX_VERSION $latest_cloud_version && echo "true" || echo "false"`
+        if [[ "$version_too_small" = "true" ]]; then
+            warn "This version is smaller than the cloud version!"
+            todo "Automatically increase build_number"
+        fi
+        final "Looks like we have an unreleased version to provide. Proceeding build ..."
     fi
-      final "Looks like we have an unreleased version to provide. Proceeding build ..."
-    fi
-
 else
     warn "Skipped cloud version check."
 fi
 
 cp $BUILD_STAGE3_FILE ./scripts
-cp ./release ./scripts/.release_$BUILD_BOX_NAME
 
 export PACKER_LOG_PATH="$PWD/packer.log"
 export PACKER_LOG="1"
