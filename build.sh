@@ -128,14 +128,14 @@ if [ "$BUILD_SKIP_VERSION_CHECK" = false ]; then
 
     latest_cloud_version=$(echo $latest_cloud_version | jq .current_version.version | tr -d '"')
     echo
-    echo "Latest cloud version..: $latest_cloud_version"
-    echo "This version..........: $BUILD_BOX_VERSION"
+    info "Latest cloud version..: '${latest_cloud_version}'"
+    info "This version..........: '${BUILD_BOX_VERSION}'"
     echo
 
-    if [[ $BUILD_BOX_VERSION = $latest_cloud_version ]]; then
+    if [[ "$BUILD_BOX_VERSION" = "$latest_cloud_version" ]]; then
         error "An equal version number already exists."
         info "Hint: run './clean.sh' and try again. This will increment your build number automatically."
-        exit 0
+        exit 1
     else
         version_too_small=`version_lt $BUILD_BOX_VERSION $latest_cloud_version && echo "true" || echo "false"`
         if [[ "$version_too_small" = "true" ]]; then
