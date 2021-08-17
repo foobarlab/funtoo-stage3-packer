@@ -19,7 +19,3 @@ chmod 0600 ~vagrant/.ssh/authorized_keys
 chown -R vagrant: ~vagrant/.ssh
 rc-update add sshd default
 EOF
-
-chroot /mnt/funtoo /bin/bash -uex <<'EOF'
-emerge -v sys-block/parted sys-apps/dmidecode sys-fs/growpart  
-EOF
