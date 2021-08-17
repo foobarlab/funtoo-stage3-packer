@@ -52,15 +52,18 @@ chroot /mnt/funtoo /bin/bash -uex <<'EOF'
 emerge -vt app-admin/eclean-kernel
 
 # acpid: required for gracefully shutdown on close
-emerge -v sys-power/acpid
+emerge -vt sys-power/acpid
 rc-update add acpid default
 
 # some utils required for advanced networking
 # see: https://wiki.gentoo.org/wiki/VirtualBox#Gentoo_guests
-emerge -v sys-apps/usermode-utilities net-misc/bridge-utils
+emerge -vt sys-apps/usermode-utilities net-misc/bridge-utils
 
 # add up-to-date intel cpu microcode, uncomment if you want to run this vm on bare metal
 #emerge -vt sys-firmware/intel-microcode sys-apps/iucode_tool
+
+# grow filesystem partitions
+emerge -vt sys-fs/growpart 
 
 # perl-cleaner
 perl-cleaner --all
