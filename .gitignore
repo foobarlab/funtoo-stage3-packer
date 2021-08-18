@@ -7,8 +7,9 @@ output-virtualbox-iso/
 *.tar.xz
 .project
 .pydevproject
-packer.log*
+/*.log*
 vagrant-cloud-*
+!vagrant-cloud-token.sh
 build_number
 build_version
 build_time
