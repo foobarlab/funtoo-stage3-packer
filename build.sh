@@ -167,14 +167,14 @@ if [ -f "$BUILD_OUTPUT_FILE_TEMP" ]; then
     step "Removing '$BUILD_BOX_NAME' ..."
     vagrant box remove -f "$BUILD_BOX_NAME" 2>/dev/null || true
     step "Adding '$BUILD_BOX_NAME' ..."
-    vagrant box add --name "$BUILD_BOX_NAME" "$BUILD_OUTPUT_FILE_TEMP"
+    vagrant box add -f --name "$BUILD_BOX_NAME" "$BUILD_OUTPUT_FILE_TEMP"
     step "Powerup and provision '$BUILD_BOX_NAME' ..."
     vagrant --provision up || { echo "Unable to startup '$BUILD_BOX_NAME'."; exit 1; }
     step "Halting '$BUILD_BOX_NAME' ..."
     vagrant halt
-    # TODO vboxmanage modifymedium --compact <path to vdi>
-    step "Exporting base box ..."
-    # TODO package additional optional files with --include
+    # TODO vboxmanage modifymedium --compact <path to vdi> ?
+    step "Exporting base box to '$BUILD_OUTPUT_FILE' ..."
+    # TODO package additional optional files with --include ?
     # TODO use configuration values inside template (BUILD_BOX_MEMORY, etc.)
     #vagrant package --vagrantfile "Vagrantfile.template" --output "$BUILD_OUTPUT_FILE"
     vagrant package --output "$BUILD_OUTPUT_FILE"
