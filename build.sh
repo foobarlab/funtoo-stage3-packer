@@ -5,7 +5,7 @@ start=`date +%s`
 
 . config.sh quiet
 
-require_commands vagrant packer wget sha256sum pv
+require_commands jq vagrant packer wget sha256sum pv
 
 header "Building box '$BUILD_BOX_NAME'"
 
@@ -115,14 +115,11 @@ fi
 
 if [ "$BUILD_SKIP_VERSION_CHECK" = false ]; then
 
-    . vagrant_cloud_token.sh
-
     # check version match on cloud and abort if same
     highlight "Comparing local and cloud version ..."
     # FIXME check if box already exists (should give us a 200 HTTP response, if not we will get a 404)
     latest_cloud_version=$( \
     curl -sS \
-      --header "Authorization: Bearer $VAGRANT_CLOUD_TOKEN" \
       https://app.vagrantup.com/api/v1/box/$BUILD_BOX_USERNAME/$BUILD_BOX_NAME \
     )
 
@@ -150,6 +147,7 @@ fi
 
 cp $BUILD_STAGE3_FILE ./scripts
 
+step "Invoking packer ..."
 export PACKER_LOG_PATH="$PWD/packer.log"
 export PACKER_LOG="1"
 packer validate "$PWD/packer/virtualbox.json"
