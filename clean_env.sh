@@ -11,6 +11,8 @@ require_commands vagrant $vboxmanage
 title "ENVIRONMENT CLEANUP"
 
 highlight "Housekeeping Vagrant environment ..."
+step "Prune previous versions of box '${BUILD_BOX_NAME}' ..."
+vagrant box prune -f -k --name ${BUILD_BOX_NAME}
 step "Prune invalid Vagrant entries ..."
 vagrant global-status --prune >/dev/null
 step "Delete temporary Vagrant files ..."
@@ -60,7 +62,7 @@ for (( i=0; i<$vbox_found_hdd_count; i++ )); do
         if [[ "${vbox_hdd_states[$i]}" = "inaccessible" ]]; then
             highlight "Removing hdd from Media Manager ..."
             $vboxmanage closemedium disk ${vbox_hdd_uuids[$i]} --delete
-            highlight "Removing hdd image file"
+            highlight "Removing hdd image file ..."
             rm -f "$vbox_hdd_locations2[$i]" || true
         else
             result "Media accessible, keep hdd image."
