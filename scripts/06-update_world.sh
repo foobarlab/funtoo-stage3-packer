@@ -6,6 +6,13 @@ if [ -z ${BUILD_RUN:-} ]; then
   exit 1
 fi
 
+# copy pre-downloaded distfiles (if any)
+if [[ -d "/tmp/distfiles" ]]; then
+    rsync -urv /tmp/distfiles /mnt/funtoo/var/cache/portage/
+    chown portage:portage /mnt/funtoo/var/cache/portage/distfiles/*
+    chmod 664 /mnt/funtoo/var/cache/portage/distfiles/*
+fi
+
 # add custom overlay?
 if [ "$BUILD_CUSTOM_OVERLAY" = true ]; then
   chroot /mnt/funtoo /bin/bash -uex <<'EOF'

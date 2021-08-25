@@ -58,8 +58,11 @@
       "destination": "/tmp",
       "source": "scripts",
       "type": "file"
-    },
-    {
+    },{
+      "destination": "/tmp",
+      "source": "distfiles",
+      "type": "file"
+    },{
       "type": "shell",
       "script": "packer/provision.sh",
       "environment_vars": [

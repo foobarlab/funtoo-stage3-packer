@@ -101,6 +101,8 @@ else
     esac
 fi
 
+. distfiles.sh quiet
+
 final "All preparations done."
 
 . config.sh
