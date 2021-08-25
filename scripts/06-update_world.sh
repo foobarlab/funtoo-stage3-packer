@@ -9,8 +9,10 @@ fi
 # copy pre-downloaded distfiles (if any)
 if [[ -d "/tmp/distfiles" ]]; then
     rsync -urv /tmp/distfiles /mnt/funtoo/var/cache/portage/
-    chown portage:portage /mnt/funtoo/var/cache/portage/distfiles/*
-    chmod 664 /mnt/funtoo/var/cache/portage/distfiles/*
+    chroot /mnt/funtoo /bin/bash -uex <<'EOF'
+chown portage:portage /var/cache/portage/distfiles/*
+chmod 664 /var/cache/portage/distfiles/*
+EOF
 fi
 
 # add custom overlay?
