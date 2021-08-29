@@ -1,0 +1,9 @@
+# This file contains a list of distfiles to download
+# Useful if source files are not available through ebuild
+# For the long term report back to Funtoo (http://bugs.funtoo.org)
+# if default Funtoo packages are affected
+# This file structure is as follows (space separated):
+# <BLAKE2B> <filename> <download url>
+
+# ---> openssl 1.1.1k: has been moved to old sources (deprecated)
+e9bd90f17bc819c4960d07bbee04346e8a7adb87a764a09d033ef76f1d638c67b180c4f2beb84ec25fbff54ccc9c14c13b9b16a27cac231a5dd22b02635d5cec openssl-1.1.1k.tar.gz   https://www.openssl.org/source/old/1.1.1/openssl-1.1.1k.tar.gz

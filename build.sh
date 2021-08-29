@@ -5,9 +5,8 @@ start=`date +%s`
 
 . config.sh quiet
 
-require_commands jq vagrant packer wget sha256sum pv
-
 header "Building box '$BUILD_BOX_NAME'"
+require_commands vagrant packer wget jq sha256sum pv
 
 highlight "Looking for '$BUILD_SYSRESCUECD_FILE' ..."
 if [ -f "$BUILD_SYSRESCUECD_FILE" ]; then
@@ -101,9 +100,7 @@ else
     esac
 fi
 
-final "All preparations done."
-
-. config.sh
+. distfiles.sh quiet
 
 # do not build an already existing release on vagrant cloud by default
 
@@ -129,6 +126,8 @@ if [ "$BUILD_SKIP_VERSION_CHECK" = false ]; then
     info "This version..........: '${BUILD_BOX_VERSION}'"
     echo
 
+    # TODO automatically generate initial build number?
+
     if [[ "$BUILD_BOX_VERSION" = "$latest_cloud_version" ]]; then
         error "An equal version number already exists, please run './clean.sh' to increment your build number and try again."
         todo "Automatically increase build number?"
@@ -145,6 +144,12 @@ else
     warn "Skipped cloud version check."
 fi
 
+
+final "All preparations done."
+
+. config.sh
+
+step "Copying temporary stage3 file ..."
 cp $BUILD_STAGE3_FILE ./scripts
 
 step "Invoking packer ..."
@@ -153,6 +158,7 @@ export PACKER_LOG="1"
 packer validate "$PWD/packer/virtualbox.json"
 packer build -force -on-error=abort "$PWD/packer/virtualbox.json"
 
+step "Removing temporary stage3 file ..."
 rm -f ./scripts/$BUILD_STAGE3_FILE
 
 title "OPTIMIZING BOX SIZE"
@@ -170,7 +176,7 @@ if [ -f "$BUILD_OUTPUT_FILE_TEMP" ]; then
     vagrant --provision up || { echo "Unable to startup '$BUILD_BOX_NAME'."; exit 1; }
     step "Halting '$BUILD_BOX_NAME' ..."
     vagrant halt
-    # TODO vboxmanage modifymedium --compact <path to vdi> ?
+    # TODO vboxmanage modifymedium disk --compact <path to vdi> ?
     step "Exporting base box to '$BUILD_OUTPUT_FILE' ..."
     # TODO package additional optional files with --include ?
     # TODO use configuration values inside template (BUILD_BOX_MEMORY, etc.)
@@ -190,4 +196,4 @@ hours=$((runtime / 3600));
 minutes=$(( (runtime % 3600) / 60 ));
 seconds=$(( (runtime % 3600) % 60 ));
 echo "$hours hours $minutes minutes $seconds seconds" >> build_time
-result "Total build runtime was $hours hours $minutes minutes $seconds seconds."
+result "Build runtime was $hours hours $minutes minutes $seconds seconds."
