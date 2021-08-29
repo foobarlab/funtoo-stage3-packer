@@ -1,7 +1,7 @@
-# This file contains a list of distfiles to download
-# Useful if source files are not available through ebuild
-# For the long term report back to Funtoo (http://bugs.funtoo.org)
-# if default Funtoo packages are affected
+# This file contains a list of distfiles to download.
+# Useful if source files are not available through an ebuild.
+# Possibly be reported back to Funtoo (http://bugs.funtoo.org)
+# if default Funtoo packages are affected.
 # This file structure is as follows (space separated):
 # <BLAKE2B> <filename> <download url>
 
