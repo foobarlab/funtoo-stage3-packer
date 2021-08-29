@@ -32,6 +32,11 @@ rm -f /var/log/portage/elog/*.log
 sync && sleep 10
 # debug: list running services
 rc-status
+# clean shell history
+set +o history
+rm -f /home/vagrant/.bash_history
+rm -f /root/.bash_history
+sync && sleep 5
 # zerofree /boot
 mount -v -n -o remount,ro /dev/sda1
 zerofree /dev/sda1 && echo "zerofree: success on /dev/sda1 (boot)"
