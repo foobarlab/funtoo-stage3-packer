@@ -155,6 +155,12 @@ cp $BUILD_STAGE3_FILE ./scripts
 step "Invoking packer ..."
 export PACKER_LOG_PATH="$PWD/packer.log"
 export PACKER_LOG="1"
+
+if [ $PACKER_LOG ]; then
+    info "Logging Packer output to '$PACKER_LOG_PATH' ..."
+fi
+
+step "Invoking Packer build configuration '$PWD/packer/virtualbox.json' ..."
 packer validate "$PWD/packer/virtualbox.json"
 packer build -force -on-error=abort "$PWD/packer/virtualbox.json"
 
