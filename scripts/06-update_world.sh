@@ -64,7 +64,10 @@ gcc-config -l || gcc-config 1
 ego sync
 # fix some USE flags
 /usr/local/sbin/fix_flags.py
-emerge -vt --update --newuse --deep --with-bdeps=y @world --exclude="sys-kernel/debian-sources-lts" --exclude="sys-kernel/debian-sources"
+emerge -vt --update --newuse --deep --with-bdeps=y --complete-graph=y @world --exclude="sys-kernel/debian-sources-lts" --exclude="sys-kernel/debian-sources"
+emerge -vt @preserved-rebuild
+emerge --depclean
+emerge -vt @preserved-rebuild
 EOF
 
 # rebuild system?
@@ -73,12 +76,15 @@ chroot /mnt/funtoo /bin/bash -uex <<'EOF'
 env-update
 source /etc/profile
 emerge -vt --update --newuse --deep --with-bdeps=y @world
+emerge -vt @preserved-rebuild
 emerge --depclean
 emerge -vt @preserved-rebuild
 emerge -vte --usepkg=n @system
 env-update
 source /etc/profile
 emerge -vte --usepkg=n @world
+emerge -vt @preserved-rebuild
+emerge --depclean
 emerge -vt @preserved-rebuild
 EOF
 fi
