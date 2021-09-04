@@ -28,7 +28,7 @@ BUILD_REBUILD_SYSTEM=false          # set to 'true': rebuild @system (e.g. requi
 BUILD_GUEST_ADDITIONS=true          # set to 'true': install virtualbox guest additions
 BUILD_KEEP_MAX_CLOUD_BOXES=1        # set the maximum number of boxes to keep in Vagrant Cloud
 
-BUILD_RELEASE_VERSION_ID="2021-07-23"    # FIXME release file sometimes missing information (workaround: copy manually from https://www.funtoo.org/Intel64-nehalem, todo: determine from stage3 file date if not present in /etc/os-release)
+BUILD_RELEASE_VERSION_ID="2021-08-30"    # FIXME release file sometimes missing information (workaround: copy manually from https://www.funtoo.org/Intel64-nehalem, todo: determine from stage3 file date if not present in /etc/os-release)
 
 # enable custom overlay?
 BUILD_CUSTOM_OVERLAY=true
@@ -69,6 +69,7 @@ BUILD_BOX_VERSION=`echo $BUILD_BOX_FUNTOO_VERSION | sed -e 's/\.//g'`
 
 BUILD_BOX_DESCRIPTION="$BUILD_BOX_NAME"
 
+# TODO extract version from https://build.funtoo.org/index.xml (parse with xmlstarlet?)
 BUILD_BOX_RELEASE_VERSION=`echo $BUILD_RELEASE_VERSION_ID | sed -e 's/\-//g'`
 BUILD_BOX_RELEASE_VERSION=`echo $BUILD_BOX_RELEASE_VERSION | sed -e 's/20//'`
 BUILD_BOX_VERSION=$BUILD_BOX_VERSION.$BUILD_BOX_RELEASE_VERSION
