@@ -86,14 +86,11 @@ EOF
     fi
 fi
 
-# cleanup and finish any installation which had temporary USE flag set
+# cleanup, rebuild and finish installation
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
 emerge -vt --update --newuse --deep --with-bdeps=y @world
+emerge -v @preserved-rebuild
 emerge --depclean
-EOF
-
-# perform @preserved-rebuild, rebuild reverse dependencies
-chroot /mnt/funtoo /bin/bash -uex <<'EOF'
 emerge -v @preserved-rebuild
 revdep-rebuild
 EOF
