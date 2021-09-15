@@ -49,7 +49,7 @@
   "post-processors": [{
       "type": "checksum",
       "checksum_types": [ "sha1" ],
-      "output": "packer_{{.BuildName}}_{{.ChecksumType}}.checksum"
+      "output": "packer.{{.ChecksumType}}.checksum"
     },{
       "output": "{{user `output_file`}}",
       "type": "vagrant"
