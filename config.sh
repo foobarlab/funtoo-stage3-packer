@@ -8,7 +8,6 @@ set -a
 # ----------------------------!  edit settings below  !----------------------------
 
 BUILD_BOX_NAME="funtoo-stage3"
-BUILD_BOX_FUNTOO_VERSION="1.4"
 BUILD_BOX_SOURCES="https://github.com/foobarlab/funtoo-stage3-packer"
 
 BUILD_GUEST_TYPE="Gentoo_64"
@@ -23,12 +22,26 @@ BUILD_BOX_MEMORY="2048"
 BUILD_BOX_PROVIDER="virtualbox"
 BUILD_BOX_USERNAME="foobarlab"
 
-BUILD_REBUILD_SYSTEM=false          # set to 'true': rebuild @system (e.g. required for toolchain rebuild)
+BUILD_REBUILD_SYSTEM=false          # set to 'true' to rebuild @system (e.g. required for toolchain rebuild)
 
-BUILD_GUEST_ADDITIONS=true          # set to 'true': install virtualbox guest additions
 BUILD_KEEP_MAX_CLOUD_BOXES=1        # set the maximum number of boxes to keep in Vagrant Cloud
 
-BUILD_RELEASE_VERSION_ID="2021-08-30"    # FIXME release file sometimes missing information (workaround: copy manually from https://www.funtoo.org/Intel64-nehalem, todo: determine from stage3 file date if not present in /etc/os-release)
+# Funtoo 1.4 (current more or less stable)
+BUILD_BOX_FUNTOO_VERSION="1.4"
+BUILD_RELEASE="${BUILD_BOX_FUNTOO_VERSION}-release-std"
+BUILD_RELEASE_VERSION_ID="2021-08-30"
+BUILD_FUNTOO_ARCHITECTURE="x86-64bit/intel64-nehalem"
+BUILD_FUNTOO_STAGE3="stage3-intel64-nehalem-${BUILD_BOX_FUNTOO_VERSION}-release-std"
+BUILD_GUEST_ADDITIONS=true          # set to 'true' to install virtualbox guest additions
+
+# Funtoo next (experimental next gen, see: https://forums.funtoo.org/topic/4970-announcing-next-release/)
+#BUILD_BOX_FUNTOO_VERSION="9999"
+#BUILD_RELEASE="next"
+
+#BUILD_RELEASE_VERSION_ID="2021-09-14"               # FIXME parse xml from https://build.funtoo.org/index.xml to get version
+#BUILD_FUNTOO_ARCHITECTURE="x86-64bit/generic_64"    # FIXME arch/cpu into separate vars
+#BUILD_FUNTOO_STAGE3="stage3-generic_64-next"        # FIXME build string from cpu + release
+#BUILD_GUEST_ADDITIONS=false                         # set to 'true' to install virtualbox guest additions
 
 # enable custom overlay?
 BUILD_CUSTOM_OVERLAY=true
@@ -39,8 +52,7 @@ BUILD_CUSTOM_OVERLAY_URL="https://github.com/foobarlab/foobarlab-overlay.git"
 # ----------------------------!  do not edit below this line  !----------------------------
 
 BUILD_STAGE3_FILE="stage3-latest.tar.xz"
-BUILD_FUNTOO_ARCHITECTURE="x86-64bit/intel64-nehalem"
-BUILD_FUNTOO_DOWNLOADPATH="https://build.funtoo.org/1.4-release-std/$BUILD_FUNTOO_ARCHITECTURE"
+BUILD_FUNTOO_DOWNLOADPATH="https://build.funtoo.org/$BUILD_RELEASE/$BUILD_FUNTOO_ARCHITECTURE"
 
 BUILD_OUTPUT_FILE="$BUILD_BOX_NAME.box"
 BUILD_OUTPUT_FILE_TEMP="$BUILD_BOX_NAME.tmp.box"
@@ -97,7 +109,7 @@ fi
 echo $BUILD_BOX_VERSION > build_version
 BUILD_OUTPUT_FILE="$BUILD_BOX_NAME-$BUILD_BOX_VERSION.box"
 
-BUILD_BOX_DESCRIPTION="Funtoo $BUILD_BOX_FUNTOO_VERSION ($BUILD_FUNTOO_ARCHITECTURE)<br><br>$BUILD_BOX_NAME version $BUILD_BOX_VERSION ($BUILD_RELEASE_VERSION_ID)"
+BUILD_BOX_DESCRIPTION="Funtoo ${BUILD_BOX_FUNTOO_VERSION/9999/next} ($BUILD_FUNTOO_ARCHITECTURE)<br><br>$BUILD_BOX_NAME version $BUILD_BOX_VERSION ($BUILD_RELEASE_VERSION_ID)"
 if [ ! -z ${BUILD_NUMBER+x} ] && [ ! -z ${BUILD_TAG+x} ]; then
     # for Jenkins builds we got some additional information: BUILD_NUMBER, BUILD_ID, BUILD_DISPLAY_NAME, BUILD_TAG, BUILD_URL
     BUILD_BOX_DESCRIPTION="$BUILD_BOX_DESCRIPTION build $BUILD_NUMBER ($BUILD_TAG)"
