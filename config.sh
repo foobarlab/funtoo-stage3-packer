@@ -22,7 +22,7 @@ BUILD_BOX_MEMORY="2048"
 BUILD_BOX_PROVIDER="virtualbox"
 BUILD_BOX_USERNAME="foobarlab"
 
-BUILD_REBUILD_SYSTEM=false          # set to 'true': rebuild @system (e.g. required for toolchain rebuild)
+BUILD_REBUILD_SYSTEM=false          # set to 'true' to rebuild @system (e.g. required for toolchain rebuild)
 
 BUILD_KEEP_MAX_CLOUD_BOXES=1        # set the maximum number of boxes to keep in Vagrant Cloud
 
@@ -32,15 +32,16 @@ BUILD_KEEP_MAX_CLOUD_BOXES=1        # set the maximum number of boxes to keep in
 #BUILD_RELEASE_VERSION_ID="2021-08-30"
 #BUILD_FUNTOO_ARCHITECTURE="x86-64bit/intel64-nehalem"
 #BUILD_FUNTOO_STAGE3="stage3-intel64-nehalem-${BUILD_BOX_FUNTOO_VERSION}-release-std"
-#BUILD_GUEST_ADDITIONS=true          # set to 'true': install virtualbox guest additions
+#BUILD_GUEST_ADDITIONS=true          # set to 'true' to install virtualbox guest additions
 
 # Funtoo next (experimental next gen, see: https://forums.funtoo.org/topic/4970-announcing-next-release/)
 BUILD_BOX_FUNTOO_VERSION="9999"
 BUILD_RELEASE="next"
+
 BUILD_RELEASE_VERSION_ID="2021-09-14"               # FIXME parse xml from https://build.funtoo.org/index.xml to get version
 BUILD_FUNTOO_ARCHITECTURE="x86-64bit/generic_64"    # FIXME arch/cpu into separate vars
 BUILD_FUNTOO_STAGE3="stage3-generic_64-next"        # FIXME build string from cpu + release
-BUILD_GUEST_ADDITIONS=false                         # set to 'true': install virtualbox guest additions
+BUILD_GUEST_ADDITIONS=false                         # set to 'true' to install virtualbox guest additions
 
 # enable custom overlay?
 BUILD_CUSTOM_OVERLAY=true
@@ -108,7 +109,7 @@ fi
 echo $BUILD_BOX_VERSION > build_version
 BUILD_OUTPUT_FILE="$BUILD_BOX_NAME-$BUILD_BOX_VERSION.box"
 
-BUILD_BOX_DESCRIPTION="Funtoo $BUILD_BOX_FUNTOO_VERSION ($BUILD_FUNTOO_ARCHITECTURE)<br><br>$BUILD_BOX_NAME version $BUILD_BOX_VERSION ($BUILD_RELEASE_VERSION_ID)"
+BUILD_BOX_DESCRIPTION="Funtoo ${BUILD_BOX_FUNTOO_VERSION/9999/next} ($BUILD_FUNTOO_ARCHITECTURE)<br><br>$BUILD_BOX_NAME version $BUILD_BOX_VERSION ($BUILD_RELEASE_VERSION_ID)"
 if [ ! -z ${BUILD_NUMBER+x} ] && [ ! -z ${BUILD_TAG+x} ]; then
     # for Jenkins builds we got some additional information: BUILD_NUMBER, BUILD_ID, BUILD_DISPLAY_NAME, BUILD_TAG, BUILD_URL
     BUILD_BOX_DESCRIPTION="$BUILD_BOX_DESCRIPTION build $BUILD_NUMBER ($BUILD_TAG)"

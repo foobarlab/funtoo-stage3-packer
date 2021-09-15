@@ -5,15 +5,15 @@ This is a minimal stage3 snapshot of Funtoo Linux that is packaged into a Vagran
 ### What's included?
 
  - Latest Funtoo 1.4 stage3 tarball from [https://build.funtoo.org/1.4-release-std/x86-64bit/intel64-nehalem/](https://build.funtoo.org/1.4-release-std/x86-64bit/intel64-nehalem/)
- - Optional: Funtoo next stage3 tarball from [https://build.funtoo.org/next/x86-64bit/generic_64/](https://build.funtoo.org/next/x86-64bit/generic_64/)
- - Box was bootstrapped using [SystemRescueCD](http://www.system-rescue-cd.org)
+ - (Optional) Funtoo next stage3 tarball from [https://build.funtoo.org/next/x86-64bit/generic_64/](https://build.funtoo.org/next/x86-64bit/generic_64/)
+ - Box is bootstrapped using [SystemRescueCD](http://www.system-rescue-cd.org)
  - Architecture: x86-64bit, intel64-nehalem (compatible with most CPUs since 2008) respectively generic_64 (Funtoo next)
  - Initial 20 GB dynamic sized HDD image (ext4), can be expanded
  - Timezone: ```UTC```
  - NAT Networking using DHCP (virtio)
  - Vagrant user *vagrant* with password *vagrant* (can get superuser via sudo without password), additionally using the default SSH authorized keys provided by Vagrant (see https://github.com/hashicorp/vagrant/tree/master/keys) 
  - Kernel 5.10 (debian-sources)
- - (Optional, enabled by default) VirtualBox 6.1 Guest Additions
+ - (Optional) VirtualBox 6.1 Guest Additions
  - Additionally installed software:
    - *sudo*
    - *usermode-utilities*, *bridge-utils* and *nfs-utils* for advanced networking
