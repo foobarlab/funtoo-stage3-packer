@@ -8,8 +8,8 @@ fi
 
 # copy pre-downloaded distfiles (if any)
 if [[ -d "/tmp/distfiles" ]]; then
-    rsync -urv /tmp/distfiles /mnt/funtoo/var/cache/portage/
-    chroot /mnt/funtoo /bin/bash -uex <<'EOF'
+  rsync -urv /tmp/distfiles /mnt/funtoo/var/cache/portage/
+  chroot /mnt/funtoo /bin/bash -uex <<'EOF'
 chown portage:portage /var/cache/portage/distfiles/*
 chmod 664 /var/cache/portage/distfiles/*
 EOF
@@ -41,10 +41,11 @@ sed -i 's/BUILD_CUSTOM_OVERLAY_NAME/'"$BUILD_CUSTOM_OVERLAY_NAME"'/g' /etc/porta
 EOF
 fi
 
-# copy fix script
-chmod 750 /tmp/scripts/fix_flags.py
-chown root:root /tmp/scripts/fix_flags.py
-cp -f /tmp/scripts/fix_flags.py /mnt/funtoo/usr/local/sbin/
+# TODO remove?
+## copy fix script
+#chmod 750 /tmp/scripts/fix_flags.py
+#chown root:root /tmp/scripts/fix_flags.py
+#cp -f /tmp/scripts/fix_flags.py /mnt/funtoo/usr/local/sbin/
 
 
 # update portage/ego, and update world, but skip kernel
@@ -63,7 +64,7 @@ gcc-config -l || gcc-config 1
 # update world, keep existing kernel
 ego sync
 # fix some USE flags
-/usr/local/sbin/fix_flags.py
+#/usr/local/sbin/fix_flags.py   # TODO remove?
 emerge -vt --update --newuse --deep --with-bdeps=y --complete-graph=y @world --exclude="sys-kernel/debian-sources-lts" --exclude="sys-kernel/debian-sources"
 emerge -vt @preserved-rebuild
 emerge --depclean

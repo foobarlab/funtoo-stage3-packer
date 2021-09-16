@@ -17,12 +17,12 @@ boot {
     timeout 1
 }
 display {
-  gfxmode 800x600
+    gfxmode 800x600
 }
 "Funtoo Linux" {
-  kernel kernel[-v]
-  initrd initramfs[-v]
-  params += root=auto rootfstype=auto
+    kernel kernel[-v]
+    initrd initramfs[-v]
+    params += root=auto rootfstype=auto
 }
 DATA
 rm -f /boot/memtest86.bin
