@@ -19,7 +19,7 @@ cloud_box_info=$( \
 )
 
 # DEBUG
-echo $cloud_box_info | jq
+#echo $cloud_box_info | jq
 
 BUILD_CLOUD_VERSION[$CLOUD_VERSION_CURRENT]=$(echo $cloud_box_info | jq .current_version.version | tr -d '"')
 
@@ -40,19 +40,19 @@ BUILD_CLOUD_VERSION[$CLOUD_VERSION_FOUND]=$(echo $cloud_box_info | jq .versions[
 echo "-------------------------------------------------------------------"
 echo "Build major version: $BUILD_BOX_MAJOR_VERSION"
 echo "Build version: $BUILD_BOX_VERSION"
-echo "Build release: $BUILD_RELEASE"
+#echo "Build release: $BUILD_RELEASE"
 echo "-------------------------------------------------------------------"
 
 # iterate all found versions
 for version in ${BUILD_CLOUD_VERSION[$CLOUD_VERSION_FOUND]}; do
   step "Processing version '$version' ..."
   
-  todo "check if current '(done)'"
+  #todo "check if current '(done)'"
   if [[ $version = ${BUILD_CLOUD_VERSION[$CLOUD_VERSION_CURRENT]} ]]; then
     echo "is-current"
   fi
   
-  todo "compare major version and check release kind '(done)'"
+  #todo "compare major version and check release kind '(done)'"
   major_version=$( echo $version | sed -e "s/[^0-9]*\([0-9]*\)[.].*/\1/" )
   case $major_version in
     "9999")
@@ -63,22 +63,22 @@ for version in ${BUILD_CLOUD_VERSION[$CLOUD_VERSION_FOUND]}; do
       ;;
   esac
 
-  todo "check if in scope '(done}'"
+  #todo "check if in scope '(done}'"
   if [ $major_version = $BUILD_BOX_MAJOR_VERSION ]; then
     echo "within-scope"
   else
     echo "out-of-scope"
   fi
 
-  todo "collect box info '(done)'"
+  #todo "collect box info '(done)'"
   cloud_box_info_item=$(echo $cloud_box_info | jq '.versions[] | select(.version=="'$version'")')
   #echo $cloud_box_info_item | jq
 
-  todo "check if active '(done)'"
+  #todo "check if active '(done)'"
   cloud_box_info_item_status=$(echo $cloud_box_info_item | jq .status | tr -d '"')
   echo "status-$cloud_box_info_item_status"
 
-  todo "check if higher/lower than build version '(done)'"
+  #todo "check if higher/lower than build version '(done)'"
   #echo "version: $version"
   #echo "build version: $BUILD_BOX_VERSION"
 
