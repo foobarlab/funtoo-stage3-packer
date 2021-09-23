@@ -1,6 +1,5 @@
 .vagrant/
 packer_cache/
-output-virtualbox-iso/
 /*.box
 /*.iso
 /*.tar.xz.hash.txt
@@ -10,6 +9,7 @@ output-virtualbox-iso/
 /*.log*
 vagrant-cloud-*
 !vagrant-cloud-token.sh
+output-virtualbox-iso/
 build_number
 build_version
 build_time
