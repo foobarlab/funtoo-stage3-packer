@@ -23,11 +23,11 @@ fi
 highlight "Checking '$BUILD_SYSRESCUECD_FILE' ..."
 BUILD_SYSRESCUECD_LOCAL_HASH=$(pv $BUILD_SYSRESCUECD_FILE | sha256sum | grep -o '^\S\+')
 if [ "$BUILD_SYSRESCUECD_LOCAL_HASH" == "$BUILD_SYSRESCUECD_REMOTE_HASH" ]; then
-  info "'$BUILD_SYSRESCUECD_FILE' checksums matched. Proceeding ..."
+    info "'$BUILD_SYSRESCUECD_FILE' checksums matched. Proceeding ..."
 else
     # FIXME: let the user decide to delete and try downloading again
-  error "'$BUILD_SYSRESCUECD_FILE' checksum did NOT match with expected checksum. The file is possibly corrupted, please delete it and try again."
-  exit 1
+    error "'$BUILD_SYSRESCUECD_FILE' checksum did NOT match with expected checksum. The file is possibly corrupted, please delete it and try again."
+    exit 1
 fi
 
 BUILD_STAGE3_URL="$BUILD_FUNTOO_DOWNLOADPATH/${BUILD_RELEASE_VERSION_ID}/${BUILD_FUNTOO_STAGE3}-${BUILD_RELEASE_VERSION_ID}.tar.xz"

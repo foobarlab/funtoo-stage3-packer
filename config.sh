@@ -34,8 +34,8 @@ BUILD_FUNTOO_ARCHITECTURE="x86-64bit/intel64-nehalem"
 BUILD_FUNTOO_STAGE3="stage3-intel64-nehalem-${BUILD_BOX_FUNTOO_VERSION}-release-std"
 BUILD_GUEST_ADDITIONS=true          # set to 'true' to install virtualbox guest additions
 
-# Funtoo next (experimental next gen, see: https://forums.funtoo.org/topic/4970-announcing-next-release/)
-#BUILD_BOX_FUNTOO_VERSION="9999"
+# Funtoo next (experimental next-release, see: https://forums.funtoo.org/topic/4970-announcing-next-release/)
+#BUILD_BOX_FUNTOO_VERSION="0"
 #BUILD_RELEASE="next"
 
 #BUILD_RELEASE_VERSION_ID="2021-09-14"               # FIXME parse xml from https://build.funtoo.org/index.xml to get version
