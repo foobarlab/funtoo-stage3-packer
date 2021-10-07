@@ -2,7 +2,9 @@
 
 # 2021-06-21
 # https://forums.funtoo.org/topic/4962-fixes-for-abi-riscv-lp64d-rebuild-issues/
-# This script will remove "abi_riscv_lp64" and "abi_riscv_lp64d" from IUSE and IUSE_EFFECTIVE in /var/db/pkg entries, eliminating the "urge" for Portage to rebuild everything.
+# This script will remove "abi_riscv_lp64" and "abi_riscv_lp64d" from IUSE and
+# IUSE_EFFECTIVE in /var/db/pkg entries, eliminating the "urge" for Portage
+# to rebuild everything.
 
 import os
 

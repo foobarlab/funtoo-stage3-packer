@@ -29,13 +29,13 @@ BUILD_KEEP_MAX_CLOUD_BOXES=1        # set the maximum number of boxes to keep in
 # Funtoo 1.4 (current more or less stable)
 BUILD_BOX_FUNTOO_VERSION="1.4"
 BUILD_RELEASE="${BUILD_BOX_FUNTOO_VERSION}-release-std"
-BUILD_RELEASE_VERSION_ID="2021-08-30"
+BUILD_RELEASE_VERSION_ID="2021-09-20"
 BUILD_FUNTOO_ARCHITECTURE="x86-64bit/intel64-nehalem"
 BUILD_FUNTOO_STAGE3="stage3-intel64-nehalem-${BUILD_BOX_FUNTOO_VERSION}-release-std"
 BUILD_GUEST_ADDITIONS=true          # set to 'true' to install virtualbox guest additions
 
-# Funtoo next (experimental next gen, see: https://forums.funtoo.org/topic/4970-announcing-next-release/)
-#BUILD_BOX_FUNTOO_VERSION="9999"
+# Funtoo next (experimental next-release, see: https://forums.funtoo.org/topic/4970-announcing-next-release/)
+#BUILD_BOX_FUNTOO_VERSION="0"
 #BUILD_RELEASE="next"
 
 #BUILD_RELEASE_VERSION_ID="2021-09-14"               # FIXME parse xml from https://build.funtoo.org/index.xml to get version
@@ -77,7 +77,8 @@ BUILD_MEMORY="${memory}"
 BUILD_MEMORY=$(($BUILD_MEMORY < $BUILD_MEMORY_MIN ? $BUILD_MEMORY_MIN : $BUILD_MEMORY)) # lower limit (min)
 BUILD_MEMORY=$(($BUILD_MEMORY > $BUILD_MEMORY_MAX ? $BUILD_MEMORY_MAX : $BUILD_MEMORY)) # upper limit (max)
 
-BUILD_BOX_VERSION=`echo $BUILD_BOX_FUNTOO_VERSION | sed -e 's/\.//g'`
+BUILD_BOX_MAJOR_VERSION=`echo $BUILD_BOX_FUNTOO_VERSION | sed -e 's/\.//g'`
+BUILD_BOX_VERSION=$BUILD_BOX_MAJOR_VERSION
 
 BUILD_BOX_DESCRIPTION="$BUILD_BOX_NAME"
 
@@ -109,7 +110,7 @@ fi
 echo $BUILD_BOX_VERSION > build_version
 BUILD_OUTPUT_FILE="$BUILD_BOX_NAME-$BUILD_BOX_VERSION.box"
 
-BUILD_BOX_DESCRIPTION="Funtoo ${BUILD_BOX_FUNTOO_VERSION/9999/next} ($BUILD_FUNTOO_ARCHITECTURE)<br><br>$BUILD_BOX_NAME version $BUILD_BOX_VERSION ($BUILD_RELEASE_VERSION_ID)"
+BUILD_BOX_DESCRIPTION="Funtoo ${BUILD_BOX_FUNTOO_VERSION/^0$/next} ($BUILD_FUNTOO_ARCHITECTURE)<br><br>$BUILD_BOX_NAME version $BUILD_BOX_VERSION ($BUILD_RELEASE_VERSION_ID)"
 if [ ! -z ${BUILD_NUMBER+x} ] && [ ! -z ${BUILD_TAG+x} ]; then
     # for Jenkins builds we got some additional information: BUILD_NUMBER, BUILD_ID, BUILD_DISPLAY_NAME, BUILD_TAG, BUILD_URL
     BUILD_BOX_DESCRIPTION="$BUILD_BOX_DESCRIPTION build $BUILD_NUMBER ($BUILD_TAG)"
