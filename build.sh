@@ -112,6 +112,7 @@ fi
 
 if [ "$BUILD_SKIP_VERSION_CHECK" = false ]; then
 
+    # FIXME move to cloud_version.sh?
     # check version match on cloud and abort if same
     highlight "Comparing local and cloud version ..."
     # FIXME check if box already exists (should give us a 200 HTTP response, if not we will get a 404)
@@ -128,11 +129,13 @@ if [ "$BUILD_SKIP_VERSION_CHECK" = false ]; then
 
     # TODO automatically generate initial build number?
 
+    # FIXME replace with cloud_version.sh?
     if [[ "$BUILD_BOX_VERSION" = "$latest_cloud_version" ]]; then
         error "An equal version number already exists, please run './clean.sh' to increment your build number and try again."
         todo "Automatically increase build number?"
         exit 1
     else
+    	# FIXME replace with cloud_version.sh?
         version_too_small=`version_lt $BUILD_BOX_VERSION $latest_cloud_version && echo "true" || echo "false"`
         if [[ "$version_too_small" = "true" ]]; then
             warn "This version is smaller than the cloud version!"

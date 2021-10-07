@@ -21,12 +21,14 @@ info "Box........: '$BUILD_BOX_NAME'"
 info "Provider...: '$BUILD_BOX_PROVIDER'"
 echo
 
+# FIXME replace with cloud_version.sh
 CLOUD_BOX_INFO=$( \
   curl -sS -f \
   --header "Authorization: Bearer $VAGRANT_CLOUD_TOKEN" \
   https://app.vagrantup.com/api/v1/box/$BUILD_BOX_USERNAME/$BUILD_BOX_NAME \
 )
 
+# FIXME replace with cloud_version.sh
 LATEST_CLOUD_VERSION=$(echo $CLOUD_BOX_INFO | jq .current_version.version | tr -d '"')
 if [ $LATEST_CLOUD_VERSION = "null" ]; then
     success "Successful request, but no boxes were found."
@@ -38,6 +40,7 @@ fi
 highlight "Latest version:"
 info "$LATEST_CLOUD_VERSION"
 
+# FIXME replace with cloud_version.sh
 EXISTING_CLOUD_VERSIONS=$(echo $CLOUD_BOX_INFO | jq .versions[] | jq .version | tr -d '"' | sort -r )
 
 if [ "$EXISTING_CLOUD_VERSIONS" = "$LATEST_CLOUD_VERSION" ]; then
@@ -120,6 +123,7 @@ do
     fi
 done
 
+# FIXME replace with cloud_version.sh
 # re-read box infos, show summary
 CLOUD_BOX_INFO=$( \
   curl -sS -f \
@@ -127,6 +131,7 @@ CLOUD_BOX_INFO=$( \
   https://app.vagrantup.com/api/v1/box/$BUILD_BOX_USERNAME/$BUILD_BOX_NAME \
 )
 
+# FIXME replace with cloud_version.sh
 EXISTING_CLOUD_VERSIONS=$(echo $CLOUD_BOX_INFO | jq .versions[] | jq .version | tr -d '"' | sort -r)
 echo
 highlight "Remaining box versions:"
