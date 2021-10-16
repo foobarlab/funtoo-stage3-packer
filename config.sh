@@ -29,7 +29,7 @@ BUILD_KEEP_MAX_CLOUD_BOXES=1        # set the maximum number of boxes to keep in
 # Funtoo 1.4 (current more or less stable)
 BUILD_BOX_FUNTOO_VERSION="1.4"
 BUILD_RELEASE="${BUILD_BOX_FUNTOO_VERSION}-release-std"
-BUILD_RELEASE_VERSION_ID="2021-09-20"
+BUILD_RELEASE_VERSION_ID="2021-10-11"
 BUILD_FUNTOO_ARCHITECTURE="x86-64bit/intel64-nehalem"
 BUILD_FUNTOO_STAGE3="stage3-intel64-nehalem-${BUILD_BOX_FUNTOO_VERSION}-release-std"
 BUILD_GUEST_ADDITIONS=true          # set to 'true' to install virtualbox guest additions
@@ -37,8 +37,7 @@ BUILD_GUEST_ADDITIONS=true          # set to 'true' to install virtualbox guest 
 # Funtoo next (experimental next-release, see: https://forums.funtoo.org/topic/4970-announcing-next-release/)
 #BUILD_BOX_FUNTOO_VERSION="0"
 #BUILD_RELEASE="next"
-
-#BUILD_RELEASE_VERSION_ID="2021-09-14"               # FIXME parse xml from https://build.funtoo.org/index.xml to get version
+#BUILD_RELEASE_VERSION_ID="2021-10-09"               # FIXME parse xml from https://build.funtoo.org/index.xml to get version
 #BUILD_FUNTOO_ARCHITECTURE="x86-64bit/generic_64"    # FIXME arch/cpu into separate vars
 #BUILD_FUNTOO_STAGE3="stage3-generic_64-next"        # FIXME build string from cpu + release
 #BUILD_GUEST_ADDITIONS=false                         # set to 'true' to install virtualbox guest additions
