@@ -163,6 +163,7 @@ if [ $PACKER_LOG ]; then
     info "Logging Packer output to '$PACKER_LOG_PATH' ..."
 fi
 
+# TODO upgrade to packer hcl template
 step "Invoking Packer build configuration '$PWD/packer/virtualbox.json' ..."
 packer validate "$PWD/packer/virtualbox.json"
 packer build -force -on-error=abort "$PWD/packer/virtualbox.json"

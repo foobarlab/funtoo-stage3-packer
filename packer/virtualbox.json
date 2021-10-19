@@ -56,7 +56,7 @@
   }],
   "provisioners": [{
       "destination": "/tmp",
-      "source": "scripts",
+      "source": "packer/scripts",
       "type": "file"
     },{
       "destination": "/tmp",
