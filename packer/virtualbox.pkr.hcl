@@ -7,7 +7,7 @@ variable "box_description" {
   default = "${env("BUILD_BOX_DESCRIPTION")}"
 }
 
-variable "version" {
+variable "box_version" {
   type    = string
   default = "${env("BUILD_BOX_VERSION")}"
 }
@@ -194,7 +194,7 @@ build {
       "scripts=/tmp", "BUILD_RUN=true",
       "BUILD_BOX_NAME=${var.vm_name}",
       "BUILD_BOX_USERNAME=${var.vm_username}",
-      "BUILD_BOX_VERSION=${var.version}",
+      "BUILD_BOX_VERSION=${var.box_version}",
       "BUILD_MAKEOPTS=${var.makeopts}",
       "BUILD_TIMESTAMP=${var.timestamp}",
       "BUILD_TIMEZONE=${var.timezone}",
