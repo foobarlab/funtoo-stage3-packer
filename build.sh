@@ -84,7 +84,7 @@ BUILD_STAGE3_LOCAL_HASH=$(pv $BUILD_STAGE3_FILE | sha256sum | grep -o '^\S\+')
 BUILD_STAGE3_REMOTE_HASH=$(cat $BUILD_HASH_FILE | sed -e 's/^sha256\s//g')
 
 if [ "$BUILD_STAGE3_LOCAL_HASH" == "$BUILD_STAGE3_REMOTE_HASH" ]; then
-    info "'$BUILD_STAGE3_FILE' checksums matched. Proceeding ..."
+    step "'$BUILD_STAGE3_FILE' checksums matched. Proceeding ..."
 else
     warn "'$BUILD_STAGE3_FILE' checksums did NOT match. The file is possibly outdated or corrupted."
     read -p "Do you want to delete it and try again (Y/n)? " choice
