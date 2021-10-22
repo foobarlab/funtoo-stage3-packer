@@ -55,11 +55,15 @@
       "type": "vagrant"
   }],
   "provisioners": [{
-      "destination": "/tmp",
+      "destination": "/tmp/",
       "source": "packer/scripts",
       "type": "file"
     },{
-      "destination": "/tmp",
+      "destination": "/tmp/",
+      "source": "stage3-latest.tar.xz",
+      "type": "file"
+    },{
+      "destination": "/tmp/",
       "source": "distfiles",
       "type": "file"
     },{

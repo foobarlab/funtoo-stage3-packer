@@ -152,9 +152,6 @@ final "All preparations done."
 
 . config.sh
 
-step "Copying temporary stage3 file ..."
-cp $BUILD_STAGE3_FILE ./scripts
-
 step "Invoking packer ..."
 export PACKER_LOG_PATH="$PWD/packer.log"
 export PACKER_LOG="1"
