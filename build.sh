@@ -158,9 +158,7 @@ if [ $PACKER_LOG ]; then
     highlight "Logging Packer output to '$PACKER_LOG_PATH' ..."
 fi
 
-# TODO upgrade to packer hcl template
-#packer build -force -on-error=abort "$PWD/packer/virtualbox.pkr.hcl"
-packer build -force -on-error=abort "$PWD/packer/virtualbox.json"
+packer build -force -on-error=abort "$PWD/packer/virtualbox.pkr.hcl"
 
 title "OPTIMIZING BOX SIZE"
 
