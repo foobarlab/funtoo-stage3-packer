@@ -5,12 +5,12 @@ start=`date +%s`
 
 . config.sh quiet
 
-header "Building box '$BUILD_BOX_NAME'"
+header "Building box '$BUILD_BOX_NAME' version '$BUILD_BOX_VERSION'"
 require_commands vagrant packer wget jq sha256sum pv
 
 highlight "Looking for '$BUILD_SYSRESCUECD_FILE' ..."
 if [ -f "$BUILD_SYSRESCUECD_FILE" ]; then
-    info "'$BUILD_SYSRESCUECD_FILE' found. Skipping download ..."
+    step "'$BUILD_SYSRESCUECD_FILE' found. Skipping download ..."
 else
     warn "'$BUILD_SYSRESCUECD_FILE' NOT found. Starting download ..."
     wget -c --content-disposition "https://sourceforge.net/projects/systemrescuecd/files/sysresccd-x86/$BUILD_SYSRESCUECD_VERSION/$BUILD_SYSRESCUECD_FILE/download"
@@ -23,7 +23,7 @@ fi
 highlight "Checking '$BUILD_SYSRESCUECD_FILE' ..."
 BUILD_SYSRESCUECD_LOCAL_HASH=$(pv $BUILD_SYSRESCUECD_FILE | sha256sum | grep -o '^\S\+')
 if [ "$BUILD_SYSRESCUECD_LOCAL_HASH" == "$BUILD_SYSRESCUECD_REMOTE_HASH" ]; then
-    info "'$BUILD_SYSRESCUECD_FILE' checksums matched. Proceeding ..."
+    step "'$BUILD_SYSRESCUECD_FILE' checksums matched. Proceeding ..."
 else
     # FIXME: let the user decide to delete and try downloading again
     error "'$BUILD_SYSRESCUECD_FILE' checksum did NOT match with expected checksum. The file is possibly corrupted, please delete it and try again."
@@ -38,7 +38,7 @@ if [ -f "$BUILD_STAGE3_FILE" ]; then
     BUILD_LOCAL_TIMESTAMP=$(date -d "$(find $BUILD_STAGE3_FILE -exec stat \{} --printf="%y\n" \;)" +%s)
     BUILD_COMPARE_TIMESTAMP=$(( $BUILD_REMOTE_TIMESTAMP - $BUILD_LOCAL_TIMESTAMP ))
     if [[ $BUILD_COMPARE_TIMESTAMP -eq 0 ]]; then
-        info "'$BUILD_STAGE3_FILE' already exists and seems up-to-date."
+        step "'$BUILD_STAGE3_FILE' already exists and seems up-to-date."
         BUILD_DOWNLOAD_STAGE3=false
     else
         warn "'$BUILD_STAGE3_FILE' already exists but seems outdated:"
@@ -103,7 +103,6 @@ fi
 . distfiles.sh quiet
 
 # do not build an already existing release on vagrant cloud by default
-
 if [ ! $# -eq 0 ]; then
     BUILD_SKIP_VERSION_CHECK=true
 else
@@ -152,21 +151,16 @@ final "All preparations done."
 
 . config.sh
 
-step "Invoking packer ..."
 export PACKER_LOG_PATH="$PWD/packer.log"
 export PACKER_LOG="1"
 
 if [ $PACKER_LOG ]; then
-    info "Logging Packer output to '$PACKER_LOG_PATH' ..."
+    highlight "Logging Packer output to '$PACKER_LOG_PATH' ..."
 fi
 
 # TODO upgrade to packer hcl template
-step "Invoking Packer build configuration '$PWD/packer/virtualbox.json' ..."
-packer validate "$PWD/packer/virtualbox.json"
+#packer build -force -on-error=abort "$PWD/packer/virtualbox.pkr.hcl"
 packer build -force -on-error=abort "$PWD/packer/virtualbox.json"
-
-step "Removing temporary stage3 file ..."
-rm -f ./scripts/$BUILD_STAGE3_FILE
 
 title "OPTIMIZING BOX SIZE"
 

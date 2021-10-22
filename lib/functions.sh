@@ -135,17 +135,23 @@ bg_white="${ANSI_START}${ANSI_RESET};${ANSI_BG_WHITE}${ANSI_END}"
 
 # ---- Functions
 
+# silent mode by var or param
 set_silent_mode() {
-    if [[ $@ = "" ]]; then
-        silent=false
-    else
-        silent=true
+    if [[ -v silent ]]; then
+        silent=$silent
+    else 
+        if [[ $@ = "" ]]; then
+            silent=false
+        else
+            silent=true
+        fi
     fi
 }
-# TODO explicit let scripts set silent mode
+
+# let scripts set silent mode
 set_silent_mode "$*"
 
-# run given param if not $silent=true
+# run given param when not in silent mode
 if_not_silent() {
     [ ! -v "$silent" ] && [[ "$silent" = "true" ]] || "$@"
 }
@@ -240,7 +246,7 @@ todo() {
   fi
 }
 
-step() {
+do_step() {
   local text="$*"
   if [ "${ANSI}" = "true" ]; then
     color="${default}"
@@ -250,6 +256,9 @@ step() {
   else
     echo "--- ${text}"
   fi
+}
+step() {
+	if_not_silent do_step "$*"
 }
 
 note() {
@@ -325,11 +334,12 @@ header() {
       text=`bracket_to_bold "${text}"`
       text="${text}${default}"
     fi
-    echo -e "${color}${bold}================================================================================${default}"
+    echo -e "${color}${bold}________________________________________________________________________________${default}"
+    echo -e "${color}${bold}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%${default}"
     echo
     echo -e "${color}    ${text}${default}"
-    echo
-    echo -e "${color}${bold}================================================================================${default}"
+    echo -e "${color}${bold}________________________________________________________________________________${default}"
+    echo -e "${color}${bold}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%${default}"
   else
     echo "================================================================================"
     echo
@@ -337,6 +347,7 @@ header() {
     echo
     echo "================================================================================"
   fi
+  echo
 }
 
 remove_ansi() {
