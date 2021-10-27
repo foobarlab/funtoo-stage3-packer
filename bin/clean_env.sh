@@ -97,9 +97,6 @@ fi
 
 highlight "Housekeeping sources ..."
 
-step "Dropping build number ..."
-rm -f "$BUILD_FILE_BUILD_NUMBER" || true
-
 # basic cleanup
 echo
 source "${BUILD_DIR_BIN}/clean.sh"
