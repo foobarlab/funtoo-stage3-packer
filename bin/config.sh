@@ -50,8 +50,6 @@ BUILD_CUSTOM_OVERLAY_URL="https://github.com/foobarlab/foobarlab-overlay.git"
 
 # ----------------------------!  do not edit below this line  !----------------------------
 
-# TODO load build.conf
-
 BUILD_STAGE3_FILE="${BUILD_DIR_DOWNLOAD}/stage3-latest.tar.xz"
 BUILD_FUNTOO_DOWNLOADPATH="https://build.funtoo.org/$BUILD_RELEASE/$BUILD_FUNTOO_ARCHITECTURE"
 
@@ -149,6 +147,9 @@ else
     BUILD_BOX_DESCRIPTION="$BUILD_BOX_DESCRIPTION<br>Origin source code: $BUILD_BOX_SOURCES"
     BUILD_BOX_DESCRIPTION="$BUILD_BOX_DESCRIPTION<br>This build is not version controlled yet.<br>$BUILD_RUNTIME_FANCY"
 fi
+
+# override build settings? load build.conf ... 
+[[ -f ""${BUILD_FILE_BUILDCONF}"" ]] && source "${BUILD_FILE_BUILDCONF}"
 
 if [ $# -eq 0 ]; then
     title "BUILD SETTINGS"

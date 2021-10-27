@@ -2,17 +2,15 @@
 .project
 .settings
 
-# config files
-vagrant-cloud-token
-
 # temporary created files during build
 packer_cache/
 /build
 /output-*
 
-# cache dirs
+# cache dirs and files
 .vagrant/
 packages/
 distfiles/
 download/
-/etc/build_number
+vagrant-cloud-token
+build_number
