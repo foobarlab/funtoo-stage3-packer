@@ -143,7 +143,7 @@ source "virtualbox-iso" "gold" {
   headless             = "${var.headless}"
   iso_checksum         = "sha256:${var.sysrescuecd_checksum}"
   iso_interface        = "sata"
-  iso_url              = "download/${var.sysrescuecd_url}"
+  iso_url              = "${var.sysrescuecd_url}"
   shutdown_command     = "shutdown -hP now"
   ssh_username         = "${var.username}"
   ssh_password         = "${var.password}"

@@ -50,14 +50,16 @@ BUILD_CUSTOM_OVERLAY_URL="https://github.com/foobarlab/foobarlab-overlay.git"
 
 # ----------------------------!  do not edit below this line  !----------------------------
 
-BUILD_STAGE3_FILE="stage3-latest.tar.xz"
+# TODO load build.conf
+
+BUILD_STAGE3_FILE="${BUILD_DIR_DOWNLOAD}/stage3-latest.tar.xz"
 BUILD_FUNTOO_DOWNLOADPATH="https://build.funtoo.org/$BUILD_RELEASE/$BUILD_FUNTOO_ARCHITECTURE"
 
 BUILD_OUTPUT_FILE="${BUILD_DIR_BUILD}/${BUILD_BOX_NAME}.box"
 BUILD_OUTPUT_FILE_TEMP="${BUILD_DIR_BUILD}/${BUILD_BOX_NAME}.tmp.box"
 
 BUILD_SYSRESCUECD_VERSION="5.3.2"
-BUILD_SYSRESCUECD_FILE="systemrescuecd-x86-$BUILD_SYSRESCUECD_VERSION.iso"
+BUILD_SYSRESCUECD_FILE="${BUILD_DIR_DOWNLOAD}/systemrescuecd-x86-$BUILD_SYSRESCUECD_VERSION.iso"
 BUILD_SYSRESCUECD_REMOTE_HASH="0a55c61bf24edd04ce44cdf5c3736f739349652154a7e27c4b1caaeb19276ad1"
 
 BUILD_TIMESTAMP="$(date --iso-8601=seconds)"

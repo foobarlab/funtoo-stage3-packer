@@ -45,7 +45,7 @@ BUILD_DIR_ETC="${BUILD_ROOT:-.}/etc"
 BUILD_DIR_BUILD="${BUILD_ROOT:-.}/build"
 BUILD_DIR_PACKER="${BUILD_ROOT:-.}/packer"
 BUILD_DIR_DISTFILES="${BUILD_ROOT:-.}/distfiles"
-BUILD_DIR_DOWNLOAD="${BUILD_ROOT:-.}/downloads"
+BUILD_DIR_DOWNLOAD="${BUILD_ROOT:-.}/download"
 
 # bin files
 BUILD_BIN_CONFIG="${BUILD_DIR_BIN}/config.sh"

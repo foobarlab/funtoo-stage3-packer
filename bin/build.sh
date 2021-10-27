@@ -9,7 +9,7 @@ header "Building box '$BUILD_BOX_NAME' version '$BUILD_BOX_VERSION'"
 require_commands vagrant packer wget jq sha256sum pv
 
 highlight "Looking for '$BUILD_SYSRESCUECD_FILE' ..."
-if [ -f "${BUILD_DIR_DOWNLOAD}/${BUILD_SYSRESCUECD_FILE}" ]; then
+if [ -f "$BUILD_SYSRESCUECD_FILE" ]; then
     step "'$BUILD_SYSRESCUECD_FILE' found."
 else
     warn "'$BUILD_SYSRESCUECD_FILE' NOT found. Starting download ..."
@@ -21,7 +21,7 @@ else
 fi
 
 highlight "Checking '$BUILD_SYSRESCUECD_FILE' ..."
-BUILD_SYSRESCUECD_LOCAL_HASH=$(pv "${BUILD_DIR_DOWNLOAD}/${BUILD_SYSRESCUECD_FILE}" | sha256sum | grep -o '^\S\+')
+BUILD_SYSRESCUECD_LOCAL_HASH=$(pv "$BUILD_SYSRESCUECD_FILE" | sha256sum | grep -o '^\S\+')
 if [ "$BUILD_SYSRESCUECD_LOCAL_HASH" == "$BUILD_SYSRESCUECD_REMOTE_HASH" ]; then
     step "'$BUILD_SYSRESCUECD_FILE' checksums matched."
 else
@@ -32,13 +32,13 @@ fi
 
 BUILD_STAGE3_URL="$BUILD_FUNTOO_DOWNLOADPATH/${BUILD_RELEASE_VERSION_ID}/${BUILD_FUNTOO_STAGE3}-${BUILD_RELEASE_VERSION_ID}.tar.xz"
 
-highlight "Looking for '$BUILD_STAGE3_FILE' ..."
-if [ -f "${BUILD_DIR_DOWNLOAD}/$BUILD_STAGE3_FILE" ]; then
+highlight "Looking for '${BUILD_STAGE3_FILE##*/}' ..."
+if [ -f "$BUILD_STAGE3_FILE" ]; then
     BUILD_REMOTE_TIMESTAMP=$(date -d "$(curl -s -v -X HEAD $BUILD_STAGE3_URL 2>&1 | grep '^< last-modified:' | sed 's/^.\{17\}//')" +%s)
-    BUILD_LOCAL_TIMESTAMP=$(date -d "$(find "${BUILD_DIR_DOWNLOAD}/${BUILD_STAGE3_FILE}" -exec stat \{} --printf="%y\n" \;)" +%s)
+    BUILD_LOCAL_TIMESTAMP=$(date -d "$(find "${BUILD_STAGE3_FILE}" -exec stat \{} --printf="%y\n" \;)" +%s)
     BUILD_COMPARE_TIMESTAMP=$(( $BUILD_REMOTE_TIMESTAMP - $BUILD_LOCAL_TIMESTAMP ))
     if [[ $BUILD_COMPARE_TIMESTAMP -eq 0 ]]; then
-        step "'$BUILD_STAGE3_FILE' already exists and seems up-to-date."
+        step "'${BUILD_STAGE3_FILE##*/}' already exists and seems up-to-date."
         BUILD_DOWNLOAD_STAGE3=false
     else
         warn "'$BUILD_STAGE3_FILE' already exists but seems outdated:"
@@ -46,7 +46,7 @@ if [ -f "${BUILD_DIR_DOWNLOAD}/$BUILD_STAGE3_FILE" ]; then
         echo "-> remote: $(date -d @${BUILD_REMOTE_TIMESTAMP})"
         BUILD_DOWNLOAD_STAGE3=true
         step "Deleting '$BUILD_STAGE3_FILE' ..."
-        rm "${BUILD_DIR_DOWNLOAD}/${BUILD_STAGE3_FILE}" || true
+        rm "${BUILD_STAGE3_FILE}" || true
         step "Resetting 'build_number' ..."
         rm "$BUILD_FILE_BUILD_NUMBER" || true
     fi
@@ -57,7 +57,7 @@ fi
 
 if [ "$BUILD_DOWNLOAD_STAGE3" = true ]; then
     highlight "Starting download of stage3 tarball ..."
-    wget -c $BUILD_STAGE3_URL -O "${BUILD_DIR_DOWNLOAD}/$BUILD_STAGE3_FILE"
+    wget -c $BUILD_STAGE3_URL -O "$BUILD_STAGE3_FILE"
     if [ $? -ne 0 ]; then
         error "Could not download '$BUILD_STAGE3_URL'. Exit code from wget was $?."
         exit $?
@@ -66,34 +66,34 @@ fi
 
 source "${BUILD_BIN_CONFIG:-./bin/config.sh}" quiet
 
-highlight "Checking '$BUILD_STAGE3_FILE' ..."
+highlight "Checking '${BUILD_STAGE3_FILE##*/}' ..."
 BUILD_HASH_URL="${BUILD_FUNTOO_DOWNLOADPATH}/${BUILD_RELEASE_VERSION_ID}/${BUILD_FUNTOO_STAGE3}-${BUILD_RELEASE_VERSION_ID}.tar.xz.hash.txt"
 BUILD_HASH_FILE="${BUILD_STAGE3_FILE}.hash.txt"
 
-if [ -f "${BUILD_DIR_DOWNLOAD}/${BUILD_HASH_FILE}" ]; then
-    rm -f "${BUILD_DIR_DOWNLOAD}/${BUILD_HASH_FILE}"
+if [ -f "${BUILD_HASH_FILE}" ]; then
+    rm -f "${BUILD_HASH_FILE}"
 fi
 
-if [ ! -f "${BUILD_DIR_DOWNLOAD}/${BUILD_HASH_FILE}" ]; then
+if [ ! -f "${BUILD_HASH_FILE}" ]; then
     step "Downloading hash of stage3 file ..."
-    wget ${BUILD_HASH_URL} -O "${BUILD_DIR_DOWNLOAD}/${BUILD_HASH_FILE}"
+    wget ${BUILD_HASH_URL} -O "${BUILD_HASH_FILE}"
 fi
 
 highlight "Comparing hash sums ..."
-BUILD_STAGE3_LOCAL_HASH=$(pv "${BUILD_DIR_DOWNLOAD}/${BUILD_STAGE3_FILE}" | sha256sum | grep -o '^\S\+')
-BUILD_STAGE3_REMOTE_HASH=$(cat "${BUILD_DIR_DOWNLOAD}/${BUILD_HASH_FILE}" | sed -e 's/^sha256\s//g')
+BUILD_STAGE3_LOCAL_HASH=$(pv "${BUILD_STAGE3_FILE}" | sha256sum | grep -o '^\S\+')
+BUILD_STAGE3_REMOTE_HASH=$(cat "${BUILD_HASH_FILE}" | sed -e 's/^sha256\s//g')
 
 if [ "$BUILD_STAGE3_LOCAL_HASH" == "$BUILD_STAGE3_REMOTE_HASH" ]; then
-    step "'${BUILD_STAGE3_FILE}' checksums matched."
+    step "'${BUILD_STAGE3_FILE##*/}' checksums matched."
 else
-    warn "'${BUILD_STAGE3_FILE}' checksums did NOT match. The file is possibly outdated or corrupted."
+    warn "'${BUILD_STAGE3_FILE##*/}' checksums did NOT match. The file is possibly outdated or corrupted."
     read -p "Do you want to delete it and try again (Y/n)? " choice
     case "$choice" in
       n|N ) echo "Canceled by user."
             exit 1
             ;;
       * ) step "Deleting '$BUILD_STAGE3_FILE' ..."
-          rm -f "${BUILD_DIR_DOWNLOAD}/${BUILD_STAGE3_FILE}"
+          rm -f "${BUILD_STAGE3_FILE}"
           exec $0
           exit 0
           ;;

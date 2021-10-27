@@ -21,7 +21,7 @@ deleteitem="${BUILD_DIR_BUILD}/"
 step "Remove build folder: '${deleteitem}' ..."
 rm -rf "${deleteitem}" || true
 
-deleteitem="${BUILD_ROOT}/output-virtualbox-iso/"
+deleteitem="${BUILD_ROOT}/output-gold/"
 step "Remove packer output dir: '${deleteitem}' ..."
 rm -rf "${deleteitem}" || true
 
