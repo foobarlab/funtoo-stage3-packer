@@ -2,11 +2,9 @@
 # vim: ts=4 sw=4 et
 # NOTE: Vagrant Cloud API see: https://www.vagrantup.com/docs/vagrant-cloud/api.html
 
-. config.sh quiet
+source "${BUILD_BIN_CONFIG:-./bin/config.sh}" quiet
 
 title "CLEAN CLOUD"
-
-. vagrant_cloud_token.sh "$*"
 
 require_commands curl jq
 
@@ -21,10 +19,11 @@ info "Box........: '$BUILD_BOX_NAME'"
 info "Provider...: '$BUILD_BOX_PROVIDER'"
 echo
 
+source "${BUILD_DIR_BIN}/vagrant_cloud_token.sh" "$*"
+
 # FIXME replace with cloud_version.sh
 CLOUD_BOX_INFO=$( \
   curl -sS -f \
-  --header "Authorization: Bearer $VAGRANT_CLOUD_TOKEN" \
   https://app.vagrantup.com/api/v1/box/$BUILD_BOX_USERNAME/$BUILD_BOX_NAME \
 )
 
@@ -125,7 +124,6 @@ done
 # re-read box infos, show summary
 CLOUD_BOX_INFO=$( \
   curl -sS -f \
-  --header "Authorization: Bearer $VAGRANT_CLOUD_TOKEN" \
   https://app.vagrantup.com/api/v1/box/$BUILD_BOX_USERNAME/$BUILD_BOX_NAME \
 )
 

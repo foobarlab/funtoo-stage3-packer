@@ -1,20 +1,26 @@
 # Funtoo Stage3 Vagrant box
 
-This is a minimal stage3 snapshot of Funtoo Linux that is packaged into a Vagrant box file. Currently only a VirtualBox version is provided.
+This is a minimal stage3 snapshot of Funtoo Linux that is packaged into a Vagrant box file.
+Currently only a VirtualBox version is provided.
 
-### What's included?
+## Operating system
 
- - Latest Funtoo 1.4 stage3 tarball from [https://build.funtoo.org/1.4-release-std/x86-64bit/intel64-nehalem/](https://build.funtoo.org/1.4-release-std/x86-64bit/intel64-nehalem/)
- - (Optional) Funtoo next stage3 tarball from [https://build.funtoo.org/next/x86-64bit/generic_64/](https://build.funtoo.org/next/x86-64bit/generic_64/)
+ - Latest Funtoo 1.4 stage3 tarball from
+   [https://build.funtoo.org/1.4-release-std/x86-64bit/intel64-nehalem/](https://build.funtoo.org/1.4-release-std/x86-64bit/intel64-nehalem/)
+ - (Optional) Funtoo next stage3 tarball from
+   [https://build.funtoo.org/next/x86-64bit/generic_64/](https://build.funtoo.org/next/x86-64bit/generic_64/)
  - Box is bootstrapped using [SystemRescueCD](http://www.system-rescue-cd.org)
- - Architecture: x86-64bit, intel64-nehalem (compatible with most CPUs since 2008) respectively generic_64 (Funtoo next)
+ - Architecture: x86-64bit, intel64-nehalem (compatible with most CPUs since 2008)
+   respectively generic_64 (Funtoo next)
  - Initial 20 GB dynamic sized HDD image (ext4), can be expanded
- - Timezone: ```UTC```
+ - Timezone: UTC
  - NAT Networking using DHCP (virtio)
- - Vagrant user *vagrant* with password *vagrant* (can get superuser via sudo without password), additionally using the default SSH authorized keys provided by Vagrant (see https://github.com/hashicorp/vagrant/tree/master/keys) 
+ - Vagrant user *vagrant* with password *vagrant* (can get superuser via sudo without password),
+   additionally using the default SSH authorized keys provided by Vagrant
+   (see https://github.com/hashicorp/vagrant/tree/master/keys) 
  - Kernel 5.10 (debian-sources)
  - (Optional) VirtualBox 6.1 Guest Additions
- - Additionally installed software:
+ - Additionally installed utils:
    - *sudo*
    - *usermode-utilities*, *bridge-utils* and *nfs-utils* for advanced networking
    - *acpid* (enables graceful acpi shutdown for VirtualBox)
@@ -24,61 +30,31 @@ This is a minimal stage3 snapshot of Funtoo Linux that is packaged into a Vagran
 
 ### Download pre-build images
 
-Get the latest build from Vagrant Cloud: [foobarlab/funtoo-stage3](https://app.vagrantup.com/foobarlab/boxes/funtoo-stage3)
+Get the latest build from Vagrant Cloud:
+[foobarlab/funtoo-stage3](https://app.vagrantup.com/foobarlab/funtoo-stage3)
 
-### Build your own using Packer
+## Build your own using Packer
 
-#### Preparation
+Install [VirtualBox](https://www.virtualbox.org) (extensions not needed),
+[Vagrant](https://www.vagrantup.com/) and [Packer](https://www.packer.io/).
 
- - Install [Vagrant](https://www.vagrantup.com/) and [Packer](https://www.packer.io/)
+The provided scripts make use of various commandline utils:
 
-#### Build a fresh VirtualBox box
+ - bash
+ - wget
+ - curl
+ - jq
+ - nproc
+ - b2sum
+ - sha256sum
+ - git
+ - make
+ - sed
+ - awk
+ - grep
+ - pv
 
- - Run ```./build.sh```
- 
-#### Quick test the box file
-
- - Run ```./test.sh```
-
-#### Upload the box to Vagrant Cloud (account required)
-
- - Run ```./upload.sh```
-
-### Regular use cases
-
-#### Initialize a fresh box (initial state, any modifications are lost)
-
- - Run ```./init.sh```
-
-#### Power on the box (keeping previous state)
-
- - Run ```./startup.sh```
-
-### Special use cases
-
-#### Show current build config
-
- - Run ```./config.sh```
-
-#### Cleanup build environment (poweroff and remove any related Vagrant and VirtualBox machines)
-
- - Run ```./clean_env.sh```
-
-#### Cleanup temporary build Vagrant box
-
- - Run ```./clean_box.sh```
-
-#### Cleanup build environment
-
- - Run ```./clean.sh```
-
-#### Generate Vagrant Cloud API Token
-
- - Run ```./vagrant_cloud_token.sh```
-
-#### Keep only a maximum number of boxes in Vagrant Cloud (experimental)
-
- - Run ```./clean_cloud.sh```
+Type ```make``` for help, build your own box with ```make all```.
 
 ## Feedback and bug reports welcome
 
