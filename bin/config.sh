@@ -1,26 +1,26 @@
 #!/bin/bash -ue
 # vim: ts=4 sw=4 et
 
-. ./lib/functions.sh "$*"
+[[ -v BUILD_ROOT ]] || BUILD_ROOT="${PWD}"   # FIXME try to set correct path (e.g. when run from inside bin dir)
+source "${BUILD_LIB_UTILS:-./bin/lib/utils.sh}" "$*"
 require_commands git nproc
 set -a
 
-# ----------------------------!  edit settings below  !----------------------------
+# ----------------------------!  default settings below  !----------------------------
 
+BUILD_BOX_PROVIDER="virtualbox"
+BUILD_GUEST_TYPE="Gentoo_64"
+
+BUILD_BOX_USERNAME="foobarlab"
 BUILD_BOX_NAME="funtoo-stage3"
 BUILD_BOX_SOURCES="https://github.com/foobarlab/funtoo-stage3-packer"
-
-BUILD_GUEST_TYPE="Gentoo_64"
-BUILD_GUEST_DISKSIZE="20480"    # dynamic disksize in MB, e.g. 20480 => 20 GB
-
-BUILD_TIMEZONE="UTC"
 
 # memory/cpus used for final box:
 BUILD_BOX_CPUS="2"
 BUILD_BOX_MEMORY="2048"
+BUILD_GUEST_DISKSIZE="20480"    # dynamic disksize in MB, e.g. 20480 => 20 GB
 
-BUILD_BOX_PROVIDER="virtualbox"
-BUILD_BOX_USERNAME="foobarlab"
+BUILD_TIMEZONE="UTC"
 
 BUILD_REBUILD_SYSTEM=false          # set to 'true' to rebuild @system (e.g. required for toolchain rebuild)
 
@@ -50,14 +50,14 @@ BUILD_CUSTOM_OVERLAY_URL="https://github.com/foobarlab/foobarlab-overlay.git"
 
 # ----------------------------!  do not edit below this line  !----------------------------
 
-BUILD_STAGE3_FILE="stage3-latest.tar.xz"
+BUILD_STAGE3_FILE="${BUILD_DIR_DOWNLOAD}/stage3-latest.tar.xz"
 BUILD_FUNTOO_DOWNLOADPATH="https://build.funtoo.org/$BUILD_RELEASE/$BUILD_FUNTOO_ARCHITECTURE"
 
-BUILD_OUTPUT_FILE="$BUILD_BOX_NAME.box"
-BUILD_OUTPUT_FILE_TEMP="$BUILD_BOX_NAME.tmp.box"
+BUILD_OUTPUT_FILE="${BUILD_DIR_BUILD}/${BUILD_BOX_NAME}.box"
+BUILD_OUTPUT_FILE_TEMP="${BUILD_DIR_BUILD}/${BUILD_BOX_NAME}.tmp.box"
 
 BUILD_SYSRESCUECD_VERSION="5.3.2"
-BUILD_SYSRESCUECD_FILE="systemrescuecd-x86-$BUILD_SYSRESCUECD_VERSION.iso"
+BUILD_SYSRESCUECD_FILE="${BUILD_DIR_DOWNLOAD}/systemrescuecd-x86-$BUILD_SYSRESCUECD_VERSION.iso"
 BUILD_SYSRESCUECD_REMOTE_HASH="0a55c61bf24edd04ce44cdf5c3736f739349652154a7e27c4b1caaeb19276ad1"
 
 BUILD_TIMESTAMP="$(date --iso-8601=seconds)"
@@ -86,28 +86,31 @@ BUILD_BOX_RELEASE_VERSION=`echo $BUILD_RELEASE_VERSION_ID | sed -e 's/\-//g'`
 BUILD_BOX_RELEASE_VERSION=`echo $BUILD_BOX_RELEASE_VERSION | sed -e 's/20//'`
 BUILD_BOX_VERSION=$BUILD_BOX_VERSION.$BUILD_BOX_RELEASE_VERSION
 
-if [ -f build_version ]; then
-    BUILD_BOX_VERSION=$(<build_version)
+# create build dir
+mkdir -p "${BUILD_DIR_BUILD}"
+
+if [ -f "$BUILD_FILE_BUILD_VERSION" ]; then
+    BUILD_BOX_VERSION=$(<"$BUILD_FILE_BUILD_VERSION")
 else
     # generate build_number
     if [ -z ${BUILD_NUMBER:-} ] ; then
-        if [ -f build_number ]; then
+        if [ -f "$BUILD_FILE_BUILD_NUMBER" ]; then
             # read from file and increase by one
-            BUILD_NUMBER=$(<build_number)
+            BUILD_NUMBER=$(<"$BUILD_FILE_BUILD_NUMBER")
             BUILD_NUMBER=$((BUILD_NUMBER+1))
         else
             BUILD_NUMBER=0
         fi
         # store for later reuse in file 'build_number'
-        echo $BUILD_NUMBER > build_number
+        echo $BUILD_NUMBER > "$BUILD_FILE_BUILD_NUMBER"
         BUILD_BOX_VERSION=$BUILD_BOX_VERSION.$BUILD_NUMBER
     fi
 fi
 if [ $# -eq 0 ]; then
     echo "build version => $BUILD_BOX_VERSION"
 fi
-echo $BUILD_BOX_VERSION > build_version
-BUILD_OUTPUT_FILE="$BUILD_BOX_NAME-$BUILD_BOX_VERSION.box"
+echo $BUILD_BOX_VERSION > "$BUILD_FILE_BUILD_VERSION"
+BUILD_OUTPUT_FILE="${BUILD_DIR_BUILD}/${BUILD_BOX_NAME}-${BUILD_BOX_VERSION}.box"
 
 BUILD_BOX_DESCRIPTION="Funtoo ${BUILD_BOX_FUNTOO_VERSION/^0$/next} ($BUILD_FUNTOO_ARCHITECTURE)<br><br>$BUILD_BOX_NAME version $BUILD_BOX_VERSION ($BUILD_RELEASE_VERSION_ID)"
 if [ ! -z ${BUILD_NUMBER+x} ] && [ ! -z ${BUILD_TAG+x} ]; then
@@ -115,8 +118,8 @@ if [ ! -z ${BUILD_NUMBER+x} ] && [ ! -z ${BUILD_TAG+x} ]; then
     BUILD_BOX_DESCRIPTION="$BUILD_BOX_DESCRIPTION build $BUILD_NUMBER ($BUILD_TAG)"
 fi
 
-if [[ -f ./build_time && -s build_time ]]; then
-    BUILD_RUNTIME=`cat build_time`
+if [[ -f "$BUILD_FILE_BUILD_TIME" && -s "$BUILD_FILE_BUILD_TIME" ]]; then
+    BUILD_RUNTIME=`cat "$BUILD_FILE_BUILD_TIME"`
     BUILD_RUNTIME_FANCY="Total build runtime was $BUILD_RUNTIME."
 else
     BUILD_RUNTIME="unknown"
@@ -144,6 +147,9 @@ else
     BUILD_BOX_DESCRIPTION="$BUILD_BOX_DESCRIPTION<br>Origin source code: $BUILD_BOX_SOURCES"
     BUILD_BOX_DESCRIPTION="$BUILD_BOX_DESCRIPTION<br>This build is not version controlled yet.<br>$BUILD_RUNTIME_FANCY"
 fi
+
+# override build settings? load build.conf ... 
+[[ -f ""${BUILD_FILE_BUILDCONF}"" ]] && source "${BUILD_FILE_BUILDCONF}"
 
 if [ $# -eq 0 ]; then
     title "BUILD SETTINGS"

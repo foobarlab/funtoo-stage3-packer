@@ -183,7 +183,7 @@ build {
   }
   provisioner "file" {
     destination = "/tmp/"
-    source      = "stage3-latest.tar.xz"
+    source      = "download/stage3-latest.tar.xz"
   }
   provisioner "file" {
     destination = "/tmp/"
@@ -213,7 +213,7 @@ build {
   }
   post-processor "checksum" {
     checksum_types = ["sha1"]
-    output         = "packer.{{.ChecksumType}}.checksum"
+    output         = "build/packer.{{.ChecksumType}}.checksum"
   }
   post-processor "vagrant" {
     output              = "${var.output_file}"

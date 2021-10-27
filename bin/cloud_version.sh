@@ -5,7 +5,7 @@
 CLOUD_VERSION_CURRENT='Current-version'
 CLOUD_VERSION_FOUND='Found-version'
 
-. config.sh quiet
+source "${BUILD_BIN_CONFIG:-./bin/config.sh}" quiet
 
 require_commands curl jq #bc
 
@@ -31,7 +31,7 @@ case "$cloud_box_info_availibility" in
   *) error `printf "Received: HTTP $cloud_box_info_availibility ==> Unhandled status code while trying to get box meta info, aborting.\n"`; exit 1 ;;
 esac
 
-step "Requesting cloud box meta info ..."
+step "Requesting cloud box info ..."
 cloud_box_info=$( \
   curl -sS -f \
   https://app.vagrantup.com/api/v1/box/$BUILD_BOX_USERNAME/$BUILD_BOX_NAME \
