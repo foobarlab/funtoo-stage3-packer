@@ -5,11 +5,10 @@ packer_cache/
 /*.tar.xz.hash.txt
 *.tar.xz
 .project
-.pydevproject
 /*.log*
 vagrant-cloud-*
 !vagrant-cloud-token.sh
-output-virtualbox-iso/
+output-*/
 build_number
 build_version
 build_time

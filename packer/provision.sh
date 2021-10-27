@@ -12,7 +12,7 @@ fi
 
 chmod +x ${scripts}/scripts/*.sh
 
-BUILD_STAGE3_PATH="${scripts}/scripts/$BUILD_STAGE3_FILE"
+BUILD_STAGE3_PATH="${scripts}/$BUILD_STAGE3_FILE"
 
 for script in \
   01-partition \

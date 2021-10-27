@@ -41,13 +41,6 @@ sed -i 's/BUILD_CUSTOM_OVERLAY_NAME/'"$BUILD_CUSTOM_OVERLAY_NAME"'/g' /etc/porta
 EOF
 fi
 
-# TODO remove?
-## copy fix script
-#chmod 750 /tmp/scripts/fix_flags.py
-#chown root:root /tmp/scripts/fix_flags.py
-#cp -f /tmp/scripts/fix_flags.py /mnt/funtoo/usr/local/sbin/
-
-
 # update portage/ego, and update world, but skip kernel
 chroot /mnt/funtoo /bin/bash -uex <<'EOF'
 ego sync
@@ -63,8 +56,6 @@ etc-update --automode -5
 gcc-config -l || gcc-config 1
 # update world, keep existing kernel
 ego sync
-# fix some USE flags
-#/usr/local/sbin/fix_flags.py   # TODO remove?
 emerge -vt --update --newuse --deep --with-bdeps=y --complete-graph=y @world --exclude="sys-kernel/debian-sources-lts" --exclude="sys-kernel/debian-sources"
 emerge -vt @preserved-rebuild
 emerge --depclean
