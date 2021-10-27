@@ -130,11 +130,11 @@ if [ "$BUILD_SKIP_VERSION_CHECK" = false ]; then
 
     # FIXME replace with cloud_version.sh?
     if [[ "$BUILD_BOX_VERSION" = "$latest_cloud_version" ]]; then
-        error "An equal version number already exists, please run 'make clean' to increment your build number and try again."
-        todo "Automatically increase build number?"
+        error "An equal version number already exists, for auto-increment run 'make all' or 'make clean build' again."
+        todo "Automatically increase build number instead?"
         exit 1
     else
-    	# FIXME replace with cloud_version.sh?
+        # FIXME replace with cloud_version.sh?
         version_too_small=`version_lt $BUILD_BOX_VERSION $latest_cloud_version && echo "true" || echo "false"`
         if [[ "$version_too_small" = "true" ]]; then
             warn "This version is smaller than the cloud version!"
