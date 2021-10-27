@@ -58,9 +58,11 @@ BUILD_FILE_PACKER_LOG="${BUILD_DIR_BUILD}/packer.log"
 
 # config files
 BUILD_FILE_DISTFILESLIST="${BUILD_DIR_ETC}/distfiles.list"
+
+# cached files
 BUILD_FILE_VAGRANT_TOKEN="${BUILD_ROOT}/vagrant-cloud-token"
+BUILD_FILE_BUILD_NUMBER="${BUILD_DIR_ETC}/build_number"
 
 # files created during build
-BUILD_FILE_BUILD_NUMBER="${BUILD_DIR_BUILD}/build_number"
 BUILD_FILE_BUILD_TIME="${BUILD_DIR_BUILD}/build_time"
 BUILD_FILE_BUILD_VERSION="${BUILD_DIR_BUILD}/build_version"

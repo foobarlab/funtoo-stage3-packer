@@ -15,3 +15,4 @@ packer_cache/
 packages/
 distfiles/
 download/
+/etc/build_number
