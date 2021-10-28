@@ -7,10 +7,10 @@ if [ -z ${BUILD_RUN:-} ]; then
 fi
 
 if [ -z ${scripts:-} ]; then
-  SCRIPTS=.
+  scripts=.
 fi
 
-chmod +x "${scripts}/scripts/*.sh"
+chmod +x ${scripts}/scripts/*.sh
 
 BUILD_STAGE3_PATH="${scripts}/${BUILD_STAGE3_FILE##*/}"
 

@@ -191,7 +191,8 @@ build {
   }
   provisioner "shell" {
     environment_vars  = [
-      "scripts=/tmp", "BUILD_RUN=true",
+      "scripts=/tmp",
+      "BUILD_RUN=true",
       "BUILD_BOX_NAME=${var.vm_name}",
       "BUILD_BOX_USERNAME=${var.vm_username}",
       "BUILD_BOX_VERSION=${var.box_version}",
