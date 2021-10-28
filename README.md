@@ -1,4 +1,4 @@
-# Funtoo Stage3 Vagrant box
+# Funtoo Stage3 box
 
 This is a minimal stage3 snapshot of Funtoo Linux that is packaged into a Vagrant box file.
 Currently only a VirtualBox version is provided.
