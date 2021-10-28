@@ -26,7 +26,7 @@ EOF
 rm -f /mnt/funtoo/etc/resolv.conf
 rm -f /mnt/funtoo/etc/resolv.conf.bak
 rm -rf /mnt/funtoo/usr/tmp/*
-rm -rf /mnt/funtoo/var/cache/portage/distfiles/*
+rm -rf /mnt/funtoo/var/cache/portage/distfiles/*   # FIXME skip delete, reboot, copy distfiles, then delete & zerofree
 rm -rf /mnt/funtoo/var/git/meta-repo
 rm -rf /mnt/funtoo/tmp/*
 

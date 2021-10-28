@@ -3,13 +3,7 @@
 
 # ---- checks
 
-check_vm() {
-  todo "check if running inside vm"
-}
-
-check_su() {
-  todo "check if we are super-user"
-}
+[[ "$EUID" -eq 0 ]] && { error "You can not run this script as 'root' user!"; exit 1; }
 
 # ---- setup
 
@@ -24,19 +18,10 @@ fi
 
 # check if build root is set, otherwise set current working directory
 [[ -v BUILD_ROOT ]] || BUILD_ROOT="${PWD}"
-step "build root is '$BUILD_ROOT'"
-
-# TODO abort if run from inside vm, run as root, or from wrong dir (must be inside project root)
 
 # TODO check location: ensure path exists and is a directory
-#[[ -d "${BUILD_ROOT}" ]] || error "Not a directory or not existant: '${BUILD_ROOT}'"; exit 1
-#echo "OK"
-
-# TODO check location: ensure we are not '.' or '..'
-
-# TODO check location: ensure we are not in '/'
-
-# TODO check location: ensure it is a reasonable named dir with reasonable dir depth
+[[ -d "${BUILD_ROOT}" ]] || { error "Not a directory or not existant: '${BUILD_ROOT}'"; exit 1; }
+step "build root is '$BUILD_ROOT'"
 
 # set dir paths
 BUILD_DIR_BIN="${BUILD_ROOT:-.}/bin"

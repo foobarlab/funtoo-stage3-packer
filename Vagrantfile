@@ -62,7 +62,7 @@ Vagrant.configure("2") do |config|
     vb.gui = false
     vb.memory = memory
     vb.cpus = cpus
-    # customize VirtualBox settings, see also 'virtualbox.json'
+    # customize VirtualBox settings, see also 'virtualbox.pkr.hcl'
     vb.customize ["modifyvm", :id, "--nictype1", "virtio"]
     vb.customize ["modifyvm", :id, "--audio", "none"]
     vb.customize ["modifyvm", :id, "--usb", "off"]
