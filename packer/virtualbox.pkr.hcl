@@ -178,7 +178,7 @@ source "virtualbox-iso" "gold" {
 build {
   sources = ["source.virtualbox-iso.gold"]
   provisioner "file" {
-    destination = "/tmp/"
+    destination = "/tmp/scripts"
     source      = "packer/scripts"
   }
   provisioner "file" {
