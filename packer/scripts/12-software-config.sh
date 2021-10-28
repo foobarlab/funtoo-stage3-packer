@@ -66,7 +66,7 @@ emerge -vt sys-apps/usermode-utilities net-misc/bridge-utils
 emerge -vt sys-fs/growpart 
 
 # perl-cleaner
-perl-cleaner --all
+perl-cleaner --reallyall
 EOF
 
 # install virtualbox-guest-additions?
