@@ -5,6 +5,12 @@ system("./bin/config.sh >/dev/null")
 
 Vagrant.require_version ">= 2.1.0"
 
+$script_export_distfiles = <<SCRIPT
+rsync -avzh /var/cache/portage/distfiles/* /vagrant/distfiles/
+rm -rf /var/cache/portage/distfiles/*
+sync && sleep 30
+SCRIPT
+
 $script_cleanup = <<SCRIPT
 # clean stale kernel files
 mount /boot || true
@@ -79,7 +85,8 @@ Vagrant.configure("2") do |config|
   end
   config.ssh.insert_key = false
   config.ssh.connect_timeout = 60
-  config.vm.synced_folder '.', '/vagrant', disabled: true
+  config.vm.synced_folder '.', '/vagrant', automount: true
+  config.vm.provision "export_distfiles", type: "shell", inline: $script_export_distfiles, privileged: true
   config.vm.provision "cleanup", type: "shell", inline: $script_cleanup, privileged: true
   # TODO add trigger for disk compaction?
 end
