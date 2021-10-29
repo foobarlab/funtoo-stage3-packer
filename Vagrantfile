@@ -6,7 +6,8 @@ system("./bin/config.sh >/dev/null")
 Vagrant.require_version ">= 2.1.0"
 
 $script_export_distfiles = <<SCRIPT
-rsync -avzh /var/cache/portage/distfiles/* /vagrant/distfiles/
+eclean-dist
+rsync -avzh --delete /var/cache/portage/distfiles/* /vagrant/distfiles/
 rm -rf /var/cache/portage/distfiles/*
 sync && sleep 30
 SCRIPT
