@@ -86,6 +86,7 @@ case "$choice" in
         ;;
 esac
 
+# FIXME some versions get not deleted if build_number > 10 and other is < 10
 IFS=$'\n'
 COUNT=0
 for ITEM in $EXISTING_CLOUD_VERSIONS
