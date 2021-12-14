@@ -42,8 +42,8 @@ if [ -f "$BUILD_STAGE3_FILE" ]; then
         BUILD_DOWNLOAD_STAGE3=false
     else
         warn "'$BUILD_STAGE3_FILE' already exists but seems outdated:"
-        echo "-> local : $(date -d @${BUILD_LOCAL_TIMESTAMP})"
-        echo "-> remote: $(date -d @${BUILD_REMOTE_TIMESTAMP})"
+        warn "-> local : $(date -d @${BUILD_LOCAL_TIMESTAMP})"
+        warn "-> remote: $(date -d @${BUILD_REMOTE_TIMESTAMP})"
         BUILD_DOWNLOAD_STAGE3=true
         step "Deleting '$BUILD_STAGE3_FILE' ..."
         rm "${BUILD_STAGE3_FILE}" || true
