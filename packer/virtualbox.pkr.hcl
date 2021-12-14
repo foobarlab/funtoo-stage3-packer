@@ -132,7 +132,7 @@ variable "vm_username" {
   default = "${env("BUILD_BOX_USERNAME")}"
 }
 
-source "virtualbox-iso" "gold" {
+source "virtualbox-iso" "img" {
   boot_command         = ["<enter>", "<wait>", "<enter>", "<wait10>", "<enter>", "<wait10>", "<wait10>", "passwd ${var.username}", "<enter>", "<wait>", "${var.password}", "<enter>", "<wait>", "${var.password}", "<enter>", "<wait>", "${var.password}", "<enter>", "<wait>"]
   boot_wait            = "5s"
   disk_size            = "${var.disksize}"
@@ -176,7 +176,7 @@ source "virtualbox-iso" "gold" {
 }
 
 build {
-  sources = ["source.virtualbox-iso.gold"]
+  sources = ["source.virtualbox-iso.img"]
   provisioner "file" {
     destination = "/tmp/scripts"
     source      = "packer/scripts"
