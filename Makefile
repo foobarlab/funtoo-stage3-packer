@@ -8,7 +8,8 @@ export PATH  := ./bin:$(PATH)
 export BUILD_ROOT:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
 .PHONY: all config build clean clean_env clean_box clean_cloud cloud_version \
-        distfiles init startup test upload vagrant_cloud_token help readme
+        distfiles init startup test upload vagrant_cloud_token help readme \
+        clean_temp install download
 
 ## show help
 help:
@@ -33,23 +34,31 @@ config:
 build:
 	@build.sh
 
-## clean temporary created files
+## install as local vagrant box
+install:
+	@install.sh
+
+## remove any build and temporary created files
 clean:
 	@clean.sh
 
-## clean vm environment
+## remove only temporary created files
+clean_temp:
+	@clean_temp.sh
+
+## cleanup whole environment (cleanup virtual machines, vagrant and clean build)
 clean_env:
 	@clean_env.sh
 
-## clean current box
+## cleanup vagrant environment
 clean_box:
 	@clean_box.sh
 
-## clean cloud boxes
+## tidy cloud boxes, delete old ones
 clean_cloud:
 	@clean_cloud.sh
 
-## show cloud box versions
+## show all cloud box versions
 cloud_version:
 	@cloud_version.sh
 
@@ -57,7 +66,7 @@ cloud_version:
 distfiles:
 	@distfiles.sh
 
-## init a built box
+## initialize a new box from build
 init:
 	@init.sh
 
@@ -65,9 +74,13 @@ init:
 startup:
 	@startup.sh
 
-## test a built box
+## quick test a built box for bootability
 test:
 	@test.sh
+
+## download box from vagrant cloud
+download:
+	@download.sh
 
 ## upload a built box to vagrant cloud
 upload:

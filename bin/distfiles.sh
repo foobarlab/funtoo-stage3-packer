@@ -38,9 +38,8 @@ if [[ -f "$BUILD_FILE_DISTFILESLIST" ]]; then
         fi
         step "Looking for file '$file_name' ..."
         if [ ! -f "${BUILD_DIR_DISTFILES}/$file_name" ]; then
-            warn "Missing file '$file_name'"
-            step "Downloading file ..."
-            wget -c "$file_url" -O "${BUILD_DIR_DISTFILES}/$file_name"
+            step "Downloading '$file_name' ..."
+            wget -c "$file_url" -O "${BUILD_DIR_DISTFILES}/$file_name" || warn "Something went wrong."
             todo "Check wget exit status"
         fi
         step "Verifying file integrity ..."
@@ -50,7 +49,7 @@ if [[ -f "$BUILD_FILE_DISTFILESLIST" ]]; then
                 success "$file_name"
                 continue
             else
-                warn "Verification failed, checksum did not match"
+                warn "Verification failed, checksum did not match!"
                 result $file_expected_hash
                 result $file_hash
             fi

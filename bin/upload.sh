@@ -28,13 +28,12 @@ info "Box..........: '$BUILD_BOX_NAME'"
 info "Provider.....: '$BUILD_BOX_PROVIDER'"
 info "Version......: '$BUILD_BOX_VERSION'"
 info "File.........: '$BUILD_OUTPUT_FILE'"
+# TODO show filesize
 info "Build time...: '$BUILD_RUNTIME'"
-# FIXME show and compare sha1 checksum?
+# TODO show description?
+# TODO show and compare sha1 checksum?
 echo
-info "Please verify if above information is correct."
-echo
-
-read -p "    Continue (Y/n)? " choice
+read -p "    Start upload (Y/n)? " choice
 case "$choice" in
   n|N ) echo
         warn "User cancelled."
@@ -45,7 +44,7 @@ case "$choice" in
         ;;
 esac
 
-# FIXME replace with cloud_version.sh
+# TODO use cloud_version.sh?
 # check if a latest version does exist
 LATEST_VERSION_HTTP_CODE=$( \
   curl -sS -w "%{http_code}" -o /dev/null \
@@ -58,7 +57,7 @@ case "$LATEST_VERSION_HTTP_CODE" in
     *) error `printf "Received: HTTP $LATEST_VERSION_HTTP_CODE ==> Unhandled status code while trying to get latest box meta info, aborting.\n"`; exit 1 ;;
 esac
 
-# FIXME replace with cloud_version.sh
+# TODO use cloud_version.sh?
 # check version match on cloud and abort if same
 highlight "Checking existing cloud version ..."
 LATEST_CLOUD_VERSION=$( \
