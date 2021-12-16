@@ -1,0 +1,3 @@
+- insert release version name in storage folders: build -> build-1.4, build-next, ... to avoid deleting files from other release
+
+- rename kernel config file like release name: config -> config-1.4, config-next
