@@ -8,10 +8,12 @@ fi
 
 # copy pre-downloaded distfiles (if any)
 if [[ -d "/tmp/distfiles" ]]; then
+  mkdir -p /mnt/funtoo/var/cache/portage/distfiles
   rsync -urv /tmp/distfiles /mnt/funtoo/var/cache/portage/
   chroot /mnt/funtoo /bin/bash -uex <<'EOF'
-chown portage:portage /var/cache/portage/distfiles/*
-chmod 664 /var/cache/portage/distfiles/*
+chown -R portage:portage /var/cache/portage/distfiles
+chmod -R 664 /var/cache/portage/distfiles
+chmod 775 /var/cache/portage/distfiles
 EOF
 fi
 
