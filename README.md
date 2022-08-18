@@ -18,7 +18,7 @@ Currently only a VirtualBox version is provided.
  - Vagrant user *vagrant* with password *vagrant* (can get superuser via sudo without password),
    additionally using the default SSH authorized keys provided by Vagrant
    (see https://github.com/hashicorp/vagrant/tree/master/keys) 
- - Debian Linux kernel 5.15
+ - Debian Linux kernel 5.16
  - (Optional) VirtualBox 6.1 Guest Additions
  - Additionally installed utils:
    - *sudo*
