@@ -13,7 +13,8 @@ if [ -f "$BUILD_SYSRESCUECD_FILE" ]; then
     step "'$BUILD_SYSRESCUECD_FILE' found."
 else
     warn "'$BUILD_SYSRESCUECD_FILE' NOT found. Starting download ..."
-    wget -c --content-disposition "https://sourceforge.net/projects/systemrescuecd/files/sysresccd-x86/$BUILD_SYSRESCUECD_VERSION/$BUILD_SYSRESCUECD_FILE/download" -O "${BUILD_DIR_DOWNLOAD}/${BUILD_SYSRESCUECD_FILE}"
+    mkdir -p "${BUILD_DIR_DOWNLOAD}"
+    wget -c --content-disposition "https://sourceforge.net/projects/systemrescuecd/files/sysresccd-x86/$BUILD_SYSRESCUECD_VERSION/$BUILD_SYSRESCUECD_FILENAME/download" -O "${BUILD_SYSRESCUECD_FILE}"
     if [ $? -ne 0 ]; then
         error "Could not download '$BUILD_SYSRESCUECD_FILE'. Exit code from wget was $?."
         exit 1
@@ -26,7 +27,7 @@ if [ "$BUILD_SYSRESCUECD_LOCAL_HASH" == "$BUILD_SYSRESCUECD_REMOTE_HASH" ]; then
     step "'$BUILD_SYSRESCUECD_FILE' checksums matched."
 else
     # FIXME: let the user decide to delete and try downloading again
-    error "'$BUILD_SYSRESCUECD_FILE' checksum did NOT match with expected checksum. The file is possibly corrupted, please delete it and try again."
+    error "'$BUILD_SYSRESCUECD_FILE' checksum did NOT match with expected checksum. The file is possibly corrupted, please delete the file ${BUILD_SYSRESCUECD_FILE} and try again."
     exit 1
 fi
 
