@@ -15,7 +15,7 @@ else
     warn "'$BUILD_SYSRESCUECD_FILE' NOT found. Starting download ..."
     mkdir -p "${BUILD_DIR_DOWNLOAD}"
     wget -c --content-disposition "https://sourceforge.net/projects/systemrescuecd/files/sysresccd-x86/$BUILD_SYSRESCUECD_VERSION/$BUILD_SYSRESCUECD_FILENAME/download" -O "${BUILD_SYSRESCUECD_FILE}"
-      if [ $? -ne 0 ]; then
+    if [ $? -ne 0 ]; then
         error "Could not download '$BUILD_SYSRESCUECD_FILE'. Exit code from wget was $?."
         exit 1
     fi
