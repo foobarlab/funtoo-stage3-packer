@@ -199,4 +199,4 @@ hours=$((runtime / 3600));
 minutes=$(( (runtime % 3600) / 60 ));
 seconds=$(( (runtime % 3600) % 60 ));
 echo "$hours hours $minutes minutes $seconds seconds" >> "$BUILD_FILE_BUILD_TIME"
-result "Build runtime was $hours hours $minutes minutes $seconds seconds."
+result "Done. Build runtime was $hours hours $minutes minutes $seconds seconds."
