@@ -30,7 +30,7 @@ all: clean_env build
 config:
 	@config.sh
 
-## build a raw box
+## build a fresh box
 build:
 	@build.sh
 
