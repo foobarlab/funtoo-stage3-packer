@@ -54,7 +54,7 @@ The provided scripts require various commandline utils:
  - grep
  - pv
 
- Please ensure these programs are installed and executable.
+Please ensure these programs are installed and executable.
 
 Type ```make``` for help, build your own box with ```make all```.
 
